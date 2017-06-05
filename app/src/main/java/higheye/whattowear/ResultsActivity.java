@@ -33,7 +33,7 @@ public class ResultsActivity extends AppCompatActivity {
 //        textView.setText(weatherAdapter.getCurrentWeather());
 //        textView2.setText(weatherAdapter.getFutureWeather());
 
-        textView.setText(dataHandler.temperature(weatherAdapter.getCurrentWeather()));
+        textView.setText(dataHandler.temperature(weatherAdapter.getCurrentWeather())+" "+dataHandler.clouds(weatherAdapter.getCurrentWeather()));
  //       textView2.setText("ddwa");
     }
 }

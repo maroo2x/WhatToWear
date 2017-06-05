@@ -56,8 +56,12 @@ public class DataHandler {
         return input.substring(index+7, index+9);
     }
 
-    public static String wind(){
-return "a";
+    public static String clouds(String input){
+        int index = input.indexOf("\"all\":");
+        if (index == -1) {
+            return "no data";
+        }
+        return input.substring(index+6, index+8);
     }
 
 }
