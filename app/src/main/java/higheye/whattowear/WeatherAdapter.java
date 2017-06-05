@@ -5,8 +5,9 @@ package higheye.whattowear;
  */
 
 public class WeatherAdapter {
-    private String currentWeather;
-    private String futureWeather;
+    private static String currentWeather;
+    private static String futureWeather;
+
 
     public void setCurrentWeather(String currentWeather){
         this.currentWeather = currentWeather;

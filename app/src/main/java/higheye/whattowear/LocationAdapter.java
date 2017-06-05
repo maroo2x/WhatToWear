@@ -6,19 +6,19 @@ package higheye.whattowear;
  */
 
 public class LocationAdapter {
-    private String _mLatitudeText;
-    private String _mLongitudeText;
+    private static String mLatitudeText;
+    private static String mLongitudeText;
 
     public void setCoords(String mLatitudeText, String mLongitudeText) {
-        this._mLatitudeText = mLatitudeText;
-        this._mLongitudeText = mLongitudeText;
+        this.mLatitudeText = mLatitudeText;
+        this.mLongitudeText = mLongitudeText;
     }
 
     public String getmLatitudeText() {
-        return _mLatitudeText;
+        return mLatitudeText;
     }
 
     public String getmLongitudeText() {
-        return _mLongitudeText;
+        return mLongitudeText;
     }
 }

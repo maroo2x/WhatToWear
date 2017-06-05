@@ -22,6 +22,7 @@ public class ResultsActivity extends AppCompatActivity {
     TextView textView;
     TextView textView2;
     WeatherAdapter weatherAdapter = new WeatherAdapter();
+    DataHandler dataHandler = new DataHandler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +30,10 @@ public class ResultsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_results);
         textView = (TextView) findViewById(R.id.textView);
         textView2 = (TextView) findViewById(R.id.textView2);
-        textView.setText(weatherAdapter.getCurrentWeather());
-        textView2.setText(weatherAdapter.getFutureWeather());
+//        textView.setText(weatherAdapter.getCurrentWeather());
+//        textView2.setText(weatherAdapter.getFutureWeather());
 
-//        textView.setText("jedden");
-//        textView2.setText("ddwa");
+        textView.setText(dataHandler.temperature(weatherAdapter.getCurrentWeather()));
+ //       textView2.setText("ddwa");
     }
 }

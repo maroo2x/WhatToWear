@@ -5,7 +5,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.lang.String;
 
+import static android.R.id.input;
 import static java.security.AccessController.getContext;
 
 /**
@@ -45,5 +47,18 @@ public class DataHandler {
         thread.start();
         return callback;
     }
+
+    public static String temperature(String input){
+        int index = input.indexOf("\"temp\":");
+        if (index == -1) {
+            return "no data";
+        }
+        return input.substring(index+7, index+9);
+    }
+
+    public static String wind(){
+return "a";
+    }
+
 }
 

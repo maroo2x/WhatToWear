@@ -75,8 +75,8 @@ public LocationAdapter locationAdapter = new LocationAdapter();
             longitude = String.valueOf(mLastLocation.getLongitude());
             mLatitudeText.setText("Latitude: " + latitude);
             mLongitudeText.setText("Longitude: " + longitude);
-            currentWeather = DataHandler.Networking("http://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=7e7469bd4b8aec9b7684f7b5dd63d3b5");
-            futureWeather = DataHandler.Networking("http://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&appid=7e7469bd4b8aec9b7684f7b5dd63d3b5");
+            currentWeather = DataHandler.Networking("http://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&units=metric&appid=7e7469bd4b8aec9b7684f7b5dd63d3b5");
+//            futureWeather = DataHandler.Networking("http://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&units=metric&appid=7e7469bd4b8aec9b7684f7b5dd63d3b5");
 
 //            currentWeather = Networking("http://api.openweathermap.org/data/2.5/weather?lat=50&lon=22&appid=7e7469bd4b8aec9b7684f7b5dd63d3b5");
 //            futureWeather = Networking("http://api.openweathermap.org/data/2.5/forecast?lat=50&lon=22&appid=7e7469bd4b8aec9b7684f7b5dd63d3b5");
@@ -89,7 +89,6 @@ public LocationAdapter locationAdapter = new LocationAdapter();
 
     @Override
     public void onConnectionSuspended(int i) {
-
     }
 
     protected void onStart() {
@@ -110,53 +109,12 @@ public LocationAdapter locationAdapter = new LocationAdapter();
                 .build();
     }
 
-
     public void checkResults(View view) {
         locationAdapter.setCoords(latitude, longitude);
         weatherAdapter.setCurrentWeather(currentWeather);
         weatherAdapter.setFutureWeather(futureWeather);
-
-        Toast.makeText(this, currentWeather, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, weatherAdapter.getCurrentWeather(), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, ResultsActivity.class);
         startActivity(intent);
     }
-
-    public String Networking(final String address) {
-
-        Toast.makeText(getApplicationContext(), "jeden", Toast.LENGTH_SHORT).show();
-        Thread thread = new Thread(new Runnable() {
-
-//        Toast.makeText(getApplicationContext(), "jeden", Toast.LENGTH_SHORT).show();
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL(address);
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.connect();
-                    StringBuilder response = new StringBuilder(50000);
-                    try {
-                        InputStream in = connection.getInputStream();
-                        BufferedReader rd = new BufferedReader(new InputStreamReader(in));
-                        int i = 0;
-                        while ((i = rd.read()) > 0) {
-                            response.append((char) i);
-                        }
-                        callback = response.toString();
-
-                        //
-                    } finally {
-                        Toast.makeText(getApplicationContext(), "disconnect!", Toast.LENGTH_SHORT).show();
-                        connection.disconnect();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        thread.start();
-//        Toast.makeText(this, address, Toast.LENGTH_SHORT).show();
-        return callback;
- //       return address;
-    }
-
 }

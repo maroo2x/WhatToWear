@@ -10,7 +10,6 @@
         android:id="@+id/textView"
         android:layout_width="368dp"
         android:layout_height="495dp"
-        android:text="TextView"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="296dp" />
 
@@ -18,7 +17,6 @@
         android:id="@+id/textView2"
         android:layout_width="390dp"
         android:layout_height="265dp"
-        android:text="TextView"
         tools:layout_editor_absoluteX="-5dp"
         tools:layout_editor_absoluteY="28dp" />
 </android.support.constraint.ConstraintLayout>
