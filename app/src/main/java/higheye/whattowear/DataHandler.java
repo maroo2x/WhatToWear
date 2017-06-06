@@ -48,20 +48,34 @@ public class DataHandler {
         return callback;
     }
 
-    public static String temperature(String input){
+    public static String getTemperature(String input){
         int index = input.indexOf("\"temp\":");
         if (index == -1) {
             return "no data";
         }
-        return input.substring(index+7, index+9);
+        String cutString = input.substring(index);
+        int newIndex = cutString.indexOf(",");
+        return cutString.substring(7, newIndex);
     }
 
-    public static String clouds(String input){
+    public static String getClouds(String input){
         int index = input.indexOf("\"all\":");
         if (index == -1) {
             return "no data";
         }
-        return input.substring(index+6, index+8);
+        String cutString = input.substring(index);
+        int newIndex = cutString.indexOf("}");
+        return cutString.substring(6, newIndex);
+    }
+
+    public static String getIcon(String input){
+        int index = input.indexOf("\"icon\":");
+        if (index == -1) {
+            return "no data";
+        }
+        String cutString = input.substring(index);
+        int newIndex = cutString.indexOf("}");
+        return cutString.substring(8, newIndex-1);
     }
 
 }

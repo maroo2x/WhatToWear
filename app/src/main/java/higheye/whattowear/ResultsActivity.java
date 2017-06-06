@@ -23,6 +23,7 @@ public class ResultsActivity extends AppCompatActivity {
     TextView textView2;
     WeatherAdapter weatherAdapter = new WeatherAdapter();
     DataHandler dataHandler = new DataHandler();
+    LocationAdapter locationAdapter = new LocationAdapter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,12 @@ public class ResultsActivity extends AppCompatActivity {
 //        textView.setText(weatherAdapter.getCurrentWeather());
 //        textView2.setText(weatherAdapter.getFutureWeather());
 
-        textView.setText(dataHandler.temperature(weatherAdapter.getCurrentWeather())+" "+dataHandler.clouds(weatherAdapter.getCurrentWeather()));
+        textView.setText(dataHandler.getTemperature(weatherAdapter.getFutureWeather())+"\n"
+                +dataHandler.getClouds(weatherAdapter.getFutureWeather())+"\n"
+                +dataHandler.getIcon(weatherAdapter.getFutureWeather())+"\n\n"
+                +locationAdapter.getmLatitudeText());
  //       textView2.setText("ddwa");
+
+        // http://openweathermap.org/img/w/10d.png -  ikony
     }
 }
