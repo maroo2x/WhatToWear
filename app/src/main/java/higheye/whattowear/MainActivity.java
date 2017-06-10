@@ -11,6 +11,9 @@ import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,14 +39,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     LocationRequest mLocationRequest = LocationRequest.create();
     public LocationAdapter locationAdapter = new LocationAdapter();
     WeatherAdapter weatherAdapter = new WeatherAdapter();
-    Context context;
-    //    DataHandler dataHandler = new DataHandler(context);
     String latitude;
     String longitude;
-    String currentWeather;
-    String futureWeather;
-    static String callback = "";
     LocationAvailability mLastLocationIsTrue;
+    private ProgressBar spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         mLongitudeText = (TextView) findViewById(R.id.mLongitudeText);
         weather = (TextView) findViewById(R.id.weather);
         weather2 = (TextView) findViewById(R.id.weather2);
+        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        spinner.setVisibility(View.GONE);
 
         // call api client
         buildGoogleApiClient();
@@ -61,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         } else {
             Toast.makeText(this, "Not connected...", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     @Override
@@ -85,14 +85,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         if (mLastLocation != null) {
             latitude = String.valueOf(mLastLocation.getLatitude());
             longitude = String.valueOf(mLastLocation.getLongitude());
-            try {
-                mLongitudeText.setText(getAddress(Double.parseDouble(latitude), Double.parseDouble(longitude)));
-                locationAdapter.setCoords(latitude, longitude);
-                mLatitudeText.setText("Latitude: " + locationAdapter.getmLatitudeText() + ", " + "Longitude: " + locationAdapter.getmLongitudeText());
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         } else {
             mLatitudeText.setText("no current location");
         }
@@ -121,15 +113,31 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 .build();
     }
 
-    public void checkResults(View view) {
+    public synchronized void checkResults(View view) {
+        spinner.setVisibility(View.VISIBLE);
+        if (mLastLocation != null) {
+            latitude = String.valueOf(mLastLocation.getLatitude());
+            longitude = String.valueOf(mLastLocation.getLongitude());
+            try {
+                mLongitudeText.setText(getAddress(Double.parseDouble(latitude), Double.parseDouble(longitude)));
+                locationAdapter.setCoords(latitude, longitude);
+                } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            weather.setText("no current location");
+        }
+        locationAdapter.setCoords(latitude, longitude);
+        try {
+            mLongitudeText.setText(getAddress(Double.parseDouble(latitude), Double.parseDouble(longitude)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        mLatitudeText.setText("Latitude: " + locationAdapter.getmLatitudeText() + ", " + "Longitude: " + locationAdapter.getmLongitudeText());
         determineWeather(0);
         determineWeather(1);
-    }
 
-    // method to get and set current weather and forecast
-    public void checkWeather(View view) {
-        determineWeather(0);
-        determineWeather(1);
+        spinner.setVisibility(View.GONE);
     }
 
     // method to get address basing on latitude and longitude
@@ -149,20 +157,25 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
 
     public synchronized void determineWeather(int flag) {
-
         if (flag == 0) {
             DataHandler.Networking("http://api.openweathermap.org/data/2.5/weather?lat=" + locationAdapter.getmLatitudeText() + "&lon=" + locationAdapter.getmLongitudeText() + "&units=metric&appid=7e7469bd4b8aec9b7684f7b5dd63d3b5", flag);
+            try {
+                wait(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             weather.setText(weatherAdapter.getCurrentWeather());
         } else if (flag == 1) {
             DataHandler.Networking("http://api.openweathermap.org/data/2.5/forecast?lat=" + locationAdapter.getmLatitudeText() + "&lon=" + locationAdapter.getmLongitudeText() + "&units=metric&appid=06e65c7536988468e72a018ff2e8cf9b", flag);
+            try {
+                wait(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             weather2.setText(weatherAdapter.getFutureWeather());
         }
     }
-
 }
-
-
-
 
 /*
         final Thread thread = new Thread(new Runnable() {

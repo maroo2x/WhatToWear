@@ -19,7 +19,7 @@ import static java.security.AccessController.getContext;
  * Created by marekk-air13 on 04/06/2017.
  */
 public class DataHandler {
-    public static void Networking(final String address, final int type) {
+    public static synchronized void Networking(final String address, final int type) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public synchronized void run() {
@@ -41,7 +41,7 @@ public class DataHandler {
                         } else if (type == 1) {
                             weatherAdapter.setFutureWeather(response.toString());
                         }
-                        //
+               //         notifyAll();
                     } finally {
                         connection.disconnect();
                     }
