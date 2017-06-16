@@ -8,6 +8,7 @@ package higheye.whattowear;
 public class LocationAdapter {
     private static String mLatitudeText;
     private static String mLongitudeText;
+    private static String address;
 
     public void setCoords(String mLatitudeText, String mLongitudeText) {
         this.mLatitudeText = mLatitudeText;
@@ -20,5 +21,11 @@ public class LocationAdapter {
 
     public String getmLongitudeText() {
         return mLongitudeText;
+    }
+    public void setAddress(String address){
+        this.address = address;
+    }
+    public String getAddress() {
+        return address;
     }
 }

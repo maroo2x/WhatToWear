@@ -40,8 +40,8 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/mLatitudeText"
         android:gravity="bottom"
-        android:onClick="checkResults"
-        android:text="Button"
+        android:onClick="checkAsynctask"
+        android:text="checkResults"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="315dp" />
 
@@ -53,21 +53,64 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:weightSum="1">
 
             <TextView
-                android:id="@+id/weather"
-                android:layout_width="0dp"
+                android:id="@+id/weather1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.50"
                 android:text="TextView1" />
 
             <TextView
                 android:id="@+id/weather2"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.50"
+                android:text="TextView2" />
+            <TextView
+                android:id="@+id/weather3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView2" />
+            <TextView
+                android:id="@+id/weather4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView2" />
+            <TextView
+                android:id="@+id/weather5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView2" />
+            <TextView
+                android:id="@+id/weather6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView2" />
+            <TextView
+                android:id="@+id/weather7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView2" />
+            <TextView
+                android:id="@+id/weather8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView2" />
+            <TextView
+                android:id="@+id/weather9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView2" />
+            <TextView
+                android:id="@+id/weather10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView2" />
+            <TextView
+                android:id="@+id/weather11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="TextView2" />
 
         </LinearLayout>
