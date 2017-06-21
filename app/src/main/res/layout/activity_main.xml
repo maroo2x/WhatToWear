@@ -56,12 +56,27 @@
             android:orientation="vertical"
             android:weightSum="1">
 
-            <TextView
-                android:id="@+id/weather1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView1" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="vertical"
+                android:weightSum="1">
 
+                <TextView
+                    android:id="@+id/datetime1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="datetime1" />
+
+                <TextView
+                    android:id="@+id/temp1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/datetime1"
+                    android:text="temp1" />
+
+            </RelativeLayout>
+            <!--
             <TextView
                 android:id="@+id/weather2"
                 android:layout_width="wrap_content"
@@ -157,7 +172,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView2" />
-
+-->
         </LinearLayout>
     </ScrollView>
     <ProgressBar

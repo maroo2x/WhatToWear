@@ -35,9 +35,9 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     TextView mLatitudeText;
     TextView mLongitudeText;
-    TextView weather1;
-    TextView weather2;
-    TextView weather3;
+    TextView temp1;
+    TextView datetime1;
+ /*   TextView weather3;
     TextView weather4;
     TextView weather5;
     TextView weather6;
@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     TextView weather18;
     TextView weather19;
     TextView weather20;
+    */
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     LocationRequest mLocationRequest = LocationRequest.create();
@@ -73,9 +74,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         setContentView(R.layout.activity_main);
         mLatitudeText = (TextView) findViewById(R.id.mLatitudeText);
         mLongitudeText = (TextView) findViewById(R.id.mLongitudeText);
-        weather1 = (TextView) findViewById(R.id.weather1);
-        weather2 = (TextView) findViewById(R.id.weather2);
-        weather3 = (TextView) findViewById(R.id.weather3);
+        temp1 = (TextView) findViewById(R.id.temp1);
+        datetime1 = (TextView) findViewById(R.id.datetime1);
+ /*       weather3 = (TextView) findViewById(R.id.weather3);
         weather4 = (TextView) findViewById(R.id.weather4);
         weather5 = (TextView) findViewById(R.id.weather5);
         weather6 = (TextView) findViewById(R.id.weather6);
@@ -93,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         weather18 = (TextView) findViewById(R.id.weather18);
         weather19 = (TextView) findViewById(R.id.weather19);
         weather20 = (TextView) findViewById(R.id.weather20);
+        */
         spinner = (ProgressBar) findViewById(R.id.progressBar1);
         spinner.setVisibility(View.GONE);
         // call api client
@@ -240,11 +242,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             dataHandler.DefineStrings(weatherAdapter.getFutureWeather());
 
  //           weather1.setText(dataHandler.getSingleString(0));
-            weather1.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
+            datetime1.setText(String.valueOf(getDateFromUnix(dataHandler.getSingleDate(n))));
+            temp1.setText(String.valueOf(dataHandler.getSingleTemp(n)));
 //            weather2.setText("Date "+getDateFromUnix(dataHandler.getSingleDate(n)));
  //           weather3.setText(dataHandler.getSingleString(1));
-            n++;
-
+//            n++;
+/*
             weather2.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
             n++;
             weather3.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
@@ -282,7 +285,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             weather19.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
             n++;
             weather20.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
-
+*/
 
         }
 
