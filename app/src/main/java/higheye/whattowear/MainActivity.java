@@ -43,6 +43,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     TextView weather9;
     TextView weather10;
     TextView weather11;
+    TextView weather12;
+    TextView weather13;
+    TextView weather14;
+    TextView weather15;
+    TextView weather16;
+    TextView weather17;
+    TextView weather18;
+    TextView weather19;
+    TextView weather20;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     LocationRequest mLocationRequest = LocationRequest.create();
@@ -72,6 +81,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         weather9 = (TextView) findViewById(R.id.weather9);
         weather10 = (TextView) findViewById(R.id.weather10);
         weather11 = (TextView) findViewById(R.id.weather11);
+        weather12 = (TextView) findViewById(R.id.weather12);
+        weather13 = (TextView) findViewById(R.id.weather13);
+        weather14 = (TextView) findViewById(R.id.weather14);
+        weather15 = (TextView) findViewById(R.id.weather15);
+        weather16 = (TextView) findViewById(R.id.weather16);
+        weather17 = (TextView) findViewById(R.id.weather17);
+        weather18 = (TextView) findViewById(R.id.weather18);
+        weather19 = (TextView) findViewById(R.id.weather19);
+        weather20 = (TextView) findViewById(R.id.weather20);
         spinner = (ProgressBar) findViewById(R.id.progressBar1);
         spinner.setVisibility(View.GONE);
         // call api client
@@ -212,16 +230,21 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         @Override
         protected void onPostExecute(Boolean result) {
+            int n = 0;
         mLatitudeText.setText("Latitude: " + locationAdapter.getmLatitudeText() + ", " + "Longitude: " + locationAdapter.getmLongitudeText());
             mLongitudeText.setText(locationAdapter.getAddress());
 
             dataHandler.setSingleString(weatherAdapter.getCurrentWeather(), 0);
             dataHandler.DefineStrings(weatherAdapter.getFutureWeather());
 
-            weather1.setText(dataHandler.getSingleString(0));
-            weather2.setText(dataHandler.getSingleString(1));
-            weather3.setText(dataHandler.getSingleString(2));
-            weather4.setText(dataHandler.getSingleString(3));
+ //           weather1.setText(dataHandler.getSingleString(0));
+            weather2.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(0)+"; date: "+dataHandler.getSingleDate(n)+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
+//            weather2.setText(dataHandler.getSingleString(1));
+ //           weather3.setText(dataHandler.getSingleString(1));
+            n = 1;
+            weather3.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(0)+"; date: "+dataHandler.getSingleDate(n)+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
+
+//            weather4.setText(dataHandler.getSingleString(3));
             weather5.setText(dataHandler.getSingleString(4));
             weather6.setText(dataHandler.getSingleString(5));
             weather7.setText(dataHandler.getSingleString(6));
@@ -229,6 +252,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             weather9.setText(dataHandler.getSingleString(8));
             weather10.setText(dataHandler.getSingleString(9));
             weather11.setText(dataHandler.getSingleString(10));
+            weather12.setText(dataHandler.getSingleString(11));
+            weather13.setText(dataHandler.getSingleString(12));
+            weather14.setText(dataHandler.getSingleString(13));
+            weather15.setText(dataHandler.getSingleString(14));
+            weather16.setText(dataHandler.getSingleString(15));
+            weather17.setText(dataHandler.getSingleString(16));
+            weather18.setText(dataHandler.getSingleString(17));
+            weather19.setText(dataHandler.getSingleString(18));
+            weather20.setText(dataHandler.getSingleString(19));
         }
 
 

@@ -112,6 +112,51 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView2" />
+            <TextView
+                android:id="@+id/weather12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView2" />
+            <TextView
+                android:id="@+id/weather13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView2" />
+            <TextView
+                android:id="@+id/weather14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView2" />
+            <TextView
+                android:id="@+id/weather15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView2" />
+            <TextView
+                android:id="@+id/weather16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView2" />
+            <TextView
+                android:id="@+id/weather17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView2" />
+            <TextView
+                android:id="@+id/weather18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView2" />
+            <TextView
+                android:id="@+id/weather19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView2" />
+            <TextView
+                android:id="@+id/weather20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView2" />
 
         </LinearLayout>
     </ScrollView>

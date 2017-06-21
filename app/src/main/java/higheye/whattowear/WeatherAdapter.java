@@ -9,16 +9,27 @@ public class WeatherAdapter {
     private static String futureWeather;
 
 
-    public void setCurrentWeather(String currentWeather){
+    public void setCurrentWeather(String currentWeather) {
         this.currentWeather = currentWeather;
     }
-    public void setFutureWeather(String futureWeather){
+
+    public void setFutureWeather(String futureWeather) {
         this.futureWeather = futureWeather;
     }
-    public String getCurrentWeather(){
-        return currentWeather;
+
+    public String getCurrentWeather() {
+        if (currentWeather != null) {
+            return currentWeather;
+        } else {
+            return "no data";
+        }
     }
-    public String getFutureWeather(){
-        return futureWeather;
+
+    public String getFutureWeather() {
+        if (futureWeather != null) {
+            return futureWeather;
+        } else {
+            return "no data";
+        }
     }
 }
