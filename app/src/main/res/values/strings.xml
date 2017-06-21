@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">WhatToWear</string>
+    <string name="no_current_location">no current location</string>
 </resources>

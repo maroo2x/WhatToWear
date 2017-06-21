@@ -9,10 +9,12 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.text.SimpleDateFormat;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -26,6 +28,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -106,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         Toast.makeText(this, "Failed to connect...", Toast.LENGTH_SHORT).show();
     }
 
-    //    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onConnected(Bundle arg0) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -130,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 e.printStackTrace();
             }
         } else {
-            mLatitudeText.setText("no current location");
+            mLatitudeText.setText(R.string.no_current_location);
         }
     }
 
@@ -238,29 +240,50 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             dataHandler.DefineStrings(weatherAdapter.getFutureWeather());
 
  //           weather1.setText(dataHandler.getSingleString(0));
-            weather2.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(0)+"; date: "+dataHandler.getSingleDate(n)+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
-//            weather2.setText(dataHandler.getSingleString(1));
+            weather1.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
+//            weather2.setText("Date "+getDateFromUnix(dataHandler.getSingleDate(n)));
  //           weather3.setText(dataHandler.getSingleString(1));
-            n = 1;
-            weather3.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(0)+"; date: "+dataHandler.getSingleDate(n)+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
+            n++;
 
-//            weather4.setText(dataHandler.getSingleString(3));
-            weather5.setText(dataHandler.getSingleString(4));
-            weather6.setText(dataHandler.getSingleString(5));
-            weather7.setText(dataHandler.getSingleString(6));
-            weather8.setText(dataHandler.getSingleString(7));
-            weather9.setText(dataHandler.getSingleString(8));
-            weather10.setText(dataHandler.getSingleString(9));
-            weather11.setText(dataHandler.getSingleString(10));
-            weather12.setText(dataHandler.getSingleString(11));
-            weather13.setText(dataHandler.getSingleString(12));
-            weather14.setText(dataHandler.getSingleString(13));
-            weather15.setText(dataHandler.getSingleString(14));
-            weather16.setText(dataHandler.getSingleString(15));
-            weather17.setText(dataHandler.getSingleString(16));
-            weather18.setText(dataHandler.getSingleString(17));
-            weather19.setText(dataHandler.getSingleString(18));
-            weather20.setText(dataHandler.getSingleString(19));
+            weather2.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
+            n++;
+            weather3.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
+            n++;
+            weather4.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
+            n++;
+            weather5.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
+            n++;
+            weather6.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
+            n++;
+            weather7.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
+            n++;
+            weather8.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
+            n++;
+            weather9.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
+            n++;
+            weather10.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
+            n++;
+            weather11.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
+            n++;
+            weather12.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
+            n++;
+            weather13.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
+            n++;
+            weather14.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
+            n++;
+            weather15.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
+            n++;
+            weather16.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
+            n++;
+            weather17.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
+            n++;
+            weather18.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
+            n++;
+            weather19.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
+            n++;
+            weather20.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
+
+
         }
 
 
@@ -271,6 +294,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         @Override
         protected void onProgressUpdate(Void... values) {
         }
+    }
+
+    public String getDateFromUnix(long unixtime) {
+        Date date = new Date(unixtime * 1000L); // *1000 is to convert seconds to milliseconds
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z"); // the format of your date
+//        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm - EEE, d. MMM"); // the format of your date
+        String formatedDate = SimpleDateFormat.getDateTimeInstance(2,3).format(date);
+//        String formatedDate = sdf.format(date);
+        return formatedDate;
     }
 }
 
