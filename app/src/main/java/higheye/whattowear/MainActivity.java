@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             dataHandler.DefineStrings(weatherAdapter.getFutureWeather());
 
  //           weather1.setText(dataHandler.getSingleString(0));
-            datetime1.setText(String.valueOf(getDateFromUnix(dataHandler.getSingleDate(n))));
+            datetime1.setText(String.valueOf(getDateFromUnix(dataHandler.getSingleDate(n)))); 
             temp1.setText(String.valueOf(dataHandler.getSingleTemp(n)));
 //            weather2.setText("Date "+getDateFromUnix(dataHandler.getSingleDate(n)));
  //           weather3.setText(dataHandler.getSingleString(1));
