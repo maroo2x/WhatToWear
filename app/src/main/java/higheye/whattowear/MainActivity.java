@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     LocationAvailability mLastLocationIsTrue;
     private ProgressBar spinner;
     public String address;
+    ArrayList<DataObject> entries;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -224,7 +226,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             int n = 0;
             mLatitudeText.setText("Latitude: " + locationAdapter.getmLatitudeText() + ", " + "Longitude: " + locationAdapter.getmLongitudeText());
             mLongitudeText.setText(locationAdapter.getAddress());
-
             dataHandler.setSingleString(weatherAdapter.getCurrentWeather(), 0);
             dataHandler.DefineStrings(weatherAdapter.getFutureWeather());
 
@@ -235,14 +236,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 //            weather2.setText("Date "+getDateFromUnix(dataHandler.getSingleDate(n)));
             //           weather3.setText(dataHandler.getSingleString(1));
 //            n++;
-            ArrayList<DataObject> entries;
             entries = new ArrayList<>();
-
             for (int i = 0; i < 20; i++) {
                 dataObject = new DataObject(dataHandler.getSingleDate(i), dataHandler.getSingleTemp(i), dataHandler.getSingleCloud(i), dataHandler.getSingleRain(i), dataHandler.getSingleSnow(i), dataHandler.getSingleIcon(i));
                 entries.add(i, dataObject);
             }
-//    public DataObject (Long data, Double temp, Double cloud, Double rain, Double snow, String icon)
+
+            //
+            // public DataObject (Long data, Double temp, Double cloud, Double rain, Double snow, String icon)
             CustomAdapter adapter = new CustomAdapter(mContext, R.layout.custom_row, entries);
             list = (ListView) findViewById(R.id.list);
             list.setAdapter(adapter);

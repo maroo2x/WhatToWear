@@ -18,13 +18,13 @@ import java.util.Date;
  */
 
 class CustomAdapter extends ArrayAdapter<DataObject> {
-    private ArrayList<DataObject> listObject;
+    private ArrayList<DataObject> entries;
     private LayoutInflater mInflater;
     private int mViewResourceId;
 
-    public CustomAdapter(Context context, int textViewResourceId, ArrayList<DataObject> listObject) {
-        super(context, R.layout.custom_row, listObject);
-        this.listObject = listObject;
+    public CustomAdapter(Context context, int textViewResourceId, ArrayList<DataObject> entries) {
+        super(context, R.layout.custom_row, entries);
+        this.entries = entries;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mViewResourceId = textViewResourceId;
     }
@@ -32,22 +32,33 @@ class CustomAdapter extends ArrayAdapter<DataObject> {
         public View getView(final int position, View convertView, final ViewGroup parent) {
             // default -  return super.getView(position, convertView, parent);
             convertView = mInflater.inflate(mViewResourceId, null);
-            final DataObject dataObject = listObject.get(position);
+            final DataObject dataObject = entries.get(position);
             TextView datetime = (TextView) convertView.findViewById(R.id.datetime);
             TextView temp = (TextView) convertView.findViewById(R.id.temp);
             TextView clouds = (TextView) convertView.findViewById(R.id.clouds);
+            TextView rain = (TextView) convertView.findViewById(R.id.rain);
+            TextView snow = (TextView) convertView.findViewById(R.id.snow);
 
-//            if (datetime != null) {
+
+            if (datetime != null) {
               datetime.setText(""+getDateFromUnix(dataObject.getSingleDate()));
-//            }
+            }
             if (temp != null) {
                 temp.setText("temp: "+dataObject.getSingleTemp());
             }
             if (clouds != null) {
                 clouds.setText("clouds: "+dataObject.getSingleCloud());
             }
+            if (clouds != null) {
+                rain.setText("rain: "+dataObject.getSingleRain());
+            }
+            if (clouds != null) {
+                snow.setText("snow: "+dataObject.getSingleSnow());
+            }
             return convertView;
     }
+
+
     public String getDateFromUnix(long unixtime) {
         Date date = new Date(unixtime * 1000L); // *1000 is to convert seconds to milliseconds
 //        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z"); // the format of your date

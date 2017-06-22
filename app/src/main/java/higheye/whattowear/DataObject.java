@@ -5,12 +5,12 @@ package higheye.whattowear;
  */
 
 public class DataObject {
-    private static Long data;
-    private static Double temp;
-    private static Double cloud;
-    private static Double rain;
-    private static Double snow;
-    private static String icon;
+    private Long data;
+    private Double temp;
+    private Double cloud;
+    private Double rain;
+    private Double snow;
+    private String icon;
 
     public DataObject (Long data, Double temp, Double cloud, Double rain, Double snow, String icon)
     {
