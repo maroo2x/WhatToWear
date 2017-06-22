@@ -45,140 +45,161 @@
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="315dp" />
 
-    <ScrollView
+    <!--
+<ScrollView
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:layout_marginTop="150dp">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="150dp">
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        android:weightSum="1">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/datetime0"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="1">
+            android:layout_height="wrap_content"
+            android:text="datetime0"
+            android:gravity="center_horizontal"
+            android:textAlignment="gravity"/>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="vertical"
-                android:weightSum="1">
+        <TextView
+            android:id="@+id/temp0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/datetime0"
+            android:text="temp0"
+            android:textSize="30sp" />
 
-                <TextView
-                    android:id="@+id/datetime1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="datetime1" />
+        <ImageView
+            android:id="@+id/icon0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            app:srcCompat="@drawable/z01d" />
+    </RelativeLayout>
+</LinearLayout>
+</ScrollView>
 
-                <TextView
-                    android:id="@+id/temp1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/datetime1"
-                    android:text="temp1" />
-
-            </RelativeLayout>
-            <!--
-            <TextView
-                android:id="@+id/weather2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView2" />
-            <TextView
-                android:id="@+id/weather3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView2" />
-            <TextView
-                android:id="@+id/weather4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView2" />
-            <TextView
-                android:id="@+id/weather5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView2" />
-            <TextView
-                android:id="@+id/weather6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView2" />
-            <TextView
-                android:id="@+id/weather7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView2" />
-            <TextView
-                android:id="@+id/weather8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView2" />
-            <TextView
-                android:id="@+id/weather9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView2" />
-            <TextView
-                android:id="@+id/weather10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView2" />
-            <TextView
-                android:id="@+id/weather11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView2" />
-            <TextView
-                android:id="@+id/weather12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView2" />
-            <TextView
-                android:id="@+id/weather13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView2" />
-            <TextView
-                android:id="@+id/weather14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView2" />
-            <TextView
-                android:id="@+id/weather15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView2" />
-            <TextView
-                android:id="@+id/weather16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView2" />
-            <TextView
-                android:id="@+id/weather17"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView2" />
-            <TextView
-                android:id="@+id/weather18"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView2" />
-            <TextView
-                android:id="@+id/weather19"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView2" />
-            <TextView
-                android:id="@+id/weather20"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView2" />
+    <TextView
+        android:id="@+id/weather2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView2" />
+    <TextView
+        android:id="@+id/weather3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView2" />
+    <TextView
+        android:id="@+id/weather4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView2" />
+    <TextView
+        android:id="@+id/weather5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView2" />
+    <TextView
+        android:id="@+id/weather6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView2" />
+    <TextView
+        android:id="@+id/weather7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView2" />
+    <TextView
+        android:id="@+id/weather8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView2" />
+    <TextView
+        android:id="@+id/weather9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView2" />
+    <TextView
+        android:id="@+id/weather10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView2" />
+    <TextView
+        android:id="@+id/weather11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView2" />
+    <TextView
+        android:id="@+id/weather12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView2" />
+    <TextView
+        android:id="@+id/weather13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView2" />
+    <TextView
+        android:id="@+id/weather14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView2" />
+    <TextView
+        android:id="@+id/weather15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView2" />
+    <TextView
+        android:id="@+id/weather16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView2" />
+    <TextView
+        android:id="@+id/weather17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView2" />
+    <TextView
+        android:id="@+id/weather18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView2" />
+    <TextView
+        android:id="@+id/weather19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView2" />
+    <TextView
+        android:id="@+id/weather20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView2" />
 -->
-        </LinearLayout>
-    </ScrollView>
     <ProgressBar
         android:id="@+id/progressBar1"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true" />
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/button1" />
 </RelativeLayout>

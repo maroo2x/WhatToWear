@@ -8,12 +8,14 @@ import java.lang.String;
  */
 public class DataHandler {
     //    private static Double[] listTemp = new Double[50];
+    private static String[] listOfEntries = new String[50];
     private static Double[] listTemp = new Double[50];
     private static Double[] listClouds = new Double[50];
     private static Double[] listRain = new Double[50];
     private static Double[] listSnow = new Double[50];
     private static Long[] listDate = new Long[50];
-    private static String[] listOfEntries = new String[50];
+    private static String[] listIcons = new String[50];
+
 
     public void DefineStrings(String input) {
         int index = input.indexOf("\"dt_txt\"");
@@ -33,7 +35,7 @@ public class DataHandler {
                 if (startindex != -1) {
                     cutString = listOfEntries[i].substring(startindex);
                     endIndex = cutString.indexOf(",");
-                                       listTemp[i] = Double.parseDouble(cutString.substring(7, endIndex));
+                    listTemp[i] = Double.parseDouble(cutString.substring(7, endIndex));
                 }
 
                 startindex = listOfEntries[i].indexOf("\"clouds\":{\"all\":");
@@ -42,7 +44,6 @@ public class DataHandler {
                     endIndex = cutString.indexOf("}");
                     if (endIndex > 16) {
                         listClouds[i] = Double.parseDouble(cutString.substring(16, endIndex));
-//                        listClouds[i] = cutString.substring(16, endIndex);
                     }
                 }
                 startindex = listOfEntries[i].indexOf("\"rain\":{\"3h\":");
@@ -50,7 +51,6 @@ public class DataHandler {
                     cutString = listOfEntries[i].substring(startindex);
                     endIndex = cutString.indexOf("}");
                     listRain[i] = Double.parseDouble(cutString.substring(13, endIndex));
-//                    listRain[i] = cutString.substring(13, endIndex);
                 }
                 startindex = listOfEntries[i].indexOf("\"snow\":{\"3h\":");
                 if (startindex != -1) {
@@ -68,6 +68,15 @@ public class DataHandler {
                     endIndex = cutString.indexOf(",");
                     if (endIndex > 5) {
                         listDate[i] = Long.parseLong(cutString.substring(5, endIndex));
+                    }
+                }
+
+                startindex = listOfEntries[i].indexOf("\"icon\":\"");
+                if (startindex != -1) {
+                    cutString = listOfEntries[i].substring(startindex);
+                    endIndex = cutString.indexOf("}");
+                    if (endIndex > 5) {
+                        listIcons[i] = cutString.substring(8, endIndex-1);
                     }
                 }
             }
@@ -114,58 +123,12 @@ public class DataHandler {
         } else return 0d;
     }
 
-/*
-    public void defineWords(String[] listOfEntries) {
-        int i;
-        listOfEntries = this.listOfEntries;
-        for (i = 0; i < 49; i++) {
-            int startindex;
-            int endIndex;
-            String cutString;
-            if (listOfEntries[i] != null && listOfEntries[i] != "") {
-                startindex = listOfEntries[i].indexOf("\"temp\":");
-                if (startindex != -1) {
-                    cutString = listOfEntries[i].substring(startindex);
-                    endIndex = cutString.indexOf(",");
-                    listTemp[i] = cutString.substring(8, endIndex);
-                    //                   listTemp[i] = Double.parseDouble(cutString.substring(8, endIndex));
-                }
-
-                startindex = listOfEntries[i].indexOf("\"clouds\":{\"all\":");
-                if (startindex != -1) {
-                    cutString = listOfEntries[i].substring(startindex);
-                    endIndex = cutString.indexOf("}");
-                    if (endIndex > 17) {
-                        listClouds[i] = cutString.substring(17, endIndex);
-//                        listClouds[i] = Double.parseDouble(cutString.substring(17, endIndex));
-                    }
-                }
-                startindex = listOfEntries[i].indexOf("\"rain\":{\"3h\":");
-                if (startindex != -1) {
-                    cutString = listOfEntries[i].substring(startindex);
-                    endIndex = cutString.indexOf("}");
-                    //         listRain[i] = Double.parseDouble(cutString.substring(14, endIndex));
-                }
-                startindex = listOfEntries[i].indexOf("\"snow\":{\"3h\":");
-                if (startindex != -1) {
-                    cutString = listOfEntries[i].substring(startindex);
-                    endIndex = cutString.indexOf("}");
-                    if (endIndex > 14) {
-                        //             listSnow[i] = Double.parseDouble(cutString.substring(14, endIndex));
-                    }
-                    startindex = listOfEntries[i].indexOf("\"dt\":");
-                    if (startindex != -1) {
-                        cutString = listOfEntries[i].substring(startindex);
-                        endIndex = cutString.indexOf(",");
-                        if (endIndex > 6) {
-                            listDate[i] = Long.parseLong(cutString.substring(6, endIndex));
-                        }
-                    }
-                }
-            }
-        }
+    public String getSingleIcon(int n) {
+        if (listIcons[n] != null) {
+            return "z"+listIcons[n]+".png";
+        } else return null;
     }
-    */
+
 
     public static String getTemperature(String input) {
         int index = input.indexOf("\"temp\":");
@@ -196,6 +159,4 @@ public class DataHandler {
         int newIndex = cutString.indexOf("}");
         return cutString.substring(8, newIndex - 1);
     }
-
-
 }

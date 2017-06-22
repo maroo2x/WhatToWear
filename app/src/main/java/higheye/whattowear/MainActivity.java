@@ -1,20 +1,28 @@
 package higheye.whattowear;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -28,6 +36,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -35,27 +44,15 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     TextView mLatitudeText;
     TextView mLongitudeText;
-    TextView temp1;
-    TextView datetime1;
- /*   TextView weather3;
-    TextView weather4;
-    TextView weather5;
-    TextView weather6;
-    TextView weather7;
-    TextView weather8;
-    TextView weather9;
-    TextView weather10;
-    TextView weather11;
-    TextView weather12;
-    TextView weather13;
-    TextView weather14;
-    TextView weather15;
-    TextView weather16;
-    TextView weather17;
-    TextView weather18;
-    TextView weather19;
-    TextView weather20;
-    */
+    TextView temp0;
+    TextView datetime0;
+    ImageView icon0;
+    ListView list;
+    Context context;
+    DataObject dataObject;
+    /*   TextView weather3;
+       TextView weather4;
+       */
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     LocationRequest mLocationRequest = LocationRequest.create();
@@ -71,29 +68,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         mLatitudeText = (TextView) findViewById(R.id.mLatitudeText);
         mLongitudeText = (TextView) findViewById(R.id.mLongitudeText);
-        temp1 = (TextView) findViewById(R.id.temp1);
-        datetime1 = (TextView) findViewById(R.id.datetime1);
+//        temp0 = (TextView) findViewById(R.id.temp0);
+//        datetime0 = (TextView) findViewById(R.id.datetime0);
+//        icon0 = (ImageView) findViewById(R.id.icon0);
  /*       weather3 = (TextView) findViewById(R.id.weather3);
-        weather4 = (TextView) findViewById(R.id.weather4);
-        weather5 = (TextView) findViewById(R.id.weather5);
-        weather6 = (TextView) findViewById(R.id.weather6);
-        weather7 = (TextView) findViewById(R.id.weather7);
-        weather8 = (TextView) findViewById(R.id.weather8);
-        weather9 = (TextView) findViewById(R.id.weather9);
-        weather10 = (TextView) findViewById(R.id.weather10);
-        weather11 = (TextView) findViewById(R.id.weather11);
-        weather12 = (TextView) findViewById(R.id.weather12);
-        weather13 = (TextView) findViewById(R.id.weather13);
-        weather14 = (TextView) findViewById(R.id.weather14);
-        weather15 = (TextView) findViewById(R.id.weather15);
-        weather16 = (TextView) findViewById(R.id.weather16);
-        weather17 = (TextView) findViewById(R.id.weather17);
-        weather18 = (TextView) findViewById(R.id.weather18);
-        weather19 = (TextView) findViewById(R.id.weather19);
-        weather20 = (TextView) findViewById(R.id.weather20);
         */
         spinner = (ProgressBar) findViewById(R.id.progressBar1);
         spinner.setVisibility(View.GONE);
@@ -183,71 +165,91 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     public void checkAsynctask(View view) {
-               new Asynctask().execute(0);
+     //   Context context = this.context;
+        new Asynctask(getApplicationContext()).execute(0);
     }
 
     private class Asynctask extends AsyncTask<Integer, Void, Boolean> {
+        private Context mContext;
+        public Asynctask (Context context){
+            mContext = context;
+        }
         @Override
         protected Boolean doInBackground(Integer... ints) {
-                    try {
-                        URL url = new URL("http://api.openweathermap.org/data/2.5/weather?lat=" + locationAdapter.getmLatitudeText() + "&lon=" + locationAdapter.getmLongitudeText() + "&units=metric&appid=7e7469bd4b8aec9b7684f7b5dd63d3b5");
-                        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                        connection.connect();
-                        StringBuilder response = new StringBuilder(50000);
-                        try {
-                            InputStream in = connection.getInputStream();
-                            BufferedReader rd = new BufferedReader(new InputStreamReader(in));
-                            int i = 0;
-                            while ((i = rd.read()) > 0) {
-                                response.append((char) i);
-                            }
-                            weatherAdapter.setCurrentWeather(response.toString());
-                        } finally {
-                            connection.disconnect();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+            try {
+                URL url = new URL("http://api.openweathermap.org/data/2.5/weather?lat=" + locationAdapter.getmLatitudeText() + "&lon=" + locationAdapter.getmLongitudeText() + "&units=metric&appid=7e7469bd4b8aec9b7684f7b5dd63d3b5");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+                StringBuilder response = new StringBuilder(50000);
+                try {
+                    InputStream in = connection.getInputStream();
+                    BufferedReader rd = new BufferedReader(new InputStreamReader(in));
+                    int i = 0;
+                    while ((i = rd.read()) > 0) {
+                        response.append((char) i);
                     }
+                    weatherAdapter.setCurrentWeather(response.toString());
+                } finally {
+                    connection.disconnect();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
 
-                    try {
-                        URL url = new URL("http://api.openweathermap.org/data/2.5/forecast?lat=" + locationAdapter.getmLatitudeText() + "&lon=" + locationAdapter.getmLongitudeText() + "&units=metric&appid=06e65c7536988468e72a018ff2e8cf9b");
-                        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                        connection.connect();
-                        StringBuilder response = new StringBuilder(50000);
-                        try {
-                            InputStream in = connection.getInputStream();
-                            BufferedReader rd = new BufferedReader(new InputStreamReader(in));
-                            int i = 0;
-                            while ((i = rd.read()) > 0) {
-                                response.append((char) i);
-                            }
-                            weatherAdapter.setFutureWeather(response.toString());
-                        } finally {
-                            connection.disconnect();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+            try {
+                URL url = new URL("http://api.openweathermap.org/data/2.5/forecast?lat=" + locationAdapter.getmLatitudeText() + "&lon=" + locationAdapter.getmLongitudeText() + "&units=metric&appid=06e65c7536988468e72a018ff2e8cf9b");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+                StringBuilder response = new StringBuilder(50000);
+                try {
+                    InputStream in = connection.getInputStream();
+                    BufferedReader rd = new BufferedReader(new InputStreamReader(in));
+                    int i = 0;
+                    while ((i = rd.read()) > 0) {
+                        response.append((char) i);
                     }
+                    weatherAdapter.setFutureWeather(response.toString());
+                } finally {
+                    connection.disconnect();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             return true;
         }
 
         @Override
         protected void onPostExecute(Boolean result) {
             int n = 0;
-        mLatitudeText.setText("Latitude: " + locationAdapter.getmLatitudeText() + ", " + "Longitude: " + locationAdapter.getmLongitudeText());
+            mLatitudeText.setText("Latitude: " + locationAdapter.getmLatitudeText() + ", " + "Longitude: " + locationAdapter.getmLongitudeText());
             mLongitudeText.setText(locationAdapter.getAddress());
 
             dataHandler.setSingleString(weatherAdapter.getCurrentWeather(), 0);
             dataHandler.DefineStrings(weatherAdapter.getFutureWeather());
 
- //           weather1.setText(dataHandler.getSingleString(0));
-            datetime1.setText(String.valueOf(getDateFromUnix(dataHandler.getSingleDate(n)))); 
-            temp1.setText(String.valueOf(dataHandler.getSingleTemp(n)));
+            //           weather1.setText(dataHandler.getSingleString(0));
+//            datetime0.setText(String.valueOf(getDateFromUnix(dataHandler.getSingleDate(n))));
+//            temp0.setText(String.valueOf(dataHandler.getSingleTemp(n)) + "\u2103");
+//            icon0.setImageResource(R.drawable.z03n);
 //            weather2.setText("Date "+getDateFromUnix(dataHandler.getSingleDate(n)));
- //           weather3.setText(dataHandler.getSingleString(1));
+            //           weather3.setText(dataHandler.getSingleString(1));
 //            n++;
-/*
+            ArrayList<DataObject> entries;
+            entries = new ArrayList<>();
+
+            for (int i = 0; i < 20; i++) {
+                dataObject = new DataObject(dataHandler.getSingleDate(i), dataHandler.getSingleTemp(i), dataHandler.getSingleCloud(i), dataHandler.getSingleRain(i), dataHandler.getSingleSnow(i), dataHandler.getSingleIcon(i));
+                entries.add(i, dataObject);
+            }
+//    public DataObject (Long data, Double temp, Double cloud, Double rain, Double snow, String icon)
+            CustomAdapter adapter = new CustomAdapter(mContext, R.layout.custom_row, entries);
+            list = (ListView) findViewById(R.id.list);
+            list.setAdapter(adapter);
+
+
+            /*
+
             weather2.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
             n++;
             weather3.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
@@ -303,13 +305,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         Date date = new Date(unixtime * 1000L); // *1000 is to convert seconds to milliseconds
 //        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z"); // the format of your date
 //        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm - EEE, d. MMM"); // the format of your date
-        String formatedDate = SimpleDateFormat.getDateTimeInstance(2,3).format(date);
+        String formatedDate = SimpleDateFormat.getDateTimeInstance(2, 3).format(date);
 //        String formatedDate = sdf.format(date);
         return formatedDate;
     }
 }
 
-
+// ikony: http://openweathermap.org/img/w/10d.png
 
 /*
         final Thread thread = new Thread(new Runnable() {
