@@ -52,4 +52,13 @@
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_below="@+id/rain"/>
+
+    <ImageView
+        android:id="@+id/icon_weather"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/snow"
+        app:srcCompat="@color/common_google_signin_btn_text_dark_default" />
 </RelativeLayout>

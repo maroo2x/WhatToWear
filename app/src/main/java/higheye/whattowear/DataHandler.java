@@ -125,7 +125,8 @@ public class DataHandler {
 
     public String getSingleIcon(int n) {
         if (listIcons[n] != null) {
-            return "z"+listIcons[n]+".png";
+//            return "z"+listIcons[n];
+            return listIcons[n];
         } else return null;
     }
 

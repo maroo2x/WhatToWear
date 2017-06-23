@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         protected void onPostExecute(Boolean result) {
             int n = 0;
             // format weather data
-            mCoords.setText("Latitude: " + locationAdapter.getmLatitudeText() + ", " + "Longitude: " + locationAdapter.getmLongitudeText());
+            mCoords.setText("Latitude: " + locationAdapter.getmLatitudeText() + ",\n " + "Longitude: " + locationAdapter.getmLongitudeText());
             mAddress.setText(locationAdapter.getAddress());
             dataHandler.setSingleString(weatherAdapter.getCurrentWeather(), 0);
             dataHandler.DefineStrings(weatherAdapter.getFutureWeather());
