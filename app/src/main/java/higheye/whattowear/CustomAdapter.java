@@ -40,20 +40,25 @@ class CustomAdapter extends ArrayAdapter<DataObject> {
             TextView snow = (TextView) convertView.findViewById(R.id.snow);
 
 
-            if (datetime != null) {
-              datetime.setText(""+getDateFromUnix(dataObject.getSingleDate()));
-            }
+                if (dataObject.getSingleDate() == 10l) {
+                    datetime.setText("now");
+                }
+                else if (datetime != null)
+                {
+                    datetime.setText(""+getDateFromUnix(dataObject.getSingleDate()));
+                }
+
             if (temp != null) {
                 temp.setText("temp: "+dataObject.getSingleTemp());
             }
             if (clouds != null) {
-                clouds.setText("clouds: "+dataObject.getSingleCloud());
+                clouds.setText("clouds(%): "+dataObject.getSingleCloud());
             }
             if (clouds != null) {
-                rain.setText("rain: "+dataObject.getSingleRain());
+                rain.setText("rain(mm/3h): "+dataObject.getSingleRain());
             }
             if (clouds != null) {
-                snow.setText("snow: "+dataObject.getSingleSnow());
+                snow.setText("snow(mm/3h): "+dataObject.getSingleSnow());
             }
             return convertView;
     }

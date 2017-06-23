@@ -208,10 +208,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             dataHandler.DefineStrings(weatherAdapter.getFutureWeather());
             // new arraylist adapter
             entries = new ArrayList<>();
-            for (int i = 0; i < 20; i++) {
+            int i = 0;
+            dataObject = new DataObject(10l, dataHandler.getSingleTemp(i), dataHandler.getSingleCloud(i), dataHandler.getSingleRain(i), dataHandler.getSingleSnow(i), dataHandler.getSingleIcon(i));
+            entries.add(i, dataObject);
+
+            for (i = 1; i < 20; i++) {
                 dataObject = new DataObject(dataHandler.getSingleDate(i), dataHandler.getSingleTemp(i), dataHandler.getSingleCloud(i), dataHandler.getSingleRain(i), dataHandler.getSingleSnow(i), dataHandler.getSingleIcon(i));
                 entries.add(i, dataObject);
             }
+
             CustomAdapter adapter = new CustomAdapter(mContext, R.layout.custom_row, entries);
             list = (ListView) findViewById(R.id.list);
             list.setAdapter(adapter);
