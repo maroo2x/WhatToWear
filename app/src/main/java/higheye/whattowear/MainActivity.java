@@ -42,17 +42,11 @@ import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-    TextView mLatitudeText;
-    TextView mLongitudeText;
-    TextView temp0;
-    TextView datetime0;
-    ImageView icon0;
+    TextView mCoords;
+    TextView mAddress;
     ListView list;
     Context context;
     DataObject dataObject;
-    /*   TextView weather3;
-       TextView weather4;
-       */
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     LocationRequest mLocationRequest = LocationRequest.create();
@@ -62,23 +56,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     String latitude;
     String longitude;
     LocationAvailability mLastLocationIsTrue;
-    private ProgressBar spinner;
     public String address;
     ArrayList<DataObject> entries;
-
+    private ProgressBar spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
-        mLatitudeText = (TextView) findViewById(R.id.mLatitudeText);
-        mLongitudeText = (TextView) findViewById(R.id.mLongitudeText);
-//        temp0 = (TextView) findViewById(R.id.temp0);
-//        datetime0 = (TextView) findViewById(R.id.datetime0);
-//        icon0 = (ImageView) findViewById(R.id.icon0);
- /*       weather3 = (TextView) findViewById(R.id.weather3);
-        */
+        mCoords = (TextView) findViewById(R.id.mLatitudeText);
+        mAddress = (TextView) findViewById(R.id.mLongitudeText);
         spinner = (ProgressBar) findViewById(R.id.progressBar1);
         spinner.setVisibility(View.GONE);
         // call api client
@@ -89,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             Toast.makeText(this, "Not connected...", Toast.LENGTH_SHORT).show();
         }
     }
-
+// connection with API failed
     @Override
     public void onConnectionFailed(ConnectionResult arg0) {
         Toast.makeText(this, "Failed to connect...", Toast.LENGTH_SHORT).show();
@@ -106,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 //        mLastLocationIsTrue = LocationServices.FusedLocationApi.getLocationAvailability(mGoogleApiClient);
         // get last location
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        // check if there is any data in current location
+        // format data location and address if exists
         if (mLastLocation != null) {
             latitude = String.valueOf(mLastLocation.getLatitude());
             longitude = String.valueOf(mLastLocation.getLongitude());
@@ -118,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 e.printStackTrace();
             }
         } else {
-            mLatitudeText.setText(R.string.no_current_location);
+            mCoords.setText(R.string.no_current_location);
         }
     }
 
@@ -145,16 +132,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 .build();
     }
 
-/*
-    public void resultsToText(View view) {
-        mLatitudeText.setText("Latitude: " + locationAdapter.getmLatitudeText() + ", " + "Longitude: " + locationAdapter.getmLongitudeText());
-        weather1.setText(weatherAdapter.getCurrentWeather());
-        weather2.setText(weatherAdapter.getFutureWeather());
-        mLongitudeText.setText(locationAdapter.getAddress());
-    }
-    */
-
-//        spinner.setVisibility(View.GONE);
 
     // method to get address basing on latitude and longitude
     public String getAddress(double latitude, double longitude) throws IOException {
@@ -198,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 e.printStackTrace();
             }
 
-
+// call weather API and save current weather and forecast
             try {
                 URL url = new URL("http://api.openweathermap.org/data/2.5/forecast?lat=" + locationAdapter.getmLatitudeText() + "&lon=" + locationAdapter.getmLongitudeText() + "&units=metric&appid=06e65c7536988468e72a018ff2e8cf9b");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -224,77 +201,26 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         @Override
         protected void onPostExecute(Boolean result) {
             int n = 0;
-            mLatitudeText.setText("Latitude: " + locationAdapter.getmLatitudeText() + ", " + "Longitude: " + locationAdapter.getmLongitudeText());
-            mLongitudeText.setText(locationAdapter.getAddress());
+            // format weather data
+            mCoords.setText("Latitude: " + locationAdapter.getmLatitudeText() + ", " + "Longitude: " + locationAdapter.getmLongitudeText());
+            mAddress.setText(locationAdapter.getAddress());
             dataHandler.setSingleString(weatherAdapter.getCurrentWeather(), 0);
             dataHandler.DefineStrings(weatherAdapter.getFutureWeather());
-
-            //           weather1.setText(dataHandler.getSingleString(0));
-//            datetime0.setText(String.valueOf(getDateFromUnix(dataHandler.getSingleDate(n))));
-//            temp0.setText(String.valueOf(dataHandler.getSingleTemp(n)) + "\u2103");
-//            icon0.setImageResource(R.drawable.z03n);
-//            weather2.setText("Date "+getDateFromUnix(dataHandler.getSingleDate(n)));
-            //           weather3.setText(dataHandler.getSingleString(1));
-//            n++;
+            // new arraylist adapter
             entries = new ArrayList<>();
             for (int i = 0; i < 20; i++) {
                 dataObject = new DataObject(dataHandler.getSingleDate(i), dataHandler.getSingleTemp(i), dataHandler.getSingleCloud(i), dataHandler.getSingleRain(i), dataHandler.getSingleSnow(i), dataHandler.getSingleIcon(i));
                 entries.add(i, dataObject);
             }
-
-            //
-            // public DataObject (Long data, Double temp, Double cloud, Double rain, Double snow, String icon)
             CustomAdapter adapter = new CustomAdapter(mContext, R.layout.custom_row, entries);
             list = (ListView) findViewById(R.id.list);
             list.setAdapter(adapter);
-
-
-            /*
-
-            weather2.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
-            n++;
-            weather3.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
-            n++;
-            weather4.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
-            n++;
-            weather5.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
-            n++;
-            weather6.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
-            n++;
-            weather7.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
-            n++;
-            weather8.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
-            n++;
-            weather9.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
-            n++;
-            weather10.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
-            n++;
-            weather11.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
-            n++;
-            weather12.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
-            n++;
-            weather13.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
-            n++;
-            weather14.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
-            n++;
-            weather15.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
-            n++;
-            weather16.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
-            n++;
-            weather17.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
-            n++;
-            weather18.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
-            n++;
-            weather19.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
-            n++;
-            weather20.setText(dataHandler.getSingleString(n)+"\nClouds: "+dataHandler.getSingleCloud(n)+"; temp:"+dataHandler.getSingleTemp(n)+"; date: "+getDateFromUnix(dataHandler.getSingleDate(n))+"; rain: "+dataHandler.getSingleRain(n)+"; snow: "+dataHandler.getSingleSnow(n)+"\n");
-*/
-
+            spinner.setVisibility(View.GONE);
         }
-
 
         @Override
         protected void onPreExecute() {
+            spinner.setVisibility(View.VISIBLE);
         }
 
         @Override

@@ -45,13 +45,6 @@
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="315dp" />
 
-    <ProgressBar
-        android:id="@+id/progressBar1"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true" />
-
     <ListView
         android:id="@+id/list"
         android:layout_width="wrap_content"
@@ -60,4 +53,12 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/button1" />
+
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/mLongitudeText"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
