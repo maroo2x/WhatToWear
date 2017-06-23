@@ -70,7 +70,7 @@ class CustomAdapter extends ArrayAdapter<DataObject> {
                 }
 
             if (temp != null) {
-                temp.setText("temp: "+dataObject.getSingleTemp());
+                temp.setText(dataObject.getSingleTemp()+"\u00b0");
             }
             if (clouds != null) {
                 clouds.setText("clouds(%): "+dataObject.getSingleCloud());
