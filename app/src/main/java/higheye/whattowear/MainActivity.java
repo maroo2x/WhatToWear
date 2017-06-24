@@ -9,6 +9,8 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.ContactsContract;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -29,6 +31,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationAvailability;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationListener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -41,24 +44,29 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
     TextView mCoords;
     TextView mAddress;
     ListView list;
     Context context;
     DataObject dataObject;
     GoogleApiClient mGoogleApiClient;
+    LocationRequest locationRequest;
     Location mLastLocation;
-    LocationRequest mLocationRequest = LocationRequest.create();
     public LocationAdapter locationAdapter = new LocationAdapter();
     WeatherAdapter weatherAdapter = new WeatherAdapter();
     DataHandler dataHandler = new DataHandler();
     String latitude;
     String longitude;
-    LocationAvailability mLastLocationIsTrue;
     public String address;
     ArrayList<DataObject> entries;
     private ProgressBar spinner;
+    LocationListener locationListener;
+
+    @Override
+    public void onLocationChanged(Location location) {
+        // Do something with the location
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +76,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         mAddress = (TextView) findViewById(R.id.mLongitudeText);
         spinner = (ProgressBar) findViewById(R.id.progressBar1);
         spinner.setVisibility(View.GONE);
+
+        locationRequest = new LocationRequest();
+        locationRequest.setInterval(5000);
+        locationRequest.setFastestInterval(5000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         // call api client
         buildGoogleApiClient();
         if (mGoogleApiClient != null) {
@@ -75,14 +88,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         } else {
             Toast.makeText(this, "Not connected...", Toast.LENGTH_SHORT).show();
         }
+
+//        checkAsynctask(view);
     }
-// connection with API failed
+
+    // connection with API failed
     @Override
     public void onConnectionFailed(ConnectionResult arg0) {
         Toast.makeText(this, "Failed to connect...", Toast.LENGTH_SHORT).show();
     }
 
     @Override
+//    public void onConnected(Bundle arg0) {
     public void onConnected(Bundle arg0) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -91,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }
         //check if current location is available
 //        mLastLocationIsTrue = LocationServices.FusedLocationApi.getLocationAvailability(mGoogleApiClient);
+
         // get last location
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         // format data location and address if exists
@@ -101,10 +119,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             try {
                 address = getAddress(Double.parseDouble(locationAdapter.getmLatitudeText()), Double.parseDouble(locationAdapter.getmLongitudeText()));
                 locationAdapter.setAddress(address);
+                checkAsynctask(MainActivity.this.getCurrentFocus());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
+            // update last location
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, (LocationListener) this);
+            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
             mCoords.setText(R.string.no_current_location);
         }
     }
@@ -143,9 +165,38 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         return cityName + ", " + stateName + ", " + countryName;
     }
 
+    //    public void checkAsynctask() {
     public void checkAsynctask(View view) {
-     //   Context context = this.context;
-        new Asynctask(getApplicationContext()).execute(0);
+
+        if (mLastLocation != null) {
+            latitude = String.valueOf(mLastLocation.getLatitude());
+            longitude = String.valueOf(mLastLocation.getLongitude());
+            locationAdapter.setCoords(latitude, longitude);
+            try {
+                address = getAddress(Double.parseDouble(locationAdapter.getmLatitudeText()), Double.parseDouble(locationAdapter.getmLongitudeText()));
+                locationAdapter.setAddress(address);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            new Asynctask(getApplicationContext()).execute(0);
+        } else {
+            // update last location
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, (LocationListener) this);
+                mCoords.setText(R.string.no_current_location);
+                mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+                Toast.makeText(this, "proba locationUpdates "+mLastLocation, Toast.LENGTH_SHORT).show();
+            }
+
     }
 
     private class Asynctask extends AsyncTask<Integer, Void, Boolean> {

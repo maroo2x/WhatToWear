@@ -138,8 +138,9 @@ class CustomAdapter extends ArrayAdapter<DataObject> {
                         icon_weather.setImageResource(z50n);
                         break;
                     default:
- //                       icon_weather.setImageResource(na);
-                        throw new IllegalArgumentException("No icon: " + dataObject.getSingleIcon());
+                        icon_weather.setImageResource(na);
+
+ //                       throw new IllegalArgumentException("No icon: " + dataObject.getSingleIcon());
                 }
             }
             return convertView;

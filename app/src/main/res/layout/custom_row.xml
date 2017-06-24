@@ -30,22 +30,25 @@
         android:id="@+id/clouds"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
-        android:layout_below="@+id/temp"/>
+        android:layout_below="@+id/temp"
+        android:text="clouds"
+        android:textColor="@color/colorPrimaryDark" />
 
     <TextView
         android:id="@+id/rain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
-        android:layout_below="@+id/clouds"/>
+        android:layout_below="@+id/clouds"
+        android:text="rain"
+        android:textColor="@color/colorPrimaryDark" />
 
     <TextView
         android:id="@+id/snow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
-        android:layout_below="@+id/rain"/>
+        android:layout_below="@+id/rain"
+        android:text="snow"
+        android:textColor="@color/colorPrimaryDark" />
 
     <ImageView
         android:id="@+id/icon_weather"

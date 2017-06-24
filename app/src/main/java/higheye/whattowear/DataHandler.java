@@ -127,7 +127,7 @@ public class DataHandler {
         if (listIcons[n] != null) {
 //            return "z"+listIcons[n];
             return listIcons[n];
-        } else return null;
+        } else return "no_data";
     }
 
 
