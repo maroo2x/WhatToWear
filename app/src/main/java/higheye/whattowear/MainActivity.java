@@ -278,51 +278,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }
     }
 
-    private class Asynctask2 extends AsyncTask<Integer, Void, Boolean> {
-        private Context mContext;
-
-        public Asynctask2(Context context) {
-            mContext = context;
-        }
-
-        @Override
-        protected Boolean doInBackground(Integer... ints) {
-
-
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-
-            if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, (LocationListener) this);
-            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            spinner.setVisibility(View.GONE);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            spinner.setVisibility(View.VISIBLE);
-
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-        }
-    }
-
-
-
     public String getDateFromUnix(long unixtime) {
         Date date = new Date(unixtime * 1000L); // *1000 is to convert seconds to milliseconds
 //        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z"); // the format of your date
