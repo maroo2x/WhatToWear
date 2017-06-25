@@ -76,11 +76,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         mAddress = (TextView) findViewById(R.id.mLongitudeText);
         spinner = (ProgressBar) findViewById(R.id.progressBar1);
         spinner.setVisibility(View.GONE);
-
         locationRequest = new LocationRequest();
-        locationRequest.setInterval(5000);
-        locationRequest.setFastestInterval(5000);
+        locationRequest.setInterval(500);
+        locationRequest.setFastestInterval(500);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setNumUpdates(2);
         // call api client
         buildGoogleApiClient();
         if (mGoogleApiClient != null) {
@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             Toast.makeText(this, "Not connected...", Toast.LENGTH_SHORT).show();
         }
 
-//        checkAsynctask(view);
     }
 
     // connection with API failed
@@ -125,10 +124,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             }
         } else {
             // update last location
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, (LocationListener) this);
-            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            //          LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, (LocationListener) this);
+            //          mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
             mCoords.setText(R.string.no_current_location);
         }
+
+        checkAsynctask(findViewById(android.R.id.content));
     }
 
     @Override
@@ -169,18 +170,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public void checkAsynctask(View view) {
 
         if (mLastLocation != null) {
-            latitude = String.valueOf(mLastLocation.getLatitude());
-            longitude = String.valueOf(mLastLocation.getLongitude());
-            locationAdapter.setCoords(latitude, longitude);
-            try {
-                address = getAddress(Double.parseDouble(locationAdapter.getmLatitudeText()), Double.parseDouble(locationAdapter.getmLongitudeText()));
-                locationAdapter.setAddress(address);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
             new Asynctask(getApplicationContext()).execute(0);
+            Toast.makeText(this, "Asynctask 1", Toast.LENGTH_SHORT).show();
         } else {
-            // update last location
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
                 //    ActivityCompat#requestPermissions
@@ -192,18 +184,20 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 return;
             }
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, (LocationListener) this);
-                mCoords.setText(R.string.no_current_location);
-                mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-                Toast.makeText(this, "proba locationUpdates "+mLastLocation, Toast.LENGTH_SHORT).show();
-            }
-
+            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            onConnected(Bundle.EMPTY);
+//            new Asynctask2(getApplicationContext()).execute(0);
+            Toast.makeText(this, "Asynctask 2", Toast.LENGTH_SHORT).show();
+            checkAsynctask(view);
+        }
     }
 
     private class Asynctask extends AsyncTask<Integer, Void, Boolean> {
         private Context mContext;
-        public Asynctask (Context context){
+        public Asynctask(Context context) {
             mContext = context;
         }
+
         @Override
         protected Boolean doInBackground(Integer... ints) {
             try {
@@ -283,6 +277,51 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         protected void onProgressUpdate(Void... values) {
         }
     }
+
+    private class Asynctask2 extends AsyncTask<Integer, Void, Boolean> {
+        private Context mContext;
+
+        public Asynctask2(Context context) {
+            mContext = context;
+        }
+
+        @Override
+        protected Boolean doInBackground(Integer... ints) {
+
+
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, (LocationListener) this);
+            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            spinner.setVisibility(View.GONE);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            spinner.setVisibility(View.VISIBLE);
+
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
+
+
 
     public String getDateFromUnix(long unixtime) {
         Date date = new Date(unixtime * 1000L); // *1000 is to convert seconds to milliseconds
