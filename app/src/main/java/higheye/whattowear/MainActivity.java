@@ -16,11 +16,14 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
@@ -38,11 +41,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import static android.R.id.toggle;
+import static android.support.v4.content.PermissionChecker.PERMISSION_GRANTED;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
     TextView mCoords;
@@ -62,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     ArrayList<DataObject> entries;
     private ProgressBar spinner;
     LocationListener locationListener;
+    private Switch switchbtn;
 
     @Override
     public void onLocationChanged(Location location) {
@@ -88,6 +96,21 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         } else {
             Toast.makeText(this, "Not connected...", Toast.LENGTH_SHORT).show();
         }
+        switchbtn = (Switch) findViewById(R.id.switch1);
+        switchbtn.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+
+                if(isChecked){
+
+                }else{
+
+                }
+
+            }
+        });
 
     }
 
@@ -171,23 +194,19 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         if (mLastLocation != null) {
             new Asynctask(getApplicationContext()).execute(0);
-            Toast.makeText(this, "Asynctask 1", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Asynctask 1", Toast.LENGTH_SHORT).show();
         } else {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_GRANTED);
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_GRANTED);
+//                Toast.makeText(this, "no permission", Toast.LENGTH_SHORT).show();
                 return;
             }
+            spinner.setVisibility(View.VISIBLE);
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, (LocationListener) this);
             mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
             onConnected(Bundle.EMPTY);
-//            new Asynctask2(getApplicationContext()).execute(0);
-            Toast.makeText(this, "Asynctask 2", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Asynctask 2", Toast.LENGTH_SHORT).show();
             checkAsynctask(view);
         }
     }
