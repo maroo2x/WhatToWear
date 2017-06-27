@@ -48,7 +48,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import static android.R.id.toggle;
 import static android.support.v4.content.PermissionChecker.PERMISSION_GRANTED;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
@@ -69,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     ArrayList<DataObject> entries;
     private ProgressBar spinner;
     LocationListener locationListener;
-    private Switch switchbtn;
+//    private Switch switchbtn;
 
     @Override
     public void onLocationChanged(Location location) {
@@ -89,14 +88,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         locationRequest.setFastestInterval(500);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setNumUpdates(2);
+        spinner.setVisibility(View.VISIBLE);
         // call api client
         buildGoogleApiClient();
         if (mGoogleApiClient != null) {
             mGoogleApiClient.connect();
         } else {
             Toast.makeText(this, "Not connected...", Toast.LENGTH_SHORT).show();
+            spinner.setVisibility(View.GONE);
         }
-        switchbtn = (Switch) findViewById(R.id.switch1);
+/*        switchbtn = (Switch) findViewById(R.id.switch1);
         switchbtn.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
             @Override
@@ -111,13 +112,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
             }
         });
-
+*/
     }
 
     // connection with API failed
     @Override
     public void onConnectionFailed(ConnectionResult arg0) {
         Toast.makeText(this, "Failed to connect...", Toast.LENGTH_SHORT).show();
+        spinner.setVisibility(View.GONE);
     }
 
     @Override
@@ -125,6 +127,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public void onConnected(Bundle arg0) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                spinner.setVisibility(View.GONE);
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_GRANTED);
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_GRANTED);
                 return;
             }
         }
@@ -150,6 +155,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             //          LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, (LocationListener) this);
             //          mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
             mCoords.setText(R.string.no_current_location);
+//          spinner.setVisibility(View.GONE);
+//          return;
         }
 
         checkAsynctask(findViewById(android.R.id.content));
@@ -191,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     //    public void checkAsynctask() {
     public void checkAsynctask(View view) {
-
+        spinner.setVisibility(View.VISIBLE);
         if (mLastLocation != null) {
             new Asynctask(getApplicationContext()).execute(0);
 //            Toast.makeText(this, "Asynctask 1", Toast.LENGTH_SHORT).show();
@@ -200,14 +207,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_GRANTED);
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_GRANTED);
 //                Toast.makeText(this, "no permission", Toast.LENGTH_SHORT).show();
+                spinner.setVisibility(View.GONE);
                 return;
             }
-            spinner.setVisibility(View.VISIBLE);
+
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, (LocationListener) this);
             mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
             onConnected(Bundle.EMPTY);
 //            Toast.makeText(this, "Asynctask 2", Toast.LENGTH_SHORT).show();
-            checkAsynctask(view);
+//            checkAsynctask(view);
         }
     }
 
