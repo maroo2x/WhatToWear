@@ -41,7 +41,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+
 import android.widget.CompoundButton.OnCheckedChangeListener;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -66,8 +68,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     String longitude;
     public String address;
     ArrayList<DataObject> entries;
-    private ProgressBar spinner;
+    ProgressBar spinner;
     LocationListener locationListener;
+
 //    private Switch switchbtn;
 
     @Override
@@ -83,19 +86,21 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         mAddress = (TextView) findViewById(R.id.mLongitudeText);
         spinner = (ProgressBar) findViewById(R.id.progressBar1);
         spinner.setVisibility(View.GONE);
+//        spinner.setVisibility(View.VISIBLE);
+ //       Toast.makeText(this, "toast right after spinner", Toast.LENGTH_SHORT).show();
         locationRequest = new LocationRequest();
-        locationRequest.setInterval(500);
-        locationRequest.setFastestInterval(500);
+        locationRequest.setInterval(1);
+        locationRequest.setFastestInterval(1);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setNumUpdates(2);
-        spinner.setVisibility(View.VISIBLE);
+        locationRequest.setNumUpdates(1);
+//        spinner.setVisibility(View.VISIBLE);
         // call api client
         buildGoogleApiClient();
         if (mGoogleApiClient != null) {
             mGoogleApiClient.connect();
         } else {
             Toast.makeText(this, "Not connected...", Toast.LENGTH_SHORT).show();
-            spinner.setVisibility(View.GONE);
+//            spinner.setVisibility(View.GONE);
         }
 /*        switchbtn = (Switch) findViewById(R.id.switch1);
         switchbtn.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -103,13 +108,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             @Override
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
-
                 if(isChecked){
-
                 }else{
-
                 }
-
             }
         });
 */
@@ -119,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     @Override
     public void onConnectionFailed(ConnectionResult arg0) {
         Toast.makeText(this, "Failed to connect...", Toast.LENGTH_SHORT).show();
-        spinner.setVisibility(View.GONE);
+//        spinner.setVisibility(View.GONE);
     }
 
     @Override
@@ -127,7 +128,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public void onConnected(Bundle arg0) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                spinner.setVisibility(View.GONE);
                 requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_GRANTED);
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_GRANTED);
                 return;
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         //check if current location is available
 //        mLastLocationIsTrue = LocationServices.FusedLocationApi.getLocationAvailability(mGoogleApiClient);
 
-        // get last location
+ /*       // get last location
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         // format data location and address if exists
         if (mLastLocation != null) {
@@ -158,6 +158,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 //          spinner.setVisibility(View.GONE);
 //          return;
         }
+        */
 
         checkAsynctask(findViewById(android.R.id.content));
     }
@@ -185,7 +186,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 .build();
     }
 
-
     // method to get address basing on latitude and longitude
     public String getAddress(double latitude, double longitude) throws IOException {
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
@@ -198,29 +198,30 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     //    public void checkAsynctask() {
     public void checkAsynctask(View view) {
-        spinner.setVisibility(View.VISIBLE);
+//        spinner.setVisibility(View.VISIBLE);
         if (mLastLocation != null) {
             new Asynctask(getApplicationContext()).execute(0);
 //            Toast.makeText(this, "Asynctask 1", Toast.LENGTH_SHORT).show();
-        } else {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_GRANTED);
-                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_GRANTED);
-//                Toast.makeText(this, "no permission", Toast.LENGTH_SHORT).show();
-                spinner.setVisibility(View.GONE);
-                return;
-            }
-
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, (LocationListener) this);
-            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            onConnected(Bundle.EMPTY);
-//            Toast.makeText(this, "Asynctask 2", Toast.LENGTH_SHORT).show();
-//            checkAsynctask(view);
         }
+        else {
+            updateLocation();
+            onConnected(Bundle.EMPTY);
+        }
+    }
+
+    public void updateLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_GRANTED);
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_GRANTED);
+            return;
+        }
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, (LocationListener) this);
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
     }
 
     private class Asynctask extends AsyncTask<Integer, Void, Boolean> {
         private Context mContext;
+
         public Asynctask(Context context) {
             mContext = context;
         }
@@ -298,6 +299,28 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         @Override
         protected void onPreExecute() {
             spinner.setVisibility(View.VISIBLE);
+
+// get last location
+            if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_GRANTED);
+                    requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_GRANTED);
+                return;
+            }
+            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            // format data location and address if exists
+            while (mLastLocation == null) {
+                updateLocation();
+                break;
+            }
+                latitude = String.valueOf(mLastLocation.getLatitude());
+                longitude = String.valueOf(mLastLocation.getLongitude());
+                locationAdapter.setCoords(latitude, longitude);
+                try {
+                    address = getAddress(Double.parseDouble(locationAdapter.getmLatitudeText()), Double.parseDouble(locationAdapter.getmLongitudeText()));
+                    locationAdapter.setAddress(address);
+                } catch (IOException e) {
+                    e.printStackTrace();
+            }
         }
 
         @Override
@@ -314,8 +337,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         return formatedDate;
     }
 }
-
-// ikony: http://openweathermap.org/img/w/10d.png
 
 /*
         final Thread thread = new Thread(new Runnable() {
