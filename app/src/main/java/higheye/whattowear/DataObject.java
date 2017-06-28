@@ -12,8 +12,7 @@ public class DataObject {
     private Double snow;
     private String icon;
 
-    public DataObject (Long data, Double temp, Double cloud, Double rain, Double snow, String icon)
-    {
+    public DataObject (Long data, Double temp, Double cloud, Double rain, Double snow, String icon) {
         this.data = data;
         this.temp = temp;
         this.cloud = cloud;

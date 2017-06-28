@@ -32,6 +32,13 @@ import static higheye.whattowear.R.drawable.z13n;
 import static higheye.whattowear.R.drawable.z50d;
 import static higheye.whattowear.R.drawable.z50n;
 import static higheye.whattowear.R.drawable.na;
+import static higheye.whattowear.R.drawable.clothes1;
+import static higheye.whattowear.R.drawable.clothes2;
+import static higheye.whattowear.R.drawable.clothes3;
+import static higheye.whattowear.R.drawable.clothes4;
+import static higheye.whattowear.R.drawable.clothes5;
+import static higheye.whattowear.R.drawable.clothes6;
+import static higheye.whattowear.R.drawable.clothes7;
 
 /**
  * Created by marekk-air13 on 22/06/2017.
@@ -59,6 +66,7 @@ class CustomAdapter extends ArrayAdapter<DataObject> {
             TextView rain = (TextView) convertView.findViewById(R.id.rain);
             TextView snow = (TextView) convertView.findViewById(R.id.snow);
             ImageView icon_weather = (ImageView) convertView.findViewById(R.id.icon_weather);
+            ImageView icon_clothes = (ImageView) convertView.findViewById(R.id.icon_clothes);
 
 
                 if (dataObject.getSingleDate() == 10l) {
@@ -81,6 +89,8 @@ class CustomAdapter extends ArrayAdapter<DataObject> {
             if (clouds != null) {
                 snow.setText("snow(mm/3h): "+dataObject.getSingleSnow());
             }
+
+
             if (icon_weather != null) {
                 switch (dataObject.getSingleIcon()) {
                     case "z01d":
@@ -139,13 +149,79 @@ class CustomAdapter extends ArrayAdapter<DataObject> {
                         break;
                     default:
                         icon_weather.setImageResource(na);
-
  //                       throw new IllegalArgumentException("No icon: " + dataObject.getSingleIcon());
                 }
             }
+            if (icon_clothes != null) {
+                double factor = dataObject.getSingleTemp();
+                if (dataObject.getSingleCloud() < 50) {factor++;}
+                if (dataObject.getSingleRain() >= 3) {factor--;
+                // set imageview "parasol"
+                }
+                if (25 <= factor) {
+                    icon_clothes.setImageResource(clothes1);
+                }
+                else if (21 <= factor && factor < 25){
+                    icon_clothes.setImageResource(clothes2);
+                }
+                else if (20 <= factor && factor < 21){
+                    icon_clothes.setImageResource(clothes3);
+                }
+                else if (16 <= factor && factor < 20){
+                    icon_clothes.setImageResource(clothes4);
+                }
+                else if (10 <= factor && factor < 16){
+                    icon_clothes.setImageResource(clothes5);
+                }
+                else if (2 <= factor && factor < 10){
+                    icon_clothes.setImageResource(clothes6);
+                }
+                else if (factor < 2){
+                    icon_clothes.setImageResource(clothes7);
+                }
+                else{
+                    icon_clothes.setImageResource(na); }
+                        /*
+25 <= temp			szorty, podkoszulek						clothes1
+21 <= temp < 25		szorty, koszulka				   		clothes2
+20 <= temp < 21		dlugie spodnie, koszulka		    	clothes3
+16 <= temp < 20		dlugie spodnie, bluza			    	clothes4
+10 <= temp < 16		dlugie spodnie, kurtka			    	clothes5
+2 <= temp < 10		dlugie spodnie, kurtka, czapka			clothes6
+temp < 2			dlugie spodnie, kurtka zimowa, czapka	clothes7
+         */
+            }
+
             return convertView;
     }
+    public static int getClothes(Double temp, Double clouds, Double rain){
+        int icon_clothes = 0;
+        if (clouds < 50) {temp++;}
+        if (rain >= 3) {temp--;}
+        if (25 <= temp) {
+            icon_clothes = 1;
+        }
+        else if (21 <= temp && temp < 25){
+            icon_clothes = 2;
+        }
+        else if (20 <= temp && temp < 21){
+            icon_clothes = 3;
+        }
+        else if (16 <= temp && temp < 20){
+            icon_clothes = 4;
+        }
+        else if (10 <= temp && temp < 16){
+            icon_clothes = 5;
+        }
+        else if (2 <= temp && temp < 10){
+            icon_clothes = 6;
+        }
+        else if (temp < 2){
+            icon_clothes = 7;
+        }
 
+        return icon_clothes;
+    }
 
     public String getDateFromUnix(long unixtime) {
         Date date = new Date(unixtime * 1000L); // *1000 is to convert seconds to milliseconds

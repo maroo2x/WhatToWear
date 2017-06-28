@@ -130,7 +130,6 @@ public class DataHandler {
         } else return "no_data";
     }
 
-
     public static String getTemperature(String input) {
         int index = input.indexOf("\"temp\":");
         if (index == -1) {
@@ -159,5 +158,42 @@ public class DataHandler {
         String cutString = input.substring(index);
         int newIndex = cutString.indexOf("}");
         return cutString.substring(8, newIndex - 1);
+    }
+
+    public static int getClothes(Double temp, Double clouds, Double rain){
+        int icon_clothes = 0;
+        if (clouds < 50) { temp ++;}
+        if (rain >= 3) {temp--;}
+        if (25 <= temp) {
+                icon_clothes = 1;
+        }
+        else if (21 <= temp && temp < 25){
+            icon_clothes = 2;
+        }
+        else if (20 <= temp && temp < 21){
+            icon_clothes = 3;
+        }
+        else if (16 <= temp && temp < 20){
+            icon_clothes = 4;
+        }
+        else if (10 <= temp && temp < 16){
+            icon_clothes = 5;
+        }
+        else if (2 <= temp && temp < 10){
+            icon_clothes = 6;
+        }
+        else if (temp < 2){
+            icon_clothes = 7;
+        }
+        /*
+25 <= temp				szorty, podkoszulek						1
+21 <= temp < 25		szorty, koszulka				    		2
+20 <= temp < 21		dlugie spodnie, koszulka		    		3
+16 <= temp < 20		dlugie spodnie, bluza			    		4
+10 <= temp < 16		dlugie spodnie, kurtka			    		5
+2 <= temp < 10			dlugie spodnie, kurtka, czapka			6
+temp < 2				dlugie spodnie, kurtka zimowa, czapka	7
+         */
+        return icon_clothes;
     }
 }

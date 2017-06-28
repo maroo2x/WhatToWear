@@ -336,6 +336,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 //        String formatedDate = sdf.format(date);
         return formatedDate;
     }
+
 }
 
 /*
