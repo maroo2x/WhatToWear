@@ -1,18 +1,32 @@
 package higheye.whattowear;
 
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static higheye.whattowear.R.drawable.abc_btn_default_mtrl_shape;
+import static higheye.whattowear.R.drawable.clothes1_up;
+import static higheye.whattowear.R.drawable.clothes2_up;
+import static higheye.whattowear.R.drawable.clothes3_up;
+import static higheye.whattowear.R.drawable.clothes4_up;
+import static higheye.whattowear.R.drawable.clothes5_up;
+import static higheye.whattowear.R.drawable.clothes6_up;
+import static higheye.whattowear.R.drawable.clothes7_up;
+import static higheye.whattowear.R.drawable.clothes1_down;
+import static higheye.whattowear.R.drawable.clothes2_down;
+import static higheye.whattowear.R.drawable.clothes3_down;
+import static higheye.whattowear.R.drawable.clothes4_down;
+import static higheye.whattowear.R.drawable.clothes5_down;
+import static higheye.whattowear.R.drawable.clothes6_down;
+import static higheye.whattowear.R.drawable.clothes7_down;
+import static higheye.whattowear.R.drawable.na;
 import static higheye.whattowear.R.drawable.z01d;
 import static higheye.whattowear.R.drawable.z01n;
 import static higheye.whattowear.R.drawable.z02d;
@@ -31,14 +45,6 @@ import static higheye.whattowear.R.drawable.z13d;
 import static higheye.whattowear.R.drawable.z13n;
 import static higheye.whattowear.R.drawable.z50d;
 import static higheye.whattowear.R.drawable.z50n;
-import static higheye.whattowear.R.drawable.na;
-import static higheye.whattowear.R.drawable.clothes1;
-import static higheye.whattowear.R.drawable.clothes2;
-import static higheye.whattowear.R.drawable.clothes3;
-import static higheye.whattowear.R.drawable.clothes4;
-import static higheye.whattowear.R.drawable.clothes5;
-import static higheye.whattowear.R.drawable.clothes6;
-import static higheye.whattowear.R.drawable.clothes7;
 
 /**
  * Created by marekk-air13 on 22/06/2017.
@@ -66,7 +72,8 @@ class CustomAdapter extends ArrayAdapter<DataObject> {
             TextView rain = (TextView) convertView.findViewById(R.id.rain);
             TextView snow = (TextView) convertView.findViewById(R.id.snow);
             ImageView icon_weather = (ImageView) convertView.findViewById(R.id.icon_weather);
-            ImageView icon_clothes = (ImageView) convertView.findViewById(R.id.icon_clothes);
+            ImageView icon_clothes_up = (ImageView) convertView.findViewById(R.id.icon_clothes_up);
+            ImageView icon_clothes_down = (ImageView) convertView.findViewById(R.id.icon_clothes_down);
 
 
                 if (dataObject.getSingleDate() == 10l) {
@@ -152,45 +159,77 @@ class CustomAdapter extends ArrayAdapter<DataObject> {
  //                       throw new IllegalArgumentException("No icon: " + dataObject.getSingleIcon());
                 }
             }
-            if (icon_clothes != null) {
+            if (icon_clothes_up != null) {
                 double factor = dataObject.getSingleTemp();
                 if (dataObject.getSingleCloud() < 50) {factor++;}
                 if (dataObject.getSingleRain() >= 3) {factor--;
                 // set imageview "parasol"
                 }
                 if (25 <= factor) {
-                    icon_clothes.setImageResource(clothes1);
+                    icon_clothes_up.setImageResource(clothes1_up);
                 }
                 else if (21 <= factor && factor < 25){
-                    icon_clothes.setImageResource(clothes2);
+                    icon_clothes_up.setImageResource(clothes2_up);
                 }
                 else if (20 <= factor && factor < 21){
-                    icon_clothes.setImageResource(clothes3);
+                    icon_clothes_up.setImageResource(clothes3_up);
                 }
                 else if (16 <= factor && factor < 20){
-                    icon_clothes.setImageResource(clothes4);
+                    icon_clothes_up.setImageResource(clothes4_up);
                 }
                 else if (10 <= factor && factor < 16){
-                    icon_clothes.setImageResource(clothes5);
+                    icon_clothes_up.setImageResource(clothes5_up);
                 }
                 else if (2 <= factor && factor < 10){
-                    icon_clothes.setImageResource(clothes6);
+                    icon_clothes_up.setImageResource(clothes6_up);
                 }
                 else if (factor < 2){
-                    icon_clothes.setImageResource(clothes7);
+                    icon_clothes_up.setImageResource(clothes7_up);
                 }
                 else{
-                    icon_clothes.setImageResource(na); }
-                        /*
+                    icon_clothes_up.setImageResource(na); }
+            }
+            if (icon_clothes_down != null) {
+                double factor = dataObject.getSingleTemp();
+                if (dataObject.getSingleCloud() < 50) {factor++;}
+                if (dataObject.getSingleRain() >= 3) {factor--;
+                    // set imageview "parasol"
+                }
+                if (25 <= factor) {
+                    icon_clothes_down.setImageResource(clothes1_down);
+                }
+                else if (21 <= factor && factor < 25){
+                    icon_clothes_down.setImageResource(clothes2_down);
+                }
+                else if (20 <= factor && factor < 21){
+                    icon_clothes_down.setImageResource(clothes3_down);
+                }
+                else if (16 <= factor && factor < 20){
+                    icon_clothes_down.setImageResource(clothes4_down);
+                }
+                else if (10 <= factor && factor < 16){
+                    icon_clothes_down.setImageResource(clothes5_down);
+                }
+                else if (2 <= factor && factor < 10){
+                    icon_clothes_down.setImageResource(clothes6_down);
+                }
+                else if (factor < 2){
+                    icon_clothes_down.setImageResource(clothes7_down);
+                }
+                else{
+                    icon_clothes_down.setImageResource(na); }
+
+            }
+
+                                    /*
 25 <= temp			szorty, podkoszulek						clothes1
 21 <= temp < 25		szorty, koszulka				   		clothes2
 20 <= temp < 21		dlugie spodnie, koszulka		    	clothes3
-16 <= temp < 20		dlugie spodnie, bluza			    	clothes4
-10 <= temp < 16		dlugie spodnie, kurtka			    	clothes5
-2 <= temp < 10		dlugie spodnie, kurtka, czapka			clothes6
-temp < 2			dlugie spodnie, kurtka zimowa, czapka	clothes7
+15 <= temp < 20		dlugie spodnie, bluza			    	clothes4
+10 <= temp < 15		dlugie spodnie, kurtka			    	clothes5
+3 <= temp < 10		dlugie spodnie, kurtka, czapka			clothes6
+temp < 3			dlugie spodnie, kurtka zimowa, czapka	clothes7
          */
-            }
 
             return convertView;
     }

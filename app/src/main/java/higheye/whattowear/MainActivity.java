@@ -8,43 +8,32 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.provider.ContactsContract;
-import android.support.annotation.Nullable;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.text.format.DateFormat;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
-
-import java.lang.reflect.Array;
-import java.text.SimpleDateFormat;
-
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationAvailability;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationListener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-
-import android.widget.CompoundButton.OnCheckedChangeListener;
-
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -71,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     ProgressBar spinner;
     LocationListener locationListener;
 
-//    private Switch switchbtn;
+    private Switch switchbtn;
 
     @Override
     public void onLocationChanged(Location location) {
@@ -102,8 +91,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             Toast.makeText(this, "Not connected...", Toast.LENGTH_SHORT).show();
 //            spinner.setVisibility(View.GONE);
         }
-/*        switchbtn = (Switch) findViewById(R.id.switch1);
-        switchbtn.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+        switchbtn = (Switch) findViewById(R.id.switchForActionBar);
+/*        switchbtn.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView,
@@ -337,6 +326,27 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         return formatedDate;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.navigation, menu);
+//        getMenuInflater().inflate(R.menu.navigation, menu);
+        MenuItem item = menu.findItem(R.id.switchForActionBar);
+//        item.setActionView(R.layout.switch_layout);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menuItem1:
+                return true;
+            case R.id.menuItem2:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }
 
 /*

@@ -62,4 +62,14 @@
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true" />
 
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/menu"
+        android:layout_above="@+id/mLongitudeText"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:state_pressed="true"/>
+
 </RelativeLayout>
