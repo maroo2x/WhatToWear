@@ -10,4 +10,7 @@
     <string name="tomorrow">Jutro</string>
     <string name="now">Teraz</string>
     <string name="no_data">brak danych</string>
+    <string name="clouds">zachmurzenie(%):</string>
+    <string name="rain">deszcz(mm/3godz.):</string>
+    <string name="snow">śnieg(mm/3godz.):</string>
 </resources>

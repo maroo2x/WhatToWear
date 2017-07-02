@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import static higheye.whattowear.R.drawable.clothes1_down;
 import static higheye.whattowear.R.drawable.clothes1_up;
@@ -27,6 +28,8 @@ import static higheye.whattowear.R.drawable.clothes6_down;
 import static higheye.whattowear.R.drawable.clothes6_up;
 import static higheye.whattowear.R.drawable.clothes7_down;
 import static higheye.whattowear.R.drawable.clothes7_up;
+import static higheye.whattowear.R.drawable.ic_sunglasses;
+import static higheye.whattowear.R.drawable.ic_umbrella;
 import static higheye.whattowear.R.drawable.na;
 import static higheye.whattowear.R.drawable.z01d;
 import static higheye.whattowear.R.drawable.z01n;
@@ -78,6 +81,8 @@ class CustomAdapter extends ArrayAdapter<DataObject> {
         ImageView icon_weather = (ImageView) convertView.findViewById(R.id.icon_weather);
         ImageView icon_clothes_up = (ImageView) convertView.findViewById(R.id.icon_clothes_up);
         ImageView icon_clothes_down = (ImageView) convertView.findViewById(R.id.icon_clothes_down);
+        ImageView umbrella = (ImageView) convertView.findViewById(R.id.icon_umbrella);
+        ImageView sunglasses = (ImageView) convertView.findViewById(R.id.icon_sunglasses);
 
 if (dataObject.getSingleDate() != -9999l){
 
@@ -95,16 +100,18 @@ if (dataObject.getSingleDate() != -9999l){
                 temp.setText(Math.round(tempF) + "\u00b0F");
             } else {
                 temp.setText(Math.round(dataObject.getSingleTemp()) + "\u00b0C");
+
+          //      temp.setText(getCorrentSunsetSunrise(dataObject.getSingleSunrise(), dataObject.getSingleDate())+"\n"+dataObject.getSingleDate()*1000+"\n"+getCorrentSunsetSunrise(dataObject.getSingleSunset(), dataObject.getSingleDate()));
             }
+        }// ("%.2f", d)
+        if (clouds != null && dataObject.getSingleCloud()!=0) {
+            clouds.setText(getContext().getString(R.string.clouds) + String.format("%.2f", dataObject.getSingleCloud()));
         }
-        if (clouds != null) {
-            clouds.setText("clouds(%): " + dataObject.getSingleCloud());
+        if (clouds != null && dataObject.getSingleRain()!=0) {
+            rain.setText(getContext().getString(R.string.rain) + String.format("%.2f", dataObject.getSingleRain()));
         }
-        if (clouds != null) {
-            rain.setText("rain(mm/3h): " + dataObject.getSingleRain());
-        }
-        if (clouds != null) {
-            snow.setText("snow(mm/3h): " + dataObject.getSingleSnow());
+        if (clouds != null && dataObject.getSingleSnow()!=0) {
+            snow.setText(getContext().getString(R.string.snow) + String.format("%.2f", dataObject.getSingleSnow()));
         }
         if (icon_weather != null) {
             switch (dataObject.getSingleIcon()) {
@@ -174,7 +181,6 @@ if (dataObject.getSingleDate() != -9999l){
             }
             if (dataObject.getSingleRain() >= 3) {
                 factor--;
-                // set imageview "parasol"
             }
             if (25 <= factor) {
                 icon_clothes_up.setImageResource(clothes1_up);
@@ -198,10 +204,13 @@ if (dataObject.getSingleDate() != -9999l){
             double factor = dataObject.getSingleTemp();
             if (dataObject.getSingleCloud() < 50) {
                 factor++;
+                // check if time is during the day, not night.
+                if (dataObject.getSingleDate()*1000>(getCorrentSunsetSunrise(dataObject.getSingleSunrise(), dataObject.getSingleDate()))&&dataObject.getSingleDate()*1000<(getCorrentSunsetSunrise(dataObject.getSingleSunset(), dataObject.getSingleDate())))
+                {sunglasses.setImageResource(ic_sunglasses);}
             }
             if (dataObject.getSingleRain() >= 3) {
                 factor--;
-                // set imageview "parasol"
+                umbrella.setImageResource(ic_umbrella);
             }
             if (25 <= factor) {
                 icon_clothes_down.setImageResource(clothes1_down);
@@ -290,5 +299,16 @@ else {
         } else {
             return formatedDayWeek + ", " + formatedDayMonth + ", " + formatedTime;
         }
+    }
+    public Long getCorrentSunsetSunrise(Long sunsetOrSunrise, Long currentDay)
+    {
+        Long currentSusnetSunrise;
+        Date thisDay = new Date(currentDay*1000);
+        Date lastSunsetSunrise = new Date(sunsetOrSunrise*1000);
+        SimpleDateFormat dayOfYear = new SimpleDateFormat("D");
+        int currentDayOfYear = Integer.parseInt(dayOfYear.format(thisDay));
+        int lastSusnetSunriseOfYear = Integer.parseInt(dayOfYear.format(lastSunsetSunrise));
+        currentSusnetSunrise = (currentDayOfYear-lastSusnetSunriseOfYear)*TimeUnit.DAYS.toMillis(1)+sunsetOrSunrise*1000;
+        return currentSusnetSunrise;
     }
 }

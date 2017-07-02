@@ -9,4 +9,7 @@
     <string name="tomorrow">Tomorrow</string>
     <string name="now">now</string>
     <string name="no_data">no data</string>
+    <string name="clouds">clouds(%):</string>
+    <string name="rain">rain(mm/3h):</string>
+    <string name="snow">snow(mm/3h):</string>
 </resources>

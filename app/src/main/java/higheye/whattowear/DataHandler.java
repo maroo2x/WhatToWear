@@ -1,8 +1,6 @@
 package higheye.whattowear;
 
 
-import java.lang.String;
-
 /**
  * Created by marekk-air13 on 04/06/2017.
  */
@@ -15,6 +13,8 @@ public class DataHandler {
     private static Double[] listSnow = new Double[50];
     private static Long[] listDate = new Long[50];
     private static String[] listIcons = new String[50];
+    private static Long[] listSunrise = new Long[50];
+    private static Long[] listSunset = new Long[50];
 
 
     public void DefineStrings(String input) {
@@ -70,6 +70,24 @@ public class DataHandler {
                         listDate[i] = Long.parseLong(cutString.substring(5, endIndex));
                     }
                 }
+                // listofentries 0 because only in first row is visible sunrise
+                startindex = listOfEntries[0].indexOf("\"sunrise\":");
+                if (startindex != -1) {
+                    cutString = listOfEntries[0].substring(startindex);
+                    endIndex = cutString.indexOf(",");
+                    if (endIndex > 10) {
+                        listSunrise[i] = Long.parseLong(cutString.substring(10, endIndex));
+                    }
+                }
+                // listofentries 0 because only in first row is visible sunset
+                startindex = listOfEntries[0].indexOf("\"sunset\":");
+                if (startindex != -1) {
+                    cutString = listOfEntries[0].substring(startindex);
+                    endIndex = cutString.indexOf("}");
+                    if (endIndex > 9) {
+                        listSunset[i] = Long.parseLong(cutString.substring(9, endIndex));
+                    }
+                }
 
                 startindex = listOfEntries[i].indexOf("\"icon\":\"");
                 if (startindex != -1) {
@@ -114,7 +132,6 @@ public class DataHandler {
         if (listDate[n] != null) {
             return listDate[n];
         } else return -9999l;
-
     }
 
     public Double getSingleSnow(int n) {
@@ -128,6 +145,16 @@ public class DataHandler {
 //            return "z"+listIcons[n];
             return listIcons[n];
         } else return "no_data";
+    }
+    public Long getSingleSunrise(int n) {
+        if (listSunrise[n] != null) {
+            return listSunrise[n];
+        } else return -333l;
+    }
+    public Long getSingleSunset(int n) {
+        if (listSunset[n] != null) {
+            return listSunset[n];
+        } else return -333l;
     }
 
     public static String getTemperature(String input) {

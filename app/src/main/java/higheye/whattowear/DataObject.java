@@ -11,6 +11,8 @@ public class DataObject {
     private Double rain;
     private Double snow;
     private String icon;
+    private Long sunrise;
+    private Long sunset;
 
     public DataObject (Long data, Double temp, Double cloud, Double rain, Double snow, String icon) {
         this.data = data;
@@ -19,6 +21,17 @@ public class DataObject {
         this.rain = rain;
         this.snow = snow;
         this.icon = icon;
+    }
+
+    public DataObject (Long data, Double temp, Double cloud, Double rain, Double snow, String icon, Long sunrise, Long sunset) {
+        this.data = data;
+        this.temp = temp;
+        this.cloud = cloud;
+        this.rain = rain;
+        this.snow = snow;
+        this.icon = icon;
+        this.sunrise = sunrise;
+        this.sunset = sunset;
     }
 
     public Long getSingleDate() {
@@ -55,5 +68,15 @@ public class DataObject {
         if (icon != null) {
             return "z"+icon;
         } else return null;
+    }
+    public Long getSingleSunrise() {
+        if (sunrise != null) {
+            return sunrise;
+        } else return -9999l;
+    }
+    public Long getSingleSunset() {
+        if (sunset != null) {
+            return sunset;
+        } else return -9999l;
     }
 }

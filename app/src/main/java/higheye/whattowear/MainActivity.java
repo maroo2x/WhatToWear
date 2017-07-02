@@ -70,8 +70,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mCoords = (TextView) findViewById(R.id.mLatitudeText);
-        mAddress = (TextView) findViewById(R.id.mLongitudeText);
+        mCoords = (TextView) findViewById(R.id.textView1);
+        mAddress = (TextView) findViewById(R.id.textView2);
         spinner = (ProgressBar) findViewById(R.id.progressBar1);
         spinner.setVisibility(View.GONE);
 //        spinner.setVisibility(View.VISIBLE);
@@ -154,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         String cityName = addresses.get(0).getAddressLine(0);
         String stateName = addresses.get(0).getAddressLine(1);
         String countryName = addresses.get(0).getAddressLine(2);
+        if (countryName == null){return cityName + ", " + stateName;}
         return cityName + ", " + stateName + ", " + countryName;
     }
 
@@ -235,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         protected void onPostExecute(Boolean result) {
             int n = 0;
             // format weather data
-            mCoords.setText("Latitude: " + locationAdapter.getmLatitudeText() + ",\n " + "Longitude: " + locationAdapter.getmLongitudeText());
+//            mCoords.setText("Latitude: " + locationAdapter.getmLatitudeText() + ",\n " + "Longitude: " + locationAdapter.getmLongitudeText());
             mAddress.setText(locationAdapter.getAddress());
             dataHandler.setSingleString(weatherAdapter.getCurrentWeather(), 0);
             dataHandler.DefineStrings(weatherAdapter.getFutureWeather());
@@ -243,14 +244,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             entries = new ArrayList<>();
             int i = 0;
             if (dataHandler.getSingleDate(i)!= -9999l) {
-                dataObject = new DataObject(10l, dataHandler.getSingleTemp(i), dataHandler.getSingleCloud(i), dataHandler.getSingleRain(i), dataHandler.getSingleSnow(i), dataHandler.getSingleIcon(i));}
+                dataObject = new DataObject(10l, dataHandler.getSingleTemp(i), dataHandler.getSingleCloud(i), dataHandler.getSingleRain(i), dataHandler.getSingleSnow(i), dataHandler.getSingleIcon(i), dataHandler.getSingleSunrise(i), dataHandler.getSingleSunset(i));}
                 else {
-                    dataObject = new DataObject(-9999l, dataHandler.getSingleTemp(i), dataHandler.getSingleCloud(i), dataHandler.getSingleRain(i), dataHandler.getSingleSnow(i), dataHandler.getSingleIcon(i));
+                    dataObject = new DataObject(-9999l, dataHandler.getSingleTemp(i), dataHandler.getSingleCloud(i), dataHandler.getSingleRain(i), dataHandler.getSingleSnow(i), dataHandler.getSingleIcon(i), dataHandler.getSingleSunrise(i), dataHandler.getSingleSunset(i));
                 }
                 entries.add(i, dataObject);
 
             for (i = 1; i < 20; i++) {
-                dataObject = new DataObject(dataHandler.getSingleDate(i), dataHandler.getSingleTemp(i), dataHandler.getSingleCloud(i), dataHandler.getSingleRain(i), dataHandler.getSingleSnow(i), dataHandler.getSingleIcon(i));
+                dataObject = new DataObject(dataHandler.getSingleDate(i), dataHandler.getSingleTemp(i), dataHandler.getSingleCloud(i), dataHandler.getSingleRain(i), dataHandler.getSingleSnow(i), dataHandler.getSingleIcon(i), dataHandler.getSingleSunrise(i), dataHandler.getSingleSunset(i));
                 entries.add(i, dataObject);
             }
 
