@@ -92,9 +92,9 @@ if (dataObject.getSingleDate() != -9999l){
         if (temp != null) {
             if (unit == 1) {
                 double tempF = (dataObject.getSingleTemp() * 9 / 5) + 32;
-                temp.setText(tempF + "\u00b0F");
+                temp.setText(Math.round(tempF) + "\u00b0F");
             } else {
-                temp.setText(dataObject.getSingleTemp() + "\u00b0C");
+                temp.setText(Math.round(dataObject.getSingleTemp()) + "\u00b0C");
             }
         }
         if (clouds != null) {
