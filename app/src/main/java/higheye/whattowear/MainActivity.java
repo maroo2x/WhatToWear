@@ -342,17 +342,19 @@ return super.onCreateOptionsMenu(menu);
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.menuItemCelsius:
-            {      unit = 0;
+            {   unit = 0;
+                if (entries!= null){
                 adapter = new CustomAdapter(this, R.layout.custom_row, entries, unit); // unit: 0 = C, 1 = F
                 list = (ListView) findViewById(R.id.list);
-                list.setAdapter(adapter);
+                list.setAdapter(adapter);}
                 return true;}
             case R.id.menuItemFahrenheit:
             {  unit = 1;
+                if (entries!= null){
                 adapter = new CustomAdapter(this, R.layout.custom_row, entries, unit); // unit: 0 = C, 1 = F
                 list = (ListView) findViewById(R.id.list);
                 list.setAdapter(adapter);
-                return true;}
+                return true;}}
             default:
                 return super.onOptionsItemSelected(item);
         }
