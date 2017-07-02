@@ -32,9 +32,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -123,33 +121,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 return;
             }
         }
-        //check if current location is available
-//        mLastLocationIsTrue = LocationServices.FusedLocationApi.getLocationAvailability(mGoogleApiClient);
-
- /*       // get last location
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        // format data location and address if exists
-        if (mLastLocation != null) {
-            latitude = String.valueOf(mLastLocation.getLatitude());
-            longitude = String.valueOf(mLastLocation.getLongitude());
-            locationAdapter.setCoords(latitude, longitude);
-            try {
-                address = getAddress(Double.parseDouble(locationAdapter.getmLatitudeText()), Double.parseDouble(locationAdapter.getmLongitudeText()));
-                locationAdapter.setAddress(address);
-                checkAsynctask(MainActivity.this.getCurrentFocus());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            // update last location
-            //          LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, (LocationListener) this);
-            //          mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            mCoords.setText(R.string.no_current_location);
-//          spinner.setVisibility(View.GONE);
-//          return;
-        }
-        */
-
         checkAsynctask(findViewById(android.R.id.content));
     }
 
@@ -186,7 +157,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         return cityName + ", " + stateName + ", " + countryName;
     }
 
-    //    public void checkAsynctask() {
     public void checkAsynctask(View view) {
 //        spinner.setVisibility(View.VISIBLE);
         if (mLastLocation != null) {
@@ -272,8 +242,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             // new arraylist adapter
             entries = new ArrayList<>();
             int i = 0;
-            dataObject = new DataObject(10l, dataHandler.getSingleTemp(i), dataHandler.getSingleCloud(i), dataHandler.getSingleRain(i), dataHandler.getSingleSnow(i), dataHandler.getSingleIcon(i));
-            entries.add(i, dataObject);
+            if (dataHandler.getSingleDate(i)!= -9999l) {
+                dataObject = new DataObject(10l, dataHandler.getSingleTemp(i), dataHandler.getSingleCloud(i), dataHandler.getSingleRain(i), dataHandler.getSingleSnow(i), dataHandler.getSingleIcon(i));}
+                else {
+                    dataObject = new DataObject(-9999l, dataHandler.getSingleTemp(i), dataHandler.getSingleCloud(i), dataHandler.getSingleRain(i), dataHandler.getSingleSnow(i), dataHandler.getSingleIcon(i));
+                }
+                entries.add(i, dataObject);
 
             for (i = 1; i < 20; i++) {
                 dataObject = new DataObject(dataHandler.getSingleDate(i), dataHandler.getSingleTemp(i), dataHandler.getSingleCloud(i), dataHandler.getSingleRain(i), dataHandler.getSingleSnow(i), dataHandler.getSingleIcon(i));
@@ -318,24 +292,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }
     }
 
-    public String getDateFromUnix(long unixtime) {
-        Date date = new Date(unixtime * 1000L); // *1000 is to convert seconds to milliseconds
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z"); // the format of your date
-//        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm - EEE, d. MMM"); // the format of your date
-        String formatedDate = SimpleDateFormat.getDateTimeInstance(2, 3).format(date);
-//        String formatedDate = sdf.format(date);
-        return formatedDate;
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.navigation, menu);
-//        getMenuInflater().inflate(R.menu.navigation, menu);
-//        MenuItem item = menu.findItem(R.id.app_bar_switch);
-//        item.setActionView(R.layout.switch_layout);
-//        MenuItemCompat.setActionView(item, R.layout.switch_layout);
 return super.onCreateOptionsMenu(menu);
-//        return true;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {

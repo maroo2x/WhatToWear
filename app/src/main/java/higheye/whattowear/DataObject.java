@@ -24,31 +24,31 @@ public class DataObject {
     public Long getSingleDate() {
         if (data != null) {
             return data;
-        } else return 0l;
+        } else return -9999l;
     }
 
     public Double getSingleTemp() {
         if (temp != null) {
             return temp;
-        } else return 0d;
+        } else return -9999d;
     }
 
     public Double getSingleCloud() {
         if (cloud != null) {
             return cloud;
-        } else return 0d;
+        } else return -9999d;
     }
 
     public Double getSingleRain() {
         if (rain != null) {
             return rain;
-        } else return 0d;
+        } else return -9999d;
     }
 
     public Double getSingleSnow() {
         if (snow != null) {
             return snow;
-        } else return 0d;
+        } else return -9999d;
     }
 
     public String getSingleIcon() {

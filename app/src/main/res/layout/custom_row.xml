@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorPrimaryBlack"
-        android:text="Medium Text"
+        android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorPrimaryDark"
-        android:text="Medium Text"
+        android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_below="@+id/datetime"/>
 
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/temp"
-        android:text="clouds"
+        android:text=""
         android:textColor="@color/colorPrimaryDark" />
 
     <TextView
@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/clouds"
-        android:text="rain"
+        android:text=""
         android:textColor="@color/colorPrimaryDark" />
 
     <TextView
@@ -43,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rain"
-        android:text="snow"
+        android:text=""
         android:textColor="@color/colorPrimaryDark" />
 
     <ImageView

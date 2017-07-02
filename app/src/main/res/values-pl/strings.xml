@@ -1,12 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">WhatToWear</string>
-    <string name="no_current_location">no current location</string>
+    <string name="no_current_location">brak aktualnego położenia</string>
     <string name="title_activity_main2">MainActivity2</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="today">Today</string>
-    <string name="tomorrow">Tomorrow</string>
-    <string name="now">now</string>
-    <string name="no_data">no data</string>
+    <string name="today">Dziś</string>
+    <string name="tomorrow">Jutro</string>
+    <string name="now">Teraz</string>
+    <string name="no_data">brak danych</string>
 </resources>

@@ -113,7 +113,7 @@ public class DataHandler {
     public Long getSingleDate(int n) {
         if (listDate[n] != null) {
             return listDate[n];
-        } else return 0l;
+        } else return -9999l;
 
     }
 
