@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
@@ -59,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     ArrayList<DataObject> entries;
     ProgressBar spinner;
     LocationListener locationListener;
+    int unit;
+    CustomAdapter adapter;
 
     private Switch switchbtn;
 
@@ -279,7 +280,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 entries.add(i, dataObject);
             }
 
-            CustomAdapter adapter = new CustomAdapter(mContext, R.layout.custom_row, entries);
+            adapter = new CustomAdapter(mContext, R.layout.custom_row, entries, unit); // unit: 0 = C, 1 = F
             list = (ListView) findViewById(R.id.list);
             list.setAdapter(adapter);
             spinner.setVisibility(View.GONE);
@@ -328,21 +329,30 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.navigation, menu);
+        getMenuInflater().inflate(R.menu.navigation, menu);
 //        getMenuInflater().inflate(R.menu.navigation, menu);
-        MenuItem item = menu.findItem(R.id.switchForActionBar);
+//        MenuItem item = menu.findItem(R.id.app_bar_switch);
 //        item.setActionView(R.layout.switch_layout);
-        return true;
+//        MenuItemCompat.setActionView(item, R.layout.switch_layout);
+return super.onCreateOptionsMenu(menu);
+//        return true;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.menuItem1:
-                return true;
-            case R.id.menuItem2:
-                return true;
+            case R.id.menuItemCelsius:
+            {      unit = 0;
+                adapter = new CustomAdapter(this, R.layout.custom_row, entries, unit); // unit: 0 = C, 1 = F
+                list = (ListView) findViewById(R.id.list);
+                list.setAdapter(adapter);
+                return true;}
+            case R.id.menuItemFahrenheit:
+            {  unit = 1;
+                adapter = new CustomAdapter(this, R.layout.custom_row, entries, unit); // unit: 0 = C, 1 = F
+                list = (ListView) findViewById(R.id.list);
+                list.setAdapter(adapter);
+                return true;}
             default:
                 return super.onOptionsItemSelected(item);
         }

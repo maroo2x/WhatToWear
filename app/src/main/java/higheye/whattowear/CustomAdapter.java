@@ -54,10 +54,12 @@ class CustomAdapter extends ArrayAdapter<DataObject> {
     private ArrayList<DataObject> entries;
     private LayoutInflater mInflater;
     private int mViewResourceId;
+    private int unit;
 
-    public CustomAdapter(Context context, int textViewResourceId, ArrayList<DataObject> entries) {
+    public CustomAdapter(Context context, int textViewResourceId, ArrayList<DataObject> entries, int unit) { // unit: 0 = C, 1 = F
         super(context, R.layout.custom_row, entries);
         this.entries = entries;
+        this.unit = unit;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mViewResourceId = textViewResourceId;
     }
@@ -85,7 +87,11 @@ class CustomAdapter extends ArrayAdapter<DataObject> {
                 }
 
             if (temp != null) {
-                temp.setText(dataObject.getSingleTemp()+"\u00b0");
+                if (unit == 1){
+                    double tempF = (dataObject.getSingleTemp()*9/5)+32;
+                temp.setText(tempF+"\u00b0F");}
+                else  {
+                    temp.setText(dataObject.getSingleTemp()+"\u00b0C");}
             }
             if (clouds != null) {
                 clouds.setText("clouds(%): "+dataObject.getSingleCloud());
@@ -258,7 +264,6 @@ temp < 3			dlugie spodnie, kurtka zimowa, czapka	clothes7
         else if (temp < 2){
             icon_clothes = 7;
         }
-
         return icon_clothes;
     }
 
