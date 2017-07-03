@@ -7,7 +7,7 @@
     <item
         android:id="@+id/menuItemUnit"
         app:showAsAction="always"
-        android:title="unit">
+        android:title="@string/unit">
         <menu>
             <item
                 android:id="@+id/menuItemCelsius"

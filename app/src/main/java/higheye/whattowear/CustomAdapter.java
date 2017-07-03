@@ -184,17 +184,17 @@ if (dataObject.getSingleDate() != -9999l){
             }
             if (25 <= factor) {
                 icon_clothes_up.setImageResource(clothes1_up);
-            } else if (21 <= factor && factor < 25) {
+            } else if (22 <= factor && factor < 25) {
                 icon_clothes_up.setImageResource(clothes2_up);
-            } else if (20 <= factor && factor < 21) {
+            } else if (20 <= factor && factor < 22) {
                 icon_clothes_up.setImageResource(clothes3_up);
-            } else if (16 <= factor && factor < 20) {
+            } else if (17 <= factor && factor < 20) {
                 icon_clothes_up.setImageResource(clothes4_up);
-            } else if (10 <= factor && factor < 16) {
+            } else if (13 <= factor && factor < 17) {
                 icon_clothes_up.setImageResource(clothes5_up);
-            } else if (2 <= factor && factor < 10) {
+            } else if (3 <= factor && factor < 13) {
                 icon_clothes_up.setImageResource(clothes6_up);
-            } else if (factor < 2) {
+            } else if (factor < 3) {
                 icon_clothes_up.setImageResource(clothes7_up);
             } else {
                 icon_clothes_up.setImageResource(na);
@@ -208,7 +208,7 @@ if (dataObject.getSingleDate() != -9999l){
                 if (dataObject.getSingleDate()*1000>(getCorrentSunsetSunrise(dataObject.getSingleSunrise(), dataObject.getSingleDate()))&&dataObject.getSingleDate()*1000<(getCorrentSunsetSunrise(dataObject.getSingleSunset(), dataObject.getSingleDate())))
                 {sunglasses.setImageResource(ic_sunglasses);}
             }
-            if (dataObject.getSingleRain() >= 3) {
+            if (dataObject.getSingleRain() >= 2) {
                 factor--;
                 umbrella.setImageResource(ic_umbrella);
             }

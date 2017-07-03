@@ -20,6 +20,9 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -39,6 +42,7 @@ import java.util.Locale;
 import static android.support.v4.content.PermissionChecker.PERMISSION_GRANTED;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+    private AdView mAdView;
     TextView mCoords;
     TextView mAddress;
     ListView list;
@@ -69,12 +73,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         mCoords = (TextView) findViewById(R.id.textView1);
         mAddress = (TextView) findViewById(R.id.textView2);
         spinner = (ProgressBar) findViewById(R.id.progressBar1);
         spinner.setVisibility(View.GONE);
-//        spinner.setVisibility(View.VISIBLE);
- //       Toast.makeText(this, "toast right after spinner", Toast.LENGTH_SHORT).show();
+        // advert
+       MobileAds.initialize(this, "ca-app-pub-9181728221541409~1070109579");
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         locationRequest = new LocationRequest();
         locationRequest.setInterval(1);
         locationRequest.setFastestInterval(1);
@@ -89,18 +98,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             Toast.makeText(this, "Not connected...", Toast.LENGTH_SHORT).show();
 //            spinner.setVisibility(View.GONE);
         }
-        switchbtn = (Switch) findViewById(R.id.switchForActionBar);
-/*        switchbtn.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+ //       switchbtn = (Switch) findViewById(R.id.switchForActionBar);
 
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView,
-                                         boolean isChecked) {
-                if(isChecked){
-                }else{
-                }
-            }
-        });
-*/
     }
 
     // connection with API failed
@@ -187,6 +186,33 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }
 
         @Override
+        protected void onPreExecute() {
+            spinner.setVisibility(View.VISIBLE);
+
+// get last location
+            if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_GRANTED);
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_GRANTED);
+                return;
+            }
+            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            // format data location and address if exists
+            while (mLastLocation == null) {
+                updateLocation();
+                break;
+            }
+            latitude = String.valueOf(mLastLocation.getLatitude());
+            longitude = String.valueOf(mLastLocation.getLongitude());
+            locationAdapter.setCoords(latitude, longitude);
+            try {
+                address = getAddress(Double.parseDouble(locationAdapter.getmLatitudeText()), Double.parseDouble(locationAdapter.getmLongitudeText()));
+                locationAdapter.setAddress(address);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
         protected Boolean doInBackground(Integer... ints) {
             try {
                 URL url = new URL("http://api.openweathermap.org/data/2.5/weather?lat=" + locationAdapter.getmLatitudeText() + "&lon=" + locationAdapter.getmLongitudeText() + "&units=metric&appid=7e7469bd4b8aec9b7684f7b5dd63d3b5");
@@ -258,33 +284,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             list = (ListView) findViewById(R.id.list);
             list.setAdapter(adapter);
             spinner.setVisibility(View.GONE);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            spinner.setVisibility(View.VISIBLE);
-
-// get last location
-            if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_GRANTED);
-                    requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_GRANTED);
-                return;
-            }
-            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            // format data location and address if exists
-            while (mLastLocation == null) {
-                updateLocation();
-                break;
-            }
-                latitude = String.valueOf(mLastLocation.getLatitude());
-                longitude = String.valueOf(mLastLocation.getLongitude());
-                locationAdapter.setCoords(latitude, longitude);
-                try {
-                    address = getAddress(Double.parseDouble(locationAdapter.getmLatitudeText()), Double.parseDouble(locationAdapter.getmLongitudeText()));
-                    locationAdapter.setAddress(address);
-                } catch (IOException e) {
-                    e.printStackTrace();
-            }
         }
 
         @Override
