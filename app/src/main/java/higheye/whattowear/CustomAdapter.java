@@ -103,9 +103,9 @@ if (dataObject.getSingleDate() != -9999l){
 
           //      temp.setText(getCorrentSunsetSunrise(dataObject.getSingleSunrise(), dataObject.getSingleDate())+"\n"+dataObject.getSingleDate()*1000+"\n"+getCorrentSunsetSunrise(dataObject.getSingleSunset(), dataObject.getSingleDate()));
             }
-        }// ("%.2f", d)
+        }
         if (clouds != null && dataObject.getSingleCloud()!=0) {
-            clouds.setText(getContext().getString(R.string.clouds) + String.format("%.2f", dataObject.getSingleCloud()));
+          //  clouds.setText(getContext().getString(R.string.clouds) + String.format("%.2f", dataObject.getSingleCloud()));
         }
         if (clouds != null && dataObject.getSingleRain()!=0) {
             rain.setText(getContext().getString(R.string.rain) + String.format("%.2f", dataObject.getSingleRain()));

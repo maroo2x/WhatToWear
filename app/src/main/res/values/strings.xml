@@ -12,4 +12,5 @@
     <string name="clouds">clouds(%):</string>
     <string name="rain">rain(mm/3h):</string>
     <string name="snow">snow(mm/3h):</string>
+    <string name="getting_location_data">Getting location data...</string>
 </resources>

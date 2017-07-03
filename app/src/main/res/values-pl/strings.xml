@@ -13,4 +13,5 @@
     <string name="clouds">zachmurzenie(%):</string>
     <string name="rain">deszcz(mm/3godz.):</string>
     <string name="snow">śnieg(mm/3godz.):</string>
+    <string name="getting_location_data">Pobieranie danych lokalizacyjnych...</string>
 </resources>

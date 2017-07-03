@@ -22,7 +22,7 @@
         android:layout_above="@+id/button1"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:text="TextView 2"
+        android:text="@string/getting_location_data"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -33,16 +33,16 @@
     <Button
         android:id="@+id/button1"
         style="@style/Theme.AppCompat.Light.DarkActionBar"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/button_image"
         android:gravity="bottom"
         android:onClick="checkAsynctask"
-        android:text="checkResults"
+        android:text=""
         tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="315dp" />
+        tools:layout_editor_absoluteY="315dp"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true" />
 
     <ListView
         android:id="@+id/list"
