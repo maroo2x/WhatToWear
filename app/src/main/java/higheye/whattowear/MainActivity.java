@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     CustomAdapter adapter;
 
     private Switch switchbtn;
-
     @Override
     public void onLocationChanged(Location location) {
         // Do something with the location
@@ -296,7 +295,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.navigation, menu);
-return super.onCreateOptionsMenu(menu);
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {

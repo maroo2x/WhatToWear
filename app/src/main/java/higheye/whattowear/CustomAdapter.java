@@ -108,10 +108,10 @@ if (dataObject.getSingleDate() != -9999l){
           //  clouds.setText(getContext().getString(R.string.clouds) + String.format("%.2f", dataObject.getSingleCloud()));
         }
         if (clouds != null && dataObject.getSingleRain()!=0) {
-            rain.setText(getContext().getString(R.string.rain) + String.format("%.2f", dataObject.getSingleRain()));
+            rain.setText(getContext().getString(R.string.rain)+"\n" + String.format("%.2f", dataObject.getSingleRain()));
         }
         if (clouds != null && dataObject.getSingleSnow()!=0) {
-            snow.setText(getContext().getString(R.string.snow) + String.format("%.2f", dataObject.getSingleSnow()));
+            snow.setText(getContext().getString(R.string.snow)+"\n" + String.format("%.2f", dataObject.getSingleSnow()));
         }
         if (icon_weather != null) {
             switch (dataObject.getSingleIcon()) {
