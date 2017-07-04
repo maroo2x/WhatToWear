@@ -6,5 +6,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorButton">#ff4056</color>
     <color name="colorButtonNormal">#40a3ff</color>
+    <color name="list_background1">#c7d7fa</color>
+    <color name="list_background2">#e1e6ff</color>
 
 </resources>

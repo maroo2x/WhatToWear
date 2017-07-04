@@ -245,6 +245,12 @@ temp < 3			dlugie spodnie, kurtka zimowa, czapka	clothes7
 else {
     datetime.setText(R.string.no_data);
 }
+if (position%2==0){
+    convertView.setBackgroundResource(R.color.list_background1);
+}
+else {
+    convertView.setBackgroundResource(R.color.list_background2);
+}
         return convertView;
     }
 

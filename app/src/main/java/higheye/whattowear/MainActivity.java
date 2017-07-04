@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+
         locationRequest = new LocationRequest();
         locationRequest.setInterval(1);
         locationRequest.setFastestInterval(1);
@@ -152,8 +153,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         String cityName = addresses.get(0).getAddressLine(0);
         String stateName = addresses.get(0).getAddressLine(1);
         String countryName = addresses.get(0).getAddressLine(2);
-        if (countryName == null){return cityName + ", " + stateName;}
-        return cityName + ", " + stateName + ", " + countryName;
+        if (countryName == null){return cityName + "\n" + stateName;}
+        return cityName + "\n" + stateName + ", " + countryName;
     }
 
     public void checkAsynctask(View view) {

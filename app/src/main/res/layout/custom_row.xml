@@ -9,6 +9,7 @@
         android:id="@+id/datetime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:textColor="@color/colorPrimaryBlack"
         android:layout_centerHorizontal="true"
         android:text=""
@@ -31,9 +32,11 @@
         android:layout_height="wrap_content"
         android:paddingStart="20dp"
         android:paddingLeft="20dp"
-        android:layout_below="@+id/icon_weather"
         android:text=""
-        android:textColor="@color/colorPrimaryDark" />
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_below="@+id/icon_weather"
+        android:layout_toRightOf="@+id/rain"
+        android:layout_toEndOf="@+id/rain" />
 
     <TextView
         android:id="@+id/rain"
@@ -41,38 +44,36 @@
         android:layout_height="wrap_content"
         android:paddingStart="20dp"
         android:paddingLeft="20dp"
-        android:layout_below="@+id/clouds"
-        android:text=""
-        android:textColor="@color/colorPrimaryDark" />
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_alignBaseline="@+id/clouds"
+        android:layout_alignBottom="@+id/clouds"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/snow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/rain"
         android:paddingStart="20dp"
         android:paddingLeft="20dp"
-        android:layout_below="@+id/rain"
-        android:text=""
         android:textColor="@color/colorPrimaryDark" />
 
     <ImageView
         android:id="@+id/icon_weather"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="20dp"
-        android:paddingLeft="20dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/temp"
+        android:scaleType="fitXY"
         app:srcCompat="@color/common_google_signin_btn_text_dark_default" />
 
     <ImageView
         android:id="@+id/icon_clothes_up"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:paddingEnd="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="10dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/datetime"
         android:layout_toLeftOf="@+id/icon_umbrella"
         android:layout_toStartOf="@+id/icon_umbrella"
@@ -94,19 +95,18 @@
         android:id="@+id/icon_umbrella"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_below="@+id/datetime"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignTop="@+id/icon_clothes_up"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
     <ImageView
         android:id="@+id/icon_sunglasses"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_below="@+id/icon_umbrella"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"/>
-
+        android:layout_alignBottom="@+id/icon_clothes_up"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

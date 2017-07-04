@@ -23,7 +23,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:text="@string/getting_location_data"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -34,6 +34,7 @@
     <Button
         android:id="@+id/button1"
         style="@style/Theme.AppCompat.Light.DarkActionBar"
+        android:layout_marginTop="15dp"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/button_image"
@@ -43,7 +44,8 @@
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="315dp"
         android:layout_below="@+id/textView1"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"/>
 
     <ListView
         android:id="@+id/list"
