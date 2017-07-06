@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="higheye.whattowear.SwipeActivity">
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menuItemUnit"
+        app:showAsAction="always"
+        android:title="@string/unit">
+        <menu>
+            <item
+                android:id="@+id/menuItemCelsius"
+                app:showAsAction="never|collapseActionView"
+                android:title="\u00b0C" />
+            <item
+                android:id="@+id/menuItemFahrenheit"
+                app:showAsAction="never|collapseActionView"
+                android:title="°F" />
+
+        </menu>
+    </item>
+</menu>

@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         mCoords = (TextView) findViewById(R.id.textView1);
         mAddress = (TextView) findViewById(R.id.textView2);
         spinner = (ProgressBar) findViewById(R.id.progressBar1);
@@ -83,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
        MobileAds.initialize(this, "ca-app-pub-9181728221541409~1070109579");
         mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+ //       mAdView.loadAd(adRequest);
 
         locationRequest = new LocationRequest();
         locationRequest.setInterval(1);
@@ -284,6 +283,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             adapter = new CustomAdapter(mContext, R.layout.custom_row, entries, unit); // unit: 0 = C, 1 = F
             list = (ListView) findViewById(R.id.list);
             list.setAdapter(adapter);
+
+
+
             spinner.setVisibility(View.GONE);
         }
 
@@ -320,6 +322,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
+
 }
 
 /*

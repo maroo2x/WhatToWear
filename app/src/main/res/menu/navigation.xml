@@ -17,7 +17,6 @@
                 android:id="@+id/menuItemFahrenheit"
                 app:showAsAction="never|collapseActionView"
                 android:title="°F" />
-
         </menu>
     </item>
     <!--
