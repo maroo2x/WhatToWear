@@ -50,17 +50,9 @@ public class ForecastFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.forecast_fragment_layout, container, false);
         // new arraylist adapter
         entries = new ArrayList<>();
-        int i = 0;
-        if (dataHandler.getSingleDate(i)!= -9999l) {
-            dataObject = new DataObject(10l, dataHandler.getSingleTemp(i), dataHandler.getSingleCloud(i), dataHandler.getSingleRain(i), dataHandler.getSingleSnow(i), dataHandler.getSingleIcon(i), dataHandler.getSingleSunrise(i), dataHandler.getSingleSunset(i));}
-        else {
-            dataObject = new DataObject(-9999l, dataHandler.getSingleTemp(i), dataHandler.getSingleCloud(i), dataHandler.getSingleRain(i), dataHandler.getSingleSnow(i), dataHandler.getSingleIcon(i), dataHandler.getSingleSunrise(i), dataHandler.getSingleSunset(i));
-        }
-        entries.add(i, dataObject);
-
-        for (i = 1; i < 20; i++) {
+        for (int i = 1; i < 20; i++) {
             dataObject = new DataObject(dataHandler.getSingleDate(i), dataHandler.getSingleTemp(i), dataHandler.getSingleCloud(i), dataHandler.getSingleRain(i), dataHandler.getSingleSnow(i), dataHandler.getSingleIcon(i), dataHandler.getSingleSunrise(i), dataHandler.getSingleSunset(i));
-            entries.add(i, dataObject);
+            entries.add(i-1, dataObject);
         }
 
         adapter = new CustomAdapter(getActivity(), R.layout.custom_row, entries, unit); // unit: 0 = C, 1 = F

@@ -14,6 +14,7 @@ public class DataObject {
     private Long sunrise;
     private Long sunset;
 
+    /*
     public DataObject (Long data, Double temp, Double cloud, Double rain, Double snow, String icon) {
         this.data = data;
         this.temp = temp;
@@ -22,6 +23,7 @@ public class DataObject {
         this.snow = snow;
         this.icon = icon;
     }
+    */
 
     public DataObject (Long data, Double temp, Double cloud, Double rain, Double snow, String icon, Long sunrise, Long sunset) {
         this.data = data;

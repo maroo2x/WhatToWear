@@ -20,13 +20,20 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            android:textAlignment="center"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:text="reload"/>
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:title="What to Wear">
+            <Button
+                android:id="@+id/button1"
+                style="@style/Theme.AppCompat.Light.DarkActionBar"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/button_image"
+                android:gravity="bottom"
+                android:onClick="checkAsynctask"
+                android:text=""
+                android:layout_below="@+id/textView1"/>
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
@@ -38,6 +45,7 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_dialog_email" />
+
     <ProgressBar
         android:id="@+id/progressBar1"
         style="?android:attr/progressBarStyleLarge"
@@ -52,7 +60,7 @@
         android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         ads:adSize="BANNER"
