@@ -15,4 +15,5 @@
     <string name="snow">śnieg(mm/3godz.):</string>
     <string name="getting_location_data">Pobieranie danych lokalizacyjnych...</string>
     <string name="unit">jednostka</string>
+
 </resources>

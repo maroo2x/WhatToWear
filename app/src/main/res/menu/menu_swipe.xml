@@ -8,20 +8,4 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="always" />
-    <item
-        android:id="@+id/menuItemUnit"
-        app:showAsAction="always"
-        android:title="@string/unit">
-        <menu>
-            <item
-                android:id="@+id/menuItemCelsius"
-                app:showAsAction="never|collapseActionView"
-                android:title="\u00b0C" />
-            <item
-                android:id="@+id/menuItemFahrenheit"
-                app:showAsAction="never|collapseActionView"
-                android:title="°F" />
-
-        </menu>
-    </item>
 </menu>

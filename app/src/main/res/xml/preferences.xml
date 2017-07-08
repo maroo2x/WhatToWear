@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:accessibilityTraversalAfter="@+id/male"
+        android:defaultValue="true"
+        android:elevation="10dp"
+        android:key="key1"
+        android:summary=""
+        android:switchTextOff="male"
+        android:switchTextOn="female"
+        android:title="Gender" />
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="unit"
+        android:summary=""
+        android:title="Unit" />
+    <SwitchPreference
+        android:key="time"
+        android:title="Time"
+        android:summary=""
+        android:defaultValue="true" />
+    <SwitchPreference
+        android:key="key4"
+        android:title="Theme"
+        android:summary=""
+        android:defaultValue="true" />
+</PreferenceScreen>

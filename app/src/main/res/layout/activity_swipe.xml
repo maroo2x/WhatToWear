@@ -23,29 +23,37 @@
             android:textAlignment="center"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:title="What to Wear">
+            app:title="">
             <Button
                 android:id="@+id/button1"
                 style="@style/Theme.AppCompat.Light.DarkActionBar"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@drawable/button_image"
-                android:gravity="bottom"
+                android:layout_gravity="start"
+                android:gravity="center"
                 android:onClick="checkAsynctask"
                 android:text=""
                 android:layout_below="@+id/textView1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="WHAT TO WEAR"
+                android:gravity="center"
+                android:layout_gravity="center"
+                />
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.design.widget.FloatingActionButton
+ <!--   <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_dialog_email" />
-
+-->
     <ProgressBar
         android:id="@+id/progressBar1"
         style="?android:attr/progressBarStyleLarge"
@@ -62,7 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
+        android:layout_gravity="bottom|center_horizontal"
         ads:adSize="BANNER"
         ads:adUnitId="ca-app-pub-9181728221541409/4023575976">
     </com.google.android.gms.ads.AdView>

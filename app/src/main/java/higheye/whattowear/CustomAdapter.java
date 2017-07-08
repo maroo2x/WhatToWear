@@ -1,6 +1,8 @@
 package higheye.whattowear;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.support.v7.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,14 +60,17 @@ class CustomAdapter extends ArrayAdapter<DataObject> {
     private ArrayList<DataObject> entries;
     private LayoutInflater mInflater;
     private int mViewResourceId;
-    private int unit;
+    private boolean unit;
+    private boolean time;
 
-    public CustomAdapter(Context context, int textViewResourceId, ArrayList<DataObject> entries, int unit) { // unit: 0 = C, 1 = F
+    public CustomAdapter(Context context, int textViewResourceId, ArrayList<DataObject> entries) { // unit: 0 = C, 1 = F
         super(context, R.layout.custom_row, entries);
         this.entries = entries;
-        this.unit = unit;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mViewResourceId = textViewResourceId;
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        this.unit = preferences.getBoolean("unit", false);
+        this.time = preferences.getBoolean("time", false);
     }
 
     @Override
@@ -94,7 +99,7 @@ class CustomAdapter extends ArrayAdapter<DataObject> {
             }
 
             if (temp != null) {
-                if (unit == 1) {
+                if (unit == true) {
                     double tempF = (dataObject.getSingleTemp() * 9 / 5) + 32;
                     temp.setText(Math.round(tempF) + "\u00b0F");
                 } else {
@@ -283,6 +288,8 @@ temp < 3			dlugie spodnie, kurtka zimowa, czapka	clothes7
     public String getDateFromUnix(long unixtime) {
         String today = getContext().getString(R.string.today);
         String tomorrow = getContext().getString(R.string.tomorrow);
+        String formatedTime;
+        SimpleDateFormat timeFormat;
         Date date = new Date(unixtime * 1000L); // *1000 is to convert seconds to milliseconds
         //current day of the year
         Calendar now = Calendar.getInstance();
@@ -293,7 +300,15 @@ temp < 3			dlugie spodnie, kurtka zimowa, czapka	clothes7
 //      format current time and date
         SimpleDateFormat dayWeekForecast = new SimpleDateFormat("EEE");
         SimpleDateFormat dayMonthForecast = new SimpleDateFormat("d. MMM");
-        String formatedTime = SimpleDateFormat.getTimeInstance(3).format(date);
+
+        if (time == false) {
+            timeFormat = new SimpleDateFormat("HH:mm");
+        }
+        else {
+            timeFormat = new SimpleDateFormat("hh:mm aa");
+        }
+        formatedTime = timeFormat.format(date);
+//      formatedTime = SimpleDateFormat.getTimeInstance(3).format(date);
         String formatedDayWeek = dayWeekForecast.format(date);
         String formatedDayMonth = dayMonthForecast.format(date);
 //        return nowDay+", "+forecastDay;

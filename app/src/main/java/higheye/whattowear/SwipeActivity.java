@@ -2,6 +2,7 @@ package higheye.whattowear;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -9,8 +10,6 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -68,7 +67,7 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
     LocationListener locationListener;
     int unit;
     CustomAdapter adapter;
-
+    static PlaceholderFragment fragment;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -90,7 +89,7 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
         setContentView(R.layout.activity_swipe);
 
         spinner = (ProgressBar) findViewById(R.id.progressBar1);
- //       spinner.setVisibility(View.GONE);
+        //       spinner.setVisibility(View.GONE);
         // advert
         MobileAds.initialize(this, "ca-app-pub-9181728221541409~1070109579");
         mAdView = (AdView) findViewById(R.id.adView);
@@ -114,6 +113,7 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -122,14 +122,14 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+/*        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
     }
 
 
@@ -148,12 +148,36 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_settings:
+                Intent i = new Intent(this, SettingsActivity.class);
+                startActivity(i);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
+
+ /*       switch (id) {
+            case R.id.menuItemCelsius:
+            {   unit = 0;
+                 *//*
+                    adapter = new CustomAdapter(this, R.layout.custom_row, entries, unit); // unit: 0 = C, 1 = F
+                    list = (ListView) findViewById(R.id.list);
+                    list.setAdapter(adapter);
+                *//*
+                return true;}
+            case R.id.menuItemFahrenheit:
+            {  unit = 1;
+                *//*
+                    adapter = new CustomAdapter(this, R.layout.custom_row, entries, unit); // unit: 0 = C, 1 = F
+                    list = (ListView) findViewById(R.id.list);
+                    list.setAdapter(adapter);
+                    *//*
+                    return true;}
+            default:
+                return super.onOptionsItemSelected(item);
+        }*/
 
     @Override
     public void onLocationChanged(Location location) {
@@ -178,7 +202,7 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
          * number.
          */
         public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
+            fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
@@ -228,11 +252,10 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
             }
             return null;
         }
+
         @Override
-        public android.support.v4.app.Fragment getItem(int position)
-        {
-            switch (position)
-            {
+        public android.support.v4.app.Fragment getItem(int position) {
+            switch (position) {
                 case 0:
                     return new CurrentWeatherFragment();
                 case 1:
@@ -331,8 +354,13 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
             dataHandler.setSingleString(weatherAdapter.getCurrentWeather(), 0);
             dataHandler.DefineStrings(weatherAdapter.getFutureWeather());
             // Set up the ViewPager with the sections adapter.
-            mViewPager = (ViewPager) findViewById(R.id.container);
             mViewPager.setAdapter(mSectionsPagerAdapter);
+/*
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.detach(fragment);
+            fragmentTransaction.attach(fragment);
+            fragmentTransaction.commit();
+*/
             spinner.setVisibility(View.GONE);
         }
 
@@ -340,6 +368,7 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
         protected void onProgressUpdate(Void... values) {
         }
     }
+
     // connection with API failed
     @Override
     public void onConnectionFailed(ConnectionResult arg0) {
@@ -390,7 +419,9 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
         String cityName = addresses.get(0).getAddressLine(0);
         String stateName = addresses.get(0).getAddressLine(1);
         String countryName = addresses.get(0).getAddressLine(2);
-        if (countryName == null){return cityName + "\n" + stateName;}
+        if (countryName == null) {
+            return cityName + "\n" + stateName;
+        }
         return cityName + "\n" + stateName + ", " + countryName;
     }
 
@@ -399,8 +430,7 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
         if (mLastLocation != null) {
             new SwipeActivity.Asynctask(getApplicationContext()).execute(0);
 //            Toast.makeText(this, "Asynctask 1", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             updateLocation();
             onConnected(Bundle.EMPTY);
         }

@@ -21,7 +21,6 @@ public class ForecastFragment extends Fragment implements View.OnClickListener {
     DataHandler dataHandler = new DataHandler();
     DataObject dataObject;
     ListView list;
-    int unit;
     CustomAdapter adapter;
 
     @Override
@@ -55,7 +54,7 @@ public class ForecastFragment extends Fragment implements View.OnClickListener {
             entries.add(i-1, dataObject);
         }
 
-        adapter = new CustomAdapter(getActivity(), R.layout.custom_row, entries, unit); // unit: 0 = C, 1 = F
+        adapter = new CustomAdapter(getActivity(), R.layout.custom_row, entries); // unit: 0 = C, 1 = F
         list = (ListView)view.findViewById(R.id.list);
         list.setAdapter(adapter);
 

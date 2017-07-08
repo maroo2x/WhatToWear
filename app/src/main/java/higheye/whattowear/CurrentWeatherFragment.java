@@ -1,8 +1,10 @@
 package higheye.whattowear;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +60,6 @@ public class CurrentWeatherFragment extends Fragment // implements View.OnClickL
 {
     protected Activity mActivity;
     DataHandler dataHandler = new DataHandler();
-    int unit = 0;
 
     @Override
     public void onAttach(Activity act) {
@@ -80,7 +81,6 @@ public class CurrentWeatherFragment extends Fragment // implements View.OnClickL
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.current_fragment_layout, container, false);
-
         int i = 0;
         TextView datetime = (TextView) view.findViewById(R.id.datetime);
         TextView temp = (TextView) view.findViewById(R.id.temp);
@@ -93,8 +93,12 @@ public class CurrentWeatherFragment extends Fragment // implements View.OnClickL
         ImageView icon_clothes_down = (ImageView) view.findViewById(R.id.icon_clothes_down);
         ImageView umbrella = (ImageView) view.findViewById(R.id.icon_umbrella);
         ImageView sunglasses = (ImageView) view.findViewById(R.id.icon_sunglasses);
-LocationAdapter locationAdapter = new LocationAdapter();
+        LocationAdapter locationAdapter = new LocationAdapter();
         address.setText(locationAdapter.getAddress());
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        boolean unit = preferences.getBoolean("unit",false);
+
         if (dataHandler.getSingleDate(i) != -9999l) {
 
 
@@ -105,7 +109,7 @@ LocationAdapter locationAdapter = new LocationAdapter();
             }
 
             if (temp != null) {
-                if (unit == 1) {
+                if (unit == true) {
                     double tempF = (dataHandler.getSingleTemp(i) * 9 / 5) + 32;
                     temp.setText(Math.round(tempF) + "\u00b0F");
                 } else {
@@ -260,6 +264,10 @@ temp < 3			dlugie spodnie, kurtka zimowa, czapka	clothes7
         return view;
     }
 
+    public void fillFieldsCurrent(){
+
+    }
+
     // previous style: displaying as a list
 /*
     @Override
@@ -269,8 +277,8 @@ temp < 3			dlugie spodnie, kurtka zimowa, czapka	clothes7
 */
 
     public String getDateFromUnix(long unixtime) {
-        String today = getContext().getString(R.string.today);
-        String tomorrow = getContext().getString(R.string.tomorrow);
+//        String today = getContext().getString(R.string.today);
+//        String tomorrow = getContext().getString(R.string.tomorrow);
         Date date = new Date(unixtime * 1000L); // *1000 is to convert seconds to milliseconds
         //current day of the year
         Calendar now = Calendar.getInstance();
@@ -285,7 +293,12 @@ temp < 3			dlugie spodnie, kurtka zimowa, czapka	clothes7
         String formatedDayWeek = dayWeekForecast.format(date);
         String formatedDayMonth = dayMonthForecast.format(date);
 //        return nowDay+", "+forecastDay;
+
+
+        return getContext().getString(R.string.now)+"\n"+formatedDayWeek+", " + formatedDayMonth;
+ /*
         if (nowDay == forecastDay) {
+
             return today + ", " + formatedDayMonth + ", " + formatedTime;
         }
         if (nowDay + 1 == forecastDay) {
@@ -293,6 +306,7 @@ temp < 3			dlugie spodnie, kurtka zimowa, czapka	clothes7
         } else {
             return formatedDayWeek + ", " + formatedDayMonth + ", " + formatedTime;
         }
+        */
     }
 
     public Long getCurrentSunsetSunrise(Long sunsetOrSunrise, Long currentDay) {

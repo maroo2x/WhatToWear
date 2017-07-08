@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     ArrayList<DataObject> entries;
     ProgressBar spinner;
     LocationListener locationListener;
-    int unit;
     CustomAdapter adapter;
 
     private Switch switchbtn;
@@ -280,7 +279,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 entries.add(i, dataObject);
             }
 
-            adapter = new CustomAdapter(mContext, R.layout.custom_row, entries, unit); // unit: 0 = C, 1 = F
+            adapter = new CustomAdapter(mContext, R.layout.custom_row, entries); // unit: 0 = C, 1 = F
             list = (ListView) findViewById(R.id.list);
             list.setAdapter(adapter);
 
@@ -303,24 +302,25 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
-        switch (item.getItemId()) {
+/*        switch (item.getItemId()) {
             case R.id.menuItemCelsius:
-            {   unit = 0;
+            {   unit = true;
                 if (entries!= null){
-                adapter = new CustomAdapter(this, R.layout.custom_row, entries, unit); // unit: 0 = C, 1 = F
+                adapter = new CustomAdapter(this, R.layout.custom_row, entries); // unit: 0 = C, 1 = F
                 list = (ListView) findViewById(R.id.list);
                 list.setAdapter(adapter);}
                 return true;}
             case R.id.menuItemFahrenheit:
-            {  unit = 1;
+            {  unit = false;
                 if (entries!= null){
-                adapter = new CustomAdapter(this, R.layout.custom_row, entries, unit); // unit: 0 = C, 1 = F
+                adapter = new CustomAdapter(this, R.layout.custom_row, entries); // unit: 0 = C, 1 = F
                 list = (ListView) findViewById(R.id.list);
                 list.setAdapter(adapter);
                 return true;}}
             default:
                 return super.onOptionsItemSelected(item);
-        }
+        }*/
+        return super.onOptionsItemSelected(item);
     }
 
 
