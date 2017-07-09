@@ -18,6 +18,12 @@
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="male">male</string>
+    <string name="female">female</string>
+    <string name="summaryOff">test1</string>
+    <string name="summaryOn">test2</string>
+    <string name="stC">°C</string>
+    <string name="stF">°F</string>
 
 
 </resources>

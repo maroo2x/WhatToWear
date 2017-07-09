@@ -70,6 +70,7 @@ public class CurrentWeatherFragment extends Fragment // implements View.OnClickL
     @Override
     public void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
+
     }
 
     @Override

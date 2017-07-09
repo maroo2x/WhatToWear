@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="male">male</string>
+    <string name="female">female</string>
+    <string name="stC">°C</string>
+    <string name="stF">°F</string>
+</resources>
