@@ -68,6 +68,8 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
     int unit;
     CustomAdapter adapter;
     static PlaceholderFragment fragment;
+    boolean firstRun = true;
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -76,6 +78,7 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
@@ -86,10 +89,13 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState!=null){
+            firstRun = savedInstanceState.getBoolean("firstRun");
+        }
         setContentView(R.layout.activity_swipe);
 
         spinner = (ProgressBar) findViewById(R.id.progressBar1);
-        //       spinner.setVisibility(View.GONE);
+               spinner.setVisibility(View.GONE);
         // advert
         MobileAds.initialize(this, "ca-app-pub-9181728221541409~1070109579");
         mAdView = (AdView) findViewById(R.id.adView);
@@ -131,7 +137,6 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });*/
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -386,7 +391,10 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
                 return;
             }
         }
-        checkAsynctask(findViewById(android.R.id.content));
+        if (firstRun==true){
+            checkAsynctask(findViewById(android.R.id.content));
+
+        }
     }
 
     @Override
@@ -394,7 +402,6 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     protected void onStart() {
-        mGoogleApiClient.connect();
         super.onStart();
     }
 
@@ -428,9 +435,11 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
     public void checkAsynctask(View view) {
 //        spinner.setVisibility(View.VISIBLE);
         if (mLastLocation != null) {
+            firstRun = false;
             new SwipeActivity.Asynctask(getApplicationContext()).execute(0);
 //            Toast.makeText(this, "Asynctask 1", Toast.LENGTH_SHORT).show();
         } else {
+            firstRun = true;
             updateLocation();
             onConnected(Bundle.EMPTY);
         }
@@ -444,5 +453,9 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, (LocationListener) this);
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+    }
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        savedInstanceState.putBoolean("firstRun", false);
     }
 }

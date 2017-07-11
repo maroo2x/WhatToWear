@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdView;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -61,6 +63,21 @@ public class CurrentWeatherFragment extends Fragment // implements View.OnClickL
     protected Activity mActivity;
     DataHandler dataHandler = new DataHandler();
 
+    String tempToSaveF;
+    String tempWhenRainToSaveF;
+    String tempToSaveC;
+    String tempWhenRainToSaveC;
+    double factor;
+    String iconToSave;
+    boolean umbrellaIfWear;
+    boolean sunglassesIfWear;
+    String dateToSave;
+    double tempF;
+    Long singleDate;
+    double singleRain;
+    boolean unit;
+    private AdView mAdView;
+
     @Override
     public void onAttach(Activity act) {
         super.onAttach(act);
@@ -68,23 +85,31 @@ public class CurrentWeatherFragment extends Fragment // implements View.OnClickL
     }
 
     @Override
-    public void onCreate(Bundle saveInstanceState) {
-        super.onCreate(saveInstanceState);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
     }
 
     @Override
-    public void onActivityCreated(Bundle saveInstanceState) {
-        super.onActivityCreated(saveInstanceState);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.current_fragment_layout, container, false);
+
+/*        MobileAds.initialize(mActivity, "ca-app-pub-9181728221541409~1070109579");
+        mAdView = (AdView) view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);*/
+
         int i = 0;
         TextView datetime = (TextView) view.findViewById(R.id.datetime);
+        TextView datetimeWhenRain = (TextView) view.findViewById(R.id.datetimeWhenRain);
         TextView temp = (TextView) view.findViewById(R.id.temp);
+        TextView tempWhenRain = (TextView) view.findViewById(R.id.tempWhenRain);
         TextView clouds = (TextView) view.findViewById(R.id.clouds);
         TextView rain = (TextView) view.findViewById(R.id.rain);
         TextView snow = (TextView) view.findViewById(R.id.snow);
@@ -96,40 +121,87 @@ public class CurrentWeatherFragment extends Fragment // implements View.OnClickL
         ImageView sunglasses = (ImageView) view.findViewById(R.id.icon_sunglasses);
         LocationAdapter locationAdapter = new LocationAdapter();
         address.setText(locationAdapter.getAddress());
-
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
-        boolean unit = preferences.getBoolean("unit",false);
 
-        if (dataHandler.getSingleDate(i) != -9999l) {
+        if (savedInstanceState != null){
+            tempWhenRainToSaveF = savedInstanceState.getString("tempWhenRainToSaveF");
+            tempToSaveC = savedInstanceState.getString("tempToSaveC");
+            tempWhenRainToSaveC = savedInstanceState.getString("tempWhenRainToSaveC");
+            iconToSave = savedInstanceState.getString("iconToSave");
+            dateToSave = savedInstanceState.getString("dateToSave");
+            umbrellaIfWear = savedInstanceState.getBoolean("umbrellaIfWear");
+            sunglassesIfWear = savedInstanceState.getBoolean("sunglassesIfWear");
+            unit = savedInstanceState.getBoolean("unit");
+            singleRain = savedInstanceState.getDouble("singleRain");
+            tempF = savedInstanceState.getDouble("tempF");
+            factor = savedInstanceState.getDouble("factor");
+            singleDate = savedInstanceState.getLong("singleDate");
+        }
+else
+        {
+            unit = preferences.getBoolean("unit", false);
+            dateToSave = "" + getDateFromUnix(dataHandler.getSingleDate(i));
+            tempF = (dataHandler.getSingleTemp(i) * 9 / 5) + 32;
+            tempToSaveF = Math.round(tempF) + "\u00b0F";
+            tempWhenRainToSaveF = Math.round(tempF) + "\u00b0F";
+            tempToSaveC = Math.round(dataHandler.getSingleTemp(i)) + "\u00b0C";
+            tempWhenRainToSaveC = Math.round(dataHandler.getSingleTemp(i)) + "\u00b0C";
+            // check if time is during the day, not night.
+            sunglassesIfWear = dataHandler.getSingleCloud(i) < 50 && (dataHandler.getSingleDate(i) * 1000 > (getCurrentSunsetSunrise(dataHandler.getSingleSunrise(i), dataHandler.getSingleDate(i))) && dataHandler.getSingleDate(i) * 1000 < (getCurrentSunsetSunrise(dataHandler.getSingleSunset(i), dataHandler.getSingleDate(i))));
+            umbrellaIfWear = dataHandler.getSingleRain(i) >= 2;
+            singleDate = dataHandler.getSingleDate(i);
+            singleRain = dataHandler.getSingleRain(i);
+        }
 
-
-            if (dataHandler.getSingleDate(i) == 10l) {
+        if (singleDate != -9999l) {
+            if (singleDate == 10l) {
                 datetime.setText(R.string.now);
             } else if (datetime != null) {
-                datetime.setText("" + getDateFromUnix(dataHandler.getSingleDate(i)));
+                if (singleRain == 0) {
+                    datetime.setText(dateToSave);
+                } else {
+                    datetimeWhenRain.setText(dateToSave);
+                }
             }
 
             if (temp != null) {
                 if (unit == true) {
-                    double tempF = (dataHandler.getSingleTemp(i) * 9 / 5) + 32;
-                    temp.setText(Math.round(tempF) + "\u00b0F");
+                    if (dataHandler.getSingleRain(i) == 0) {
+                        temp.setText(tempToSaveF);
+                    } else {
+                        tempWhenRain.setText(tempWhenRainToSaveF);
+                    }
                 } else {
-                    temp.setText(Math.round(dataHandler.getSingleTemp(i)) + "\u00b0C");
-
+                    if (dataHandler.getSingleRain(i) == 0) {
+                        temp.setText(tempToSaveC);
+                    } else {
+                        tempWhenRain.setText(tempWhenRainToSaveC);
+                    }
                     //      temp.setText(getCorrentSunsetSunrise(dataObject.getSingleSunrise(), dataObject.getSingleDate())+"\n"+dataObject.getSingleDate()*1000+"\n"+getCorrentSunsetSunrise(dataObject.getSingleSunset(), dataObject.getSingleDate()));
                 }
             }
-            if (clouds != null && dataHandler.getSingleCloud(i) != 0) {
-                //  clouds.setText(getContext().getString(R.string.clouds) + String.format("%.2f", dataObject.getSingleCloud()));
-            }
-            if (clouds != null && dataHandler.getSingleRain(i) != 0) {
+
+            if (rain != null && dataHandler.getSingleRain(i) != 0) {
                 rain.setText(getContext().getString(R.string.rain) + "\n" + String.format("%.2f", dataHandler.getSingleRain(i)));
             }
-            if (clouds != null && dataHandler.getSingleSnow(i) != 0) {
+/*            if (clouds != null && dataHandler.getSingleCloud(i) != 0) {
+                clouds.setText(getContext().getString(R.string.clouds) + String.format("%.2f", dataHandler.getSingleCloud(i)));
+            }
+            if (snow != null && dataHandler.getSingleSnow(i) != 0) {
                 snow.setText(getContext().getString(R.string.snow) + "\n" + String.format("%.2f", dataHandler.getSingleSnow(i)));
             }
+*/
+
+            iconToSave = "z" + dataHandler.getSingleIcon(i);
+            factor = dataHandler.getSingleTemp(i);
+            if (dataHandler.getSingleCloud(i) < 50) {
+                factor++;
+            }
+            if (dataHandler.getSingleRain(i) >= 3) {
+                factor--;
+            }
             if (icon_weather != null) {
-                switch ("z"+dataHandler.getSingleIcon(i)) {
+                switch (iconToSave) {
                     case "z01d":
                         icon_weather.setImageResource(z01d);
                         break;
@@ -186,17 +258,11 @@ public class CurrentWeatherFragment extends Fragment // implements View.OnClickL
                         break;
                     default:
                         icon_weather.setImageResource(na);
-                        //                       throw new IllegalArgumentException("No icon: " + dataObject.getSingleIcon());
+                        //        throw new IllegalArgumentException("No icon: " + dataObject.getSingleIcon());
                 }
             }
+
             if (icon_clothes_up != null) {
-                double factor = dataHandler.getSingleTemp(i);
-                if (dataHandler.getSingleCloud(i) < 50) {
-                    factor++;
-                }
-                if (dataHandler.getSingleRain(i) >= 3) {
-                    factor--;
-                }
                 if (25 <= factor) {
                     icon_clothes_up.setImageResource(clothes1_up);
                 } else if (22 <= factor && factor < 25) {
@@ -216,18 +282,6 @@ public class CurrentWeatherFragment extends Fragment // implements View.OnClickL
                 }
             }
             if (icon_clothes_down != null) {
-                double factor = dataHandler.getSingleTemp(i);
-                if (dataHandler.getSingleCloud(i) < 50) {
-                    factor++;
-                    // check if time is during the day, not night.
-                    if (dataHandler.getSingleDate(i) * 1000 > (getCurrentSunsetSunrise(dataHandler.getSingleSunrise(i), dataHandler.getSingleDate(i))) && dataHandler.getSingleDate(i) * 1000 < (getCurrentSunsetSunrise(dataHandler.getSingleSunset(i), dataHandler.getSingleDate(i)))) {
-                        sunglasses.setImageResource(ic_sunglasses);
-                    }
-                }
-                if (dataHandler.getSingleRain(i) >= 2) {
-                    factor--;
-                    umbrella.setImageResource(ic_umbrella);
-                }
                 if (25 <= factor) {
                     icon_clothes_down.setImageResource(clothes1_down);
                 } else if (21 <= factor && factor < 25) {
@@ -245,10 +299,16 @@ public class CurrentWeatherFragment extends Fragment // implements View.OnClickL
                 } else {
                     icon_clothes_down.setImageResource(na);
                 }
-
+            }
+            if (sunglassesIfWear) {
+                sunglasses.setImageResource(ic_sunglasses);
             }
 
-                                    /*
+            if (umbrellaIfWear) {
+                umbrella.setImageResource(ic_umbrella);
+            }
+
+          /*
 25 <= temp			szorty, podkoszulek						clothes1
 21 <= temp < 25		szorty, koszulka				   		clothes2
 20 <= temp < 21		dlugie spodnie, koszulka		    	clothes3
@@ -261,15 +321,9 @@ temp < 3			dlugie spodnie, kurtka zimowa, czapka	clothes7
             datetime.setText(R.string.no_data);
         }
 
-
         return view;
     }
 
-    public void fillFieldsCurrent(){
-
-    }
-
-    // previous style: displaying as a list
 /*
     @Override
     public void onClick(View v) {
@@ -278,10 +332,10 @@ temp < 3			dlugie spodnie, kurtka zimowa, czapka	clothes7
 */
 
     public String getDateFromUnix(long unixtime) {
-//        String today = getContext().getString(R.string.today);
-//        String tomorrow = getContext().getString(R.string.tomorrow);
+//      String today = getContext().getString(R.string.today);
+//      String tomorrow = getContext().getString(R.string.tomorrow);
         Date date = new Date(unixtime * 1000L); // *1000 is to convert seconds to milliseconds
-        //current day of the year
+//      current day of the year
         Calendar now = Calendar.getInstance();
         int nowDay = now.get(Calendar.DAY_OF_YEAR);
 //      forecast day of the year
@@ -296,10 +350,9 @@ temp < 3			dlugie spodnie, kurtka zimowa, czapka	clothes7
 //        return nowDay+", "+forecastDay;
 
 
-        return getContext().getString(R.string.now)+"\n"+formatedDayWeek+", " + formatedDayMonth;
- /*
+        return getContext().getString(R.string.now) + "\n" + formatedDayWeek + ", " + formatedDayMonth;
+/*
         if (nowDay == forecastDay) {
-
             return today + ", " + formatedDayMonth + ", " + formatedTime;
         }
         if (nowDay + 1 == forecastDay) {
@@ -307,7 +360,7 @@ temp < 3			dlugie spodnie, kurtka zimowa, czapka	clothes7
         } else {
             return formatedDayWeek + ", " + formatedDayMonth + ", " + formatedTime;
         }
-        */
+*/
     }
 
     public Long getCurrentSunsetSunrise(Long sunsetOrSunrise, Long currentDay) {
@@ -319,5 +372,42 @@ temp < 3			dlugie spodnie, kurtka zimowa, czapka	clothes7
         int lastSusnetSunriseOfYear = Integer.parseInt(dayOfYear.format(lastSunsetSunrise));
         currentSusnetSunrise = (currentDayOfYear - lastSusnetSunriseOfYear) * TimeUnit.DAYS.toMillis(1) + sunsetOrSunrise * 1000;
         return currentSusnetSunrise;
+    }
+
+    @Override
+    public void onDestroyView(){
+    super.onDestroyView();
+}
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putString("tempWhenRainToSaveF", tempWhenRainToSaveF);
+        savedInstanceState.putString("tempToSaveC", tempToSaveC);
+        savedInstanceState.putString("tempWhenRainToSaveC", tempWhenRainToSaveC);
+        savedInstanceState.putString("iconToSave", iconToSave);
+        savedInstanceState.putString("dateToSave", dateToSave);
+        savedInstanceState.putBoolean("umbrellaIfWear", umbrellaIfWear);
+        savedInstanceState.putBoolean("sunglassesIfWear", sunglassesIfWear);
+        savedInstanceState.putBoolean("unit", unit);
+        savedInstanceState.putDouble("singleRain", singleRain);
+        savedInstanceState.putDouble("tempF", tempF);
+        savedInstanceState.putDouble("factor", factor);
+        savedInstanceState.putLong("singleDate", singleDate);
+
+        /*
+            String tempToSaveF;
+    String tempWhenRainToSaveF;
+    String tempToSaveC;
+    String tempWhenRainToSaveC;
+    String iconToSave;
+    String dateToSave;
+    boolean umbrellaIfWear;
+    boolean sunglassesIfWear;
+    boolean unit;
+    double singleRain;
+    double tempF;
+    double factor;
+    Long singleDate;
+         */
     }
 }

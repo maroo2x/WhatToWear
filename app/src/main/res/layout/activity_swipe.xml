@@ -62,24 +62,25 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_centerInParent="true" />
-    <android.support.v4.view.ViewPager
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_above="@id/adView"/>
+
     <com.google.android.gms.ads.AdView
         xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom|center_horizontal"
-        ads:adSize="BANNER"
+        android:layout_gravity="bottom"
+        ads:adSize="SMART_BANNER"
         ads:adUnitId="ca-app-pub-9181728221541409/4023575976">
     </com.google.android.gms.ads.AdView>
 
-
+    <android.support.v4.view.ViewPager
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/adView"
+        android:layout_marginBottom="50dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </android.support.design.widget.CoordinatorLayout>
