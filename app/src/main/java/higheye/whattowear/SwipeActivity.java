@@ -3,6 +3,7 @@ package higheye.whattowear;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -69,16 +70,17 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
     CustomAdapter adapter;
     static PlaceholderFragment fragment;
     boolean firstRun = true;
+    Bundle savedInstanceState;
 
-/*    private SharedPreferences.OnSharedPreferenceChangeListener listener =
+    private SharedPreferences.OnSharedPreferenceChangeListener listener =
             new SharedPreferences.OnSharedPreferenceChangeListener() {
                 @Override
                 public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-                    if (key.equals("setSmsSend") {
-                        onCreate(); // the function you want called
+                    if (key.equals("time") || key.equals("temp")) {
+                        onCreate(savedInstanceState); // the function you want called
                     }
                 }
-            };*/
+            };
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -161,10 +163,12 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
         }
         if (firstRun==true){
             checkAsynctask(findViewById(android.R.id.content));
+//            checkAsynctask();
         }
     }
 
     public void checkAsynctask(View view) {
+//        public void checkAsynctask() {
 //        spinner.setVisibility(View.VISIBLE);
         if (mLastLocation != null) {
             firstRun = false;
@@ -227,6 +231,7 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
     public void onLocationChanged(Location location) {
 
     }
+
 
     /**
      * A placeholder fragment containing a simple view.
@@ -425,6 +430,7 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
 
     protected void onStart() {
         super.onStart();
+        mViewPager.setAdapter(mSectionsPagerAdapter);
     }
 
     protected void onStop() {

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdView;
 
@@ -394,5 +395,9 @@ temp < 3			dlugie spodnie, kurtka zimowa, czapka	clothes7
     double factor;
     Long singleDate;
          */
+
+    }
+    public void testClass(View view){
+        Toast.makeText(mActivity, "Asynctask 1", Toast.LENGTH_SHORT).show();
     }
 }
