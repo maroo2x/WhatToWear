@@ -123,22 +123,7 @@ public class CurrentWeatherFragment extends Fragment // implements View.OnClickL
         address.setText(locationAdapter.getAddress());
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
 
-        if (savedInstanceState != null){
-            tempWhenRainToSaveF = savedInstanceState.getString("tempWhenRainToSaveF");
-            tempToSaveC = savedInstanceState.getString("tempToSaveC");
-            tempWhenRainToSaveC = savedInstanceState.getString("tempWhenRainToSaveC");
-            iconToSave = savedInstanceState.getString("iconToSave");
-            dateToSave = savedInstanceState.getString("dateToSave");
-            umbrellaIfWear = savedInstanceState.getBoolean("umbrellaIfWear");
-            sunglassesIfWear = savedInstanceState.getBoolean("sunglassesIfWear");
-            unit = savedInstanceState.getBoolean("unit");
-            singleRain = savedInstanceState.getDouble("singleRain");
-            tempF = savedInstanceState.getDouble("tempF");
-            factor = savedInstanceState.getDouble("factor");
-            singleDate = savedInstanceState.getLong("singleDate");
-        }
-else
-        {
+
             unit = preferences.getBoolean("unit", false);
             dateToSave = "" + getDateFromUnix(dataHandler.getSingleDate(i));
             tempF = (dataHandler.getSingleTemp(i) * 9 / 5) + 32;
@@ -151,7 +136,7 @@ else
             umbrellaIfWear = dataHandler.getSingleRain(i) >= 2;
             singleDate = dataHandler.getSingleDate(i);
             singleRain = dataHandler.getSingleRain(i);
-        }
+
 
         if (singleDate != -9999l) {
             if (singleDate == 10l) {

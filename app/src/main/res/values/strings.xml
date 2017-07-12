@@ -14,7 +14,7 @@
     <string name="snow">snow(mm/3h):</string>
     <string name="getting_location_data">Getting location data...</string>
     <string name="unit">unit</string>
-    <string name="title_activity_swipe">SwipeActivity</string>
+    <string name="title_activity_swipe">WhatToWear</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_settings">Settings</string>

@@ -70,6 +70,16 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
     static PlaceholderFragment fragment;
     boolean firstRun = true;
 
+/*    private SharedPreferences.OnSharedPreferenceChangeListener listener =
+            new SharedPreferences.OnSharedPreferenceChangeListener() {
+                @Override
+                public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+                    if (key.equals("setSmsSend") {
+                        onCreate(); // the function you want called
+                    }
+                }
+            };*/
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -88,39 +98,41 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (savedInstanceState!=null){
-            firstRun = savedInstanceState.getBoolean("firstRun");
-        }
-        setContentView(R.layout.activity_swipe);
 
+        setContentView(R.layout.activity_swipe);
         spinner = (ProgressBar) findViewById(R.id.progressBar1);
-               spinner.setVisibility(View.GONE);
+        spinner.setVisibility(View.GONE);
+        super.onCreate(savedInstanceState);
         // advert
         MobileAds.initialize(this, "ca-app-pub-9181728221541409~1070109579");
         mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        locationRequest = new LocationRequest();
-        locationRequest.setInterval(1);
-        locationRequest.setFastestInterval(1);
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setNumUpdates(1);
-//        spinner.setVisibility(View.VISIBLE);
-        // call api client
-        buildGoogleApiClient();
-        if (mGoogleApiClient != null) {
-            mGoogleApiClient.connect();
-        } else {
-            Toast.makeText(this, "Not connected...", Toast.LENGTH_SHORT).show();
-//            spinner.setVisibility(View.GONE);
+        if (savedInstanceState!=null){
+//            mViewPager.setAdapter(mSectionsPagerAdapter);
+            firstRun = savedInstanceState.getBoolean("firstRun");
         }
+        else {
+//      force get location
+            locationRequest = new LocationRequest();
+            locationRequest.setInterval(1);
+            locationRequest.setFastestInterval(1);
+            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            locationRequest.setNumUpdates(1);
 
+//      call api client
+            buildGoogleApiClient();
+            if (mGoogleApiClient != null) {
+                mGoogleApiClient.connect();
+            } else {
+                Toast.makeText(this, "Not connected...", Toast.LENGTH_SHORT).show();
+            }
+        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        // Create the adapter that will return a fragment for each of the three
+        // Create the adapter that will return a fragment for each of the two
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
@@ -136,6 +148,33 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
                         .setAction("Action", null).show();
             }
         });*/
+    }
+
+    @Override
+    public void onConnected(Bundle arg0) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_GRANTED);
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_GRANTED);
+                return;
+            }
+        }
+        if (firstRun==true){
+            checkAsynctask(findViewById(android.R.id.content));
+        }
+    }
+
+    public void checkAsynctask(View view) {
+//        spinner.setVisibility(View.VISIBLE);
+        if (mLastLocation != null) {
+            firstRun = false;
+            new SwipeActivity.Asynctask(getApplicationContext()).execute(0);
+//            Toast.makeText(this, "Asynctask 1", Toast.LENGTH_SHORT).show();
+        } else {
+//            firstRun = true;
+            updateLocation();
+            onConnected(Bundle.EMPTY);
+        }
     }
 
     @Override
@@ -155,7 +194,7 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
         //noinspection SimplifiableIfStatement
         switch (id) {
             case R.id.action_settings:
-                Intent i = new Intent(this, SettingsActivity.class);
+                Intent i = new Intent(SwipeActivity.this, SettingsActivity.class);
                 startActivity(i);
                 return true;
             default:
@@ -288,12 +327,9 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_GRANTED);
                 return;
             }
-            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+//            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
             // format data location and address if exists
-            while (mLastLocation == null) {
-                updateLocation();
-                break;
-            }
+/**/
             latitude = String.valueOf(mLastLocation.getLatitude());
             longitude = String.valueOf(mLastLocation.getLongitude());
             locationAdapter.setCoords(latitude, longitude);
@@ -381,21 +417,7 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
 //        spinner.setVisibility(View.GONE);
     }
 
-    @Override
-//    public void onConnected(Bundle arg0) {
-    public void onConnected(Bundle arg0) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_GRANTED);
-                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_GRANTED);
-                return;
-            }
-        }
-        if (firstRun==true){
-            checkAsynctask(findViewById(android.R.id.content));
 
-        }
-    }
 
     @Override
     public void onConnectionSuspended(int i) {
@@ -408,6 +430,10 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
     protected void onStop() {
         mGoogleApiClient.disconnect();
         super.onStop();
+    }
+    protected void onDestroy(){
+        super.onDestroy();
+ //       mGoogleApiClient.disconnect();
     }
 
     // method to build API client
@@ -432,18 +458,7 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
         return cityName + "\n" + stateName + ", " + countryName;
     }
 
-    public void checkAsynctask(View view) {
-//        spinner.setVisibility(View.VISIBLE);
-        if (mLastLocation != null) {
-            firstRun = false;
-            new SwipeActivity.Asynctask(getApplicationContext()).execute(0);
-//            Toast.makeText(this, "Asynctask 1", Toast.LENGTH_SHORT).show();
-        } else {
-            firstRun = true;
-            updateLocation();
-            onConnected(Bundle.EMPTY);
-        }
-    }
+
 
     public void updateLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

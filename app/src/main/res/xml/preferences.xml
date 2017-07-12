@@ -3,15 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <SwitchPreference
-        android:accessibilityTraversalAfter="@+id/male"
-        android:defaultValue="true"
-        android:elevation="10dp"
-        android:key="gender"
-        android:summary=""
-        android:summaryOff="@string/male"
-        android:summaryOn="@string/female"
-        android:title="Gender" />
+
     <SwitchPreference
         android:defaultValue="true"
         android:key="unit"
@@ -26,11 +18,20 @@
         android:summaryOff="24h"
         android:summaryOn="12h"
         android:defaultValue="true" />
+<!--    <SwitchPreference
+        android:accessibilityTraversalAfter="@+id/male"
+        android:defaultValue="true"
+        android:elevation="10dp"
+        android:key="gender"
+        android:summary=""
+        android:summaryOff="@string/male"
+        android:summaryOn="@string/female"
+        android:title="Gender" />
     <SwitchPreference
         android:key="theme"
         android:title="Theme"
         android:summary=""
         android:summaryOff="Light"
         android:summaryOn="Dark"
-        android:defaultValue="true" />
+        android:defaultValue="true" />-->
 </PreferenceScreen>
