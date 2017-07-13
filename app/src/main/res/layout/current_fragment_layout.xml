@@ -73,7 +73,7 @@
         android:layout_height="match_parent"
         android:layout_weight="0.2"
         android:gravity="center"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceSmall" />
     <TextView
         android:id="@+id/temp"
         android:layout_width="0dp"
@@ -88,15 +88,15 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.2"
-        android:gravity="center"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textColor="@color/tempFont"
+        android:textSize="30sp"
+        android:gravity="center" />
 
     <TextView
         android:id="@+id/datetime"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.2"
-
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -106,7 +106,7 @@
         android:layout_height="match_parent"
         android:layout_weight="0.2"
         android:gravity="center"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </LinearLayout>
 

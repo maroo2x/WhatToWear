@@ -134,7 +134,7 @@ public class CurrentWeatherFragment extends Fragment // implements View.OnClickL
             tempWhenRainToSaveC = Math.round(dataHandler.getSingleTemp(i)) + "\u00b0C";
             // check if time is during the day, not night.
             sunglassesIfWear = dataHandler.getSingleCloud(i) < 50 && (dataHandler.getSingleDate(i) * 1000 > (getCurrentSunsetSunrise(dataHandler.getSingleSunrise(i), dataHandler.getSingleDate(i))) && dataHandler.getSingleDate(i) * 1000 < (getCurrentSunsetSunrise(dataHandler.getSingleSunset(i), dataHandler.getSingleDate(i))));
-            umbrellaIfWear = dataHandler.getSingleRain(i) >= 2;
+        umbrellaIfWear = dataHandler.getSingleRain(i) >= 1;
             singleDate = dataHandler.getSingleDate(i);
             singleRain = dataHandler.getSingleRain(i);
 
@@ -152,13 +152,13 @@ public class CurrentWeatherFragment extends Fragment // implements View.OnClickL
 
             if (temp != null) {
                 if (unit == true) {
-                    if (dataHandler.getSingleRain(i) == 0) {
+                    if (singleRain == 0) {
                         temp.setText(tempToSaveF);
                     } else {
                         tempWhenRain.setText(tempWhenRainToSaveF);
                     }
                 } else {
-                    if (dataHandler.getSingleRain(i) == 0) {
+                    if (singleRain == 0) {
                         temp.setText(tempToSaveC);
                     } else {
                         tempWhenRain.setText(tempWhenRainToSaveC);

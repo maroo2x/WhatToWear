@@ -212,7 +212,7 @@ class CustomAdapter extends ArrayAdapter<DataObject> {
                         sunglasses.setImageResource(ic_sunglasses);
                     }
                 }
-                if (dataObject.getSingleRain() >= 2) {
+                if (dataObject.getSingleRain() >= 1) {
                     factor--;
                     umbrella.setImageResource(ic_umbrella);
                 }

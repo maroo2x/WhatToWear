@@ -17,7 +17,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         super.onCreate(savedInstanceState);
         setupActionBar();
         getFragmentManager().beginTransaction().replace(android.R.id.content, new MyPreferenceFragment()).commit();
-
     }
 
     public static class MyPreferenceFragment extends PreferenceFragment
@@ -51,7 +50,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
-
         int itemId = item.getItemId();
         switch (itemId) {
             case android.R.id.home:
@@ -59,9 +57,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 onBackPressed();
                 Toast.makeText(this, "home pressed", Toast.LENGTH_LONG).show();
                 break;
-
         }
-
         return true;
     }
 
