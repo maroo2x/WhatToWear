@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
@@ -55,7 +54,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             case android.R.id.home:
 //                toggle();
                 onBackPressed();
-                Toast.makeText(this, "home pressed", Toast.LENGTH_LONG).show();
+//                Toast.makeText(this, "home pressed", Toast.LENGTH_LONG).show();
                 break;
         }
         return true;
