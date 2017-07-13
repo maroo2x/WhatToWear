@@ -38,6 +38,7 @@ public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
     }
 
     public void setSupportActionBar(@Nullable Toolbar toolbar) {
+        toolbar.findViewById(R.id.appbar);
         getDelegate().setSupportActionBar(toolbar);
     }
 

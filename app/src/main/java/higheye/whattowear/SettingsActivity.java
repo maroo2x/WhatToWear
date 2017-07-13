@@ -4,6 +4,9 @@ package higheye.whattowear;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.ActionBar;
+import android.view.MenuItem;
+import android.widget.Toast;
+
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
@@ -14,6 +17,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         super.onCreate(savedInstanceState);
         setupActionBar();
         getFragmentManager().beginTransaction().replace(android.R.id.content, new MyPreferenceFragment()).commit();
+
     }
 
     public static class MyPreferenceFragment extends PreferenceFragment
@@ -25,6 +29,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             addPreferencesFromResource(R.xml.preferences);
         }
     }
+
+    /**
+     * Set up the {@link android.app.ActionBar}, if the API is available.
+     */
+
     private void setupActionBar() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -32,6 +41,30 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
+
+
+    @Override
+    public void onBackPressed() {
+        // code here to show dialog
+        super.onBackPressed();  // optional depending on your needs
+    }
+
+    @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+
+        int itemId = item.getItemId();
+        switch (itemId) {
+            case android.R.id.home:
+//                toggle();
+                onBackPressed();
+                Toast.makeText(this, "home pressed", Toast.LENGTH_LONG).show();
+                break;
+
+        }
+
+        return true;
+    }
+
 }
 
 
