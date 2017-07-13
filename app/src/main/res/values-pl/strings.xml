@@ -19,5 +19,12 @@
     <string name="female">female</string>
     <string name="stC">°C</string>
     <string name="stF">°F</string>
+    <string name="title_activity_swipe">WhatToWear</string>
+    <string name="action_settings">Ustawienia</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="summaryOff">test1</string>
+    <string name="summaryOn">test2</string>
+    <string name="title_activity_settings">Ustawienia</string>
+    <string name="what_to_wear">WHAT TO WEAR</string>
 
 </resources>

@@ -9,5 +9,6 @@
     <color name="list_background1">#c7d7fa</color>
     <color name="list_background2">#e1e6ff</color>
     <color name="tempFont">#ff0008</color>
+    <color name="tempTitle">#ffffff</color>
     <color name="upper_bar_background">#e2e6ff</color>
 </resources>

@@ -170,15 +170,7 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
     public void checkAsynctask(View view) {
 //        public void checkAsynctask() {
 //        spinner.setVisibility(View.VISIBLE);
-        if (mLastLocation != null) {
-            firstRun = false;
-            new SwipeActivity.Asynctask(getApplicationContext()).execute(0);
-//            Toast.makeText(this, "Asynctask 1", Toast.LENGTH_SHORT).show();
-        } else {
-//            firstRun = true;
-            updateLocation();
-            onConnected(Bundle.EMPTY);
-        }
+        new SwipeActivity.Asynctask(getApplicationContext()).execute(0);
     }
 
     @Override
@@ -322,9 +314,13 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
             mContext = context;
         }
 
+        private boolean running = true;
         @Override
         protected void onPreExecute() {
             spinner.setVisibility(View.VISIBLE);
+            if (mLastLocation != null) {
+                firstRun = false;
+//            Toast.makeText(this, "Asynctask 1", Toast.LENGTH_SHORT).show();
 
 // get last location
             if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -344,10 +340,21 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            } else {
+//            firstRun = true;
+                updateLocation();
+                onConnected(Bundle.EMPTY);
+                running = false;
+
+//                spinner.setVisibility(View.GONE);
+            }
         }
 
         @Override
         protected Boolean doInBackground(Integer... ints) {
+            while (running == false) {
+                return false;
+            }
             try {
                 URL url = new URL("http://api.openweathermap.org/data/2.5/weather?lat=" + locationAdapter.getmLatitudeText() + "&lon=" + locationAdapter.getmLongitudeText() + "&units=metric&appid=7e7469bd4b8aec9b7684f7b5dd63d3b5");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();

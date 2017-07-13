@@ -63,6 +63,8 @@
         ads:adUnitId="ca-app-pub-9181728221541409/4023575976">
     </com.google.android.gms.ads.AdView>
 <LinearLayout
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:background="@color/upper_bar_background">
