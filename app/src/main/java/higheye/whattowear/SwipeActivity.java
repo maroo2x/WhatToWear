@@ -15,14 +15,17 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -48,7 +51,7 @@ import java.util.Locale;
 
 import static android.support.v4.content.PermissionChecker.PERMISSION_GRANTED;
 
-public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+public class SwipeActivity extends AppCompatActivity implements ShareActionProvider.OnShareTargetSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private AdView mAdView;
     TextView mCoords;
@@ -71,6 +74,11 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
     static PlaceholderFragment fragment;
     boolean firstRun = true;
     Bundle savedInstanceState;
+    private ShareActionProvider mShareActionProvider;
+    private ShareActionProvider share = null;
+    private EditText editor = null;
+
+    private Intent shareIntent = new Intent(Intent.ACTION_SEND);
 
     private SharedPreferences.OnSharedPreferenceChangeListener listener =
             new SharedPreferences.OnSharedPreferenceChangeListener() {
@@ -134,6 +142,8 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+//        getSupportActionBar().setTitle(null);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // Create the adapter that will return a fragment for each of the two
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -169,16 +179,44 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
 
     public void checkAsynctask(View view) {
 //        public void checkAsynctask() {
-//        spinner.setVisibility(View.VISIBLE);
-        new SwipeActivity.Asynctask(getApplicationContext()).execute(0);
+        spinner.setVisibility(View.VISIBLE);
+        new SwipeActivity.Asynctask(getApplicationContext()).execute();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_swipe, menu);
+        MenuItem menuItem = menu.findItem(R.id.action_bar_share);
+        share = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+//        share.setOnShareTargetSelectedListener(this);
+//            share.setShareIntent(createShareIntent());
+//        setShareIntent(createShareIntent());
+//        return (super.onCreateOptionsMenu(menu));
         return true;
     }
+
+    /*    private void setShareIntent(Intent shareIntent) {
+            if (mShareActionProvider != null) {
+                mShareActionProvider.setShareIntent(shareIntent);
+            }
+        }*/
+    private void createShareIntent() {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Check this WhatToWear app");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=higheye.whattowear");
+        startActivity(Intent.createChooser(shareIntent, "Share using"));
+    }
+
+/*    private Intent createShareIntent() {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT,
+                "http://stackandroid.com");
+        return shareIntent;
+    }*/
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -192,6 +230,12 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
             case R.id.action_settings:
                 Intent i = new Intent(SwipeActivity.this, SettingsActivity.class);
                 startActivity(i);
+                return true;
+            case R.id.action_bar_share:
+                createShareIntent();
+                return true;
+            case R.id.action_bar_refresh:
+                checkAsynctask(findViewById(android.R.id.content));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -222,6 +266,13 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onLocationChanged(Location location) {
 
+    }
+
+    @Override
+    public boolean onShareTargetSelected(ShareActionProvider source, Intent intent) {
+        Toast.makeText(this, intent.getComponent().toString(),
+                Toast.LENGTH_LONG).show();
+        return false;
     }
 
 
@@ -317,7 +368,10 @@ public class SwipeActivity extends AppCompatActivity implements GoogleApiClient.
         private boolean running = true;
         @Override
         protected void onPreExecute() {
-            spinner.setVisibility(View.VISIBLE);
+//            spinner.setVisibility(findViewById(android.R.id.content).VISIBLE);
+//            spinner.setVisibility(getWindow().getDecorView().findViewById(android.R.id.content).VISIBLE);
+
+            Toast.makeText(getApplicationContext(), "spinner should be visible", Toast.LENGTH_SHORT).show();
             if (mLastLocation != null) {
                 firstRun = false;
 //            Toast.makeText(this, "Asynctask 1", Toast.LENGTH_SHORT).show();

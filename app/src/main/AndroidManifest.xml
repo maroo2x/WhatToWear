@@ -47,14 +47,14 @@
                 android:value="higheye.whattowear.SwipeActivity" />
         </activity>
 
-        <activity
-            android:name=".AppCompatPreferenceActivity"
-            android:label="AppCompatPreferenceActivity"
-            android:parentActivityName="higheye.whattowear.SwipeActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="higheye.whattowear.SwipeActivity" />
-        </activity>
+        <!--        <activity
+                    android:name=".AppCompatPreferenceActivity"
+                    android:label="AppCompatPreferenceActivity"
+                    android:parentActivityName="higheye.whattowear.SwipeActivity">
+                    <meta-data
+                        android:name="android.support.PARENT_ACTIVITY"
+                        android:value="higheye.whattowear.SwipeActivity" />
+                </activity>-->
 
     </application>
 
