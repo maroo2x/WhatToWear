@@ -109,37 +109,41 @@ public class SwipeActivity extends AppCompatActivity implements ShareActionProvi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipe);
         spinner = (ProgressBar) findViewById(R.id.progressBar1);
         spinner.setVisibility(View.GONE);
-        super.onCreate(savedInstanceState);
+
         // advert
         MobileAds.initialize(this, "ca-app-pub-9181728221541409~1070109579");
         mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
+        //      call api client
+        buildGoogleApiClient();
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.connect();
+        } else {
+            Toast.makeText(this, "Not connected...", Toast.LENGTH_SHORT).show();
+        }
+//        updateLocation();
         if (savedInstanceState!=null){
 //            mViewPager.setAdapter(mSectionsPagerAdapter);
             firstRun = savedInstanceState.getBoolean("firstRun");
         }
         else {
+            if (mLastLocation == null) {
 //      force get location
-            locationRequest = new LocationRequest();
-            locationRequest.setInterval(1);
-            locationRequest.setFastestInterval(1);
-            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-            locationRequest.setNumUpdates(1);
-
-//      call api client
-            buildGoogleApiClient();
-            if (mGoogleApiClient != null) {
-                mGoogleApiClient.connect();
-            } else {
-                Toast.makeText(this, "Not connected...", Toast.LENGTH_SHORT).show();
+                locationRequest = new LocationRequest();
+                locationRequest.setInterval(1);
+                locationRequest.setFastestInterval(1);
+                locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+                locationRequest.setNumUpdates(1);
             }
         }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 //        getSupportActionBar().setTitle(null);
@@ -171,6 +175,7 @@ public class SwipeActivity extends AppCompatActivity implements ShareActionProvi
                 return;
             }
         }
+        updateLocation();
         if (firstRun==true){
             checkAsynctask(findViewById(android.R.id.content));
 //            checkAsynctask();
@@ -179,6 +184,7 @@ public class SwipeActivity extends AppCompatActivity implements ShareActionProvi
 
     public void checkAsynctask(View view) {
 //        public void checkAsynctask() {
+        mViewPager.setAdapter(null);
         spinner.setVisibility(View.VISIBLE);
         new SwipeActivity.Asynctask(getApplicationContext()).execute();
     }
@@ -368,15 +374,9 @@ public class SwipeActivity extends AppCompatActivity implements ShareActionProvi
         private boolean running = true;
         @Override
         protected void onPreExecute() {
-//            spinner.setVisibility(findViewById(android.R.id.content).VISIBLE);
-//            spinner.setVisibility(getWindow().getDecorView().findViewById(android.R.id.content).VISIBLE);
-
-            Toast.makeText(getApplicationContext(), "spinner should be visible", Toast.LENGTH_SHORT).show();
             if (mLastLocation != null) {
                 firstRun = false;
-//            Toast.makeText(this, "Asynctask 1", Toast.LENGTH_SHORT).show();
 
-// get last location
             if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_GRANTED);
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_GRANTED);
@@ -396,7 +396,6 @@ public class SwipeActivity extends AppCompatActivity implements ShareActionProvi
             }
             } else {
 //            firstRun = true;
-                updateLocation();
                 onConnected(Bundle.EMPTY);
                 running = false;
 
@@ -429,7 +428,7 @@ public class SwipeActivity extends AppCompatActivity implements ShareActionProvi
                 e.printStackTrace();
             }
 
-// call weather API and save current weather and forecast
+            // call weather API and save current weather and forecast
             try {
                 URL url = new URL("http://api.openweathermap.org/data/2.5/forecast?lat=" + locationAdapter.getmLatitudeText() + "&lon=" + locationAdapter.getmLongitudeText() + "&units=metric&appid=06e65c7536988468e72a018ff2e8cf9b");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();

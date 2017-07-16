@@ -25,17 +25,17 @@
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:title="">
 
-            <Button
-                android:id="@+id/button1"
-                style="@style/Theme.AppCompat.Light.DarkActionBar"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_below="@+id/textView1"
-                android:layout_gravity="start"
-                android:background="@drawable/button_image"
-                android:gravity="center"
-                android:onClick="checkAsynctask"
-                android:text="" />
+            <!--            <Button
+                            android:id="@+id/button1"
+                            style="@style/Theme.AppCompat.Light.DarkActionBar"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_below="@+id/textView1"
+                            android:layout_gravity="start"
+                            android:background="@drawable/button_image"
+                            android:gravity="center"
+                            android:onClick="checkAsynctask"
+                            android:text="" />-->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -83,7 +83,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/adView"
-        android:layout_marginBottom="105dp"
+        android:layout_marginBottom="106dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </android.support.design.widget.CoordinatorLayout>
