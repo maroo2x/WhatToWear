@@ -16,12 +16,7 @@
         android:screenOrientation="portrait"
         android:theme="@style/AppTheme">
 <!--        android:configChanges="orientation|screenSize"-->
-        <!--        <activity android:name=".MainActivity">
-                    <intent-filter>
-                        <action android:name="android.intent.action.MAIN" />
 
-                    </intent-filter>
-                </activity>-->
         <!-- category android:name="android.intent.category.LAUNCHER" /! -->
 
         <meta-data
