@@ -17,6 +17,14 @@ public class DataHandler {
     private static String[] listIcons = new String[50];
     private static Long[] listSunrise = new Long[50];
     private static Long[] listSunset = new Long[50];
+    private static Double[] listPressure = new Double[50];
+    private static Double[] listHumidity = new Double[50];
+    private static Double[] listTemp_min = new Double[50];
+    private static Double[] listTemp_max = new Double[50];
+    private static Double[] listVisibility = new Double[50];
+    private static Double[] listWind_speed = new Double[50];
+
+
     private Context context;
 
 
@@ -32,6 +40,7 @@ public class DataHandler {
         for (i = 0; i < 49; i++) {
             int startindex;
             int endIndex;
+            int endIndex2;
             String cutString;
             if (listOfEntries[i] != null && listOfEntries[i] != "") {
                 startindex = listOfEntries[i].indexOf("\"temp\":");
@@ -91,7 +100,6 @@ public class DataHandler {
                         listSunset[i] = Long.parseLong(cutString.substring(9, endIndex));
                     }
                 }
-
                 startindex = listOfEntries[i].indexOf("\"icon\":\"");
                 if (startindex != -1) {
                     cutString = listOfEntries[i].substring(startindex);
@@ -100,6 +108,54 @@ public class DataHandler {
                         listIcons[i] = cutString.substring(8, endIndex-1);
                     }
                 }
+
+
+                startindex = listOfEntries[i].indexOf("\"pressure\":");
+                if (startindex != -1) {
+                    cutString = listOfEntries[i].substring(startindex);
+                    endIndex = cutString.indexOf(",");
+                    listPressure[i] = Double.parseDouble(cutString.substring(11, endIndex));
+                }
+                startindex = listOfEntries[i].indexOf("\"humidity\":");
+                if (startindex != -1) {
+                    cutString = listOfEntries[i].substring(startindex);
+                    endIndex = cutString.indexOf(",");
+                    listHumidity[i] = Double.parseDouble(cutString.substring(11, endIndex));
+                }
+                startindex = listOfEntries[i].indexOf("\"temp_min\":");
+                if (startindex != -1) {
+                    cutString = listOfEntries[i].substring(startindex);
+                    endIndex = cutString.indexOf(",");
+                    listTemp_min[i] = Double.parseDouble(cutString.substring(11, endIndex));
+                }
+                startindex = listOfEntries[i].indexOf("\"temp_max\":");
+                if (startindex != -1) {
+                    cutString = listOfEntries[i].substring(startindex);
+                    endIndex = cutString.indexOf("}");
+                    endIndex2 = cutString.indexOf(",");
+                    if (endIndex2 < endIndex) {
+                        endIndex = endIndex2;
+                    }
+                    listTemp_max[i] = Double.parseDouble(cutString.substring(11, endIndex));
+                }
+                startindex = listOfEntries[i].indexOf("\"visibility\":");
+                if (startindex != -1) {
+                    cutString = listOfEntries[i].substring(startindex);
+                    endIndex = cutString.indexOf(",");
+                    listVisibility[i] = Double.parseDouble(cutString.substring(13, endIndex));
+                }
+                startindex = listOfEntries[i].indexOf("\"speed\":");
+                if (startindex != -1) {
+                    cutString = listOfEntries[i].substring(startindex);
+                    endIndex = cutString.indexOf("}");
+                    endIndex2 = cutString.indexOf(",");
+                    if (endIndex2 < endIndex) {
+                        endIndex = endIndex2;
+                    }
+                    listWind_speed[i] = Double.parseDouble(cutString.substring(8, endIndex));
+                }
+
+
             }
         }
     }
@@ -153,6 +209,51 @@ public class DataHandler {
             return listSunset[n];
         } else return -333l;
     }
+
+    public Double getSinglePressure(int n) {
+        if (listPressure[n] != null) {
+            return listPressure[n];
+        } else return 0d;
+    }
+
+    public Double getSingleHumidity(int n) {
+        if (listHumidity[n] != null) {
+            return listHumidity[n];
+        } else return 0d;
+    }
+
+    public Double getSingleTemp_min(int n) {
+        if (listTemp_min[n] != null) {
+            return listTemp_min[n];
+        } else return 0d;
+    }
+
+    public Double getSingleTemp_max(int n) {
+        if (listTemp_max[n] != null) {
+            return listTemp_max[n];
+        } else return 0d;
+    }
+
+    public Double getSingleVisibility(int n) {
+        if (listVisibility[n] != null) {
+            return listVisibility[n];
+        } else return 0d;
+    }
+
+    public Double getSingleWind_speed(int n) {
+        if (listWind_speed[n] != null) {
+            return listWind_speed[n];
+        } else return 0d;
+    }
+                    /*
+
+    private static Double[] listPressure = new Double[50];
+    private static Double[] listHumidity = new Double[50];
+    private static Double[] listTemp_min = new Double[50];
+    private static Double[] listTemp_max = new Double[50];
+    private static Double[] listVisibility = new Double[50];
+    private static Double[] listWind_speed = new Double[50];
+                 */
 
 
 }

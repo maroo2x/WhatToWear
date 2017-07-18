@@ -120,10 +120,10 @@ public class CurrentWeatherFragment extends Fragment // implements View.OnClickL
         ImageView icon_clothes_down = (ImageView) view.findViewById(R.id.icon_clothes_down);
         ImageView umbrella = (ImageView) view.findViewById(R.id.icon_umbrella);
         ImageView sunglasses = (ImageView) view.findViewById(R.id.icon_sunglasses);
-        LocationAdapter locationAdapter = new LocationAdapter();
+        final LocationAdapter locationAdapter = new LocationAdapter();
         address.setText(locationAdapter.getAddress());
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
-
+        unit = preferences.getBoolean("unit", false);
         // add button listener to create Dialog
         buttonDialog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,10 +132,58 @@ public class CurrentWeatherFragment extends Fragment // implements View.OnClickL
                 final Dialog dialog = new Dialog(mActivity);
                 dialog.setContentView(R.layout.dialog_weather);
                 dialog.setTitle("Title...");
-
+                int i = 0;
                 // set the custom dialog components - text, image and button
                 TextView datetime = (TextView) dialog.findViewById(R.id.datetime);
-                datetime.setText("Android custom dialog example!");
+                datetime.setText("datetime: " + dataHandler.getSingleDate(i));
+                TextView longitude = (TextView) dialog.findViewById(R.id.longitude);
+                longitude.setText("longitude: " + locationAdapter.getmLongitudeText());
+                TextView latitude = (TextView) dialog.findViewById(R.id.latitude);
+                latitude.setText("latitude: " + locationAdapter.getmLatitudeText());
+                TextView pressure = (TextView) dialog.findViewById(R.id.pressure);
+                pressure.setText("pressure: " + dataHandler.getSinglePressure(i) + "hPa");
+                TextView humidity = (TextView) dialog.findViewById(R.id.humidity);
+                humidity.setText("humidity: " + dataHandler.getSingleHumidity(i) + "%");
+                TextView temp = (TextView) dialog.findViewById(R.id.temp);
+                TextView temp_min = (TextView) dialog.findViewById(R.id.temp_min);
+                TextView temp_max = (TextView) dialog.findViewById(R.id.temp_max);
+                if (unit == true) {
+                    temp.setText("temperature: " + ((dataHandler.getSingleTemp(i) * 9 / 5) + 32) + "\u00b0F");
+                    temp_min.setText("temp min: " + ((dataHandler.getSingleTemp_min(i) * 9 / 5) + 32) + "\u00b0F");
+                    temp_max.setText("temp_max: " + ((dataHandler.getSingleTemp_max(i) * 9 / 5) + 32) + "\u00b0F");
+                } else {
+                    temp.setText("temperature: " + dataHandler.getSingleTemp(i) + "\u00b0C");
+                    temp_min.setText("temp min: " + dataHandler.getSingleTemp_min(i) + "\u00b0C");
+                    temp_max.setText("temp_max: " + dataHandler.getSingleTemp_max(i) + "\u00b0C");
+                }
+                TextView visibility = (TextView) dialog.findViewById(R.id.visibility);
+                visibility.setText("visibility: " + dataHandler.getSingleVisibility(i) + "m");
+                TextView wind_speed = (TextView) dialog.findViewById(R.id.wind_speed);
+                wind_speed.setText("wind speed: " + dataHandler.getSingleWind_speed(i) + "m/s");
+                TextView clouds = (TextView) dialog.findViewById(R.id.clouds);
+                clouds.setText("clouds: " + dataHandler.getSingleCloud(i) + "%");
+                TextView rain = (TextView) dialog.findViewById(R.id.rain);
+                rain.setText("rain: " + dataHandler.getSingleRain(i) + "mm/3h");
+                TextView snow = (TextView) dialog.findViewById(R.id.snow);
+                snow.setText("snow: " + dataHandler.getSingleSnow(i) + "mm/3h");
+                TextView sunset = (TextView) dialog.findViewById(R.id.sunset);
+                sunset.setText("sunset: " + dataHandler.getSingleSunset(i));
+                TextView sunrise = (TextView) dialog.findViewById(R.id.sunrise);
+                sunrise.setText("sunrise: " + dataHandler.getSingleSunrise(i));
+                /*
+longitude
+latitude
+temp
+pressure
+humidity
+temp_min
+temp_max
+visibility
+wind_speed
+clouds
+sunset
+sunrise
+                 */
 //                ImageView image = (ImageView) dialog.findViewById(R.id.image);
                 //               image.setImageResource(R.drawable.ic_launcher);
 
@@ -154,7 +202,6 @@ public class CurrentWeatherFragment extends Fragment // implements View.OnClickL
 
 
 
-            unit = preferences.getBoolean("unit", false);
             dateToSave = "" + getDateFromUnix(dataHandler.getSingleDate(i));
             tempF = (dataHandler.getSingleTemp(i) * 9 / 5) + 32;
             tempToSaveF = Math.round(tempF) + "\u00b0F";
