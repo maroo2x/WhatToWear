@@ -540,3 +540,7 @@ public class SwipeActivity extends AppCompatActivity implements ShareActionProvi
         savedInstanceState.putBoolean("firstRun", false);
     }
 }
+
+// example api call
+// http://api.openweathermap.org/data/2.5/weather?lat=49.827442&lon=19.931819&units=metric&appid=7e7469bd4b8aec9b7684f7b5dd63d3b5
+// http://api.openweathermap.org/data/2.5/forecast?lat=49.827442&lon=19.931819&units=metric&appid=06e65c7536988468e72a018ff2e8cf9b

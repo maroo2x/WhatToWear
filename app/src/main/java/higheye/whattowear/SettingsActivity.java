@@ -16,6 +16,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         super.onCreate(savedInstanceState);
         setupActionBar();
         getFragmentManager().beginTransaction().replace(android.R.id.content, new MyPreferenceFragment()).commit();
+//        SwitchPreference pref = (SwitchPreference) findPreference(getString(R.string.));
+
     }
 
     public static class MyPreferenceFragment extends PreferenceFragment

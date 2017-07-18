@@ -4,6 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/buttonShowCustomDialog"
+        android:layout_width="88dp"
+        android:layout_height="38dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/linearLayout"
+        android:text="Show Dialog"
+        android:background="@drawable/button" />
+
     <ImageView
         android:id="@+id/icon_clothes_up"
         android:layout_width="120dp"
@@ -41,7 +51,7 @@
         android:id="@+id/icon_umbrella"
         android:layout_width="90dp"
         android:layout_height="90dp"
-        android:layout_alignTop="@+id/icon_sunglasses"
+        android:layout_alignTop="@+id/icon_clothes_up"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -67,7 +77,8 @@
     android:paddingRight="5dp"
     android:layout_width="match_parent"
     android:layout_height="70dp"
-    android:background="@color/upper_bar_background">
+    android:background="@color/upper_bar_background"
+    android:id="@+id/linearLayout">
 
     <TextView
         android:id="@+id/rain"
@@ -111,5 +122,4 @@
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </LinearLayout>
-
 </RelativeLayout>

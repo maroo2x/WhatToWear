@@ -1,6 +1,7 @@
 package higheye.whattowear;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.support.v7.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,6 +80,7 @@ public class CurrentWeatherFragment extends Fragment // implements View.OnClickL
     double singleRain;
     boolean unit;
     private AdView mAdView;
+    private Button buttonDialog;
 
     @Override
     public void onAttach(Activity act) {
@@ -101,10 +104,7 @@ public class CurrentWeatherFragment extends Fragment // implements View.OnClickL
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.current_fragment_layout, container, false);
 
-/*        MobileAds.initialize(mActivity, "ca-app-pub-9181728221541409~1070109579");
-        mAdView = (AdView) view.findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);*/
+        buttonDialog = (Button) view.findViewById(R.id.buttonShowCustomDialog);
 
         int i = 0;
         TextView datetime = (TextView) view.findViewById(R.id.datetime);
@@ -123,6 +123,35 @@ public class CurrentWeatherFragment extends Fragment // implements View.OnClickL
         LocationAdapter locationAdapter = new LocationAdapter();
         address.setText(locationAdapter.getAddress());
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
+
+        // add button listener to create Dialog
+        buttonDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                // custom dialog
+                final Dialog dialog = new Dialog(mActivity);
+                dialog.setContentView(R.layout.dialog_weather);
+                dialog.setTitle("Title...");
+
+                // set the custom dialog components - text, image and button
+                TextView datetime = (TextView) dialog.findViewById(R.id.datetime);
+                datetime.setText("Android custom dialog example!");
+//                ImageView image = (ImageView) dialog.findViewById(R.id.image);
+                //               image.setImageResource(R.drawable.ic_launcher);
+
+                Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+                // if button is clicked, close the custom dialog
+                dialogButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
+
+
 
 
             unit = preferences.getBoolean("unit", false);

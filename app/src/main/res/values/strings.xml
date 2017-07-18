@@ -8,11 +8,11 @@
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
     <string name="now">now</string>
-    <string name="no_data">no data</string>
+    <string name="no_data">getting data…</string>
     <string name="clouds">clouds(%):</string>
     <string name="rain">rain(mm/3h):</string>
     <string name="snow">snow(mm/3h):</string>
-    <string name="getting_location_data">Getting location data...</string>
+    <string name="getting_location_data">Getting location data…</string>
     <string name="unit">unit</string>
     <string name="title_activity_swipe">WhatToWear</string>
     <string name="action_settings">Settings</string>
