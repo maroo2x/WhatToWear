@@ -1,25 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/dialog_background"
+    android:paddingBottom="20dp"
+    android:paddingLeft="20dp"
+    android:paddingStart="20dp">
 
-    <Button
-        android:id="@+id/dialogButtonOK"
-        android:layout_width="100px"
+    <!--   <Button
+           android:id="@+id/dialogButtonOK"
+           android:layout_width="100px"
+           android:layout_height="wrap_content"
+           android:text=" Ok "
+           android:layout_alignParentTop="true"
+           android:layout_alignParentRight="true"
+           android:layout_alignParentEnd="true" />-->
+
+    <TextView
+        android:id="@+id/cleardata"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=" Ok "
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:paddingTop="20dp"
+        android:textColor="@color/dialog_text"
+        android:textIsSelectable="true" />
 
+    <!--
     <TextView
         android:id="@+id/datetime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#FFF"
-        android:layout_below="@+id/dialogButtonOK"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:paddingTop="20dp"
+        android:textColor="@color/dialog_text"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/longitude"
@@ -28,124 +44,152 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/datetime"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textColor="@color/dialog_text"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/latitude"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_below="@+id/longitude"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/longitude"
+        android:text="TextView"
+        android:textColor="@color/dialog_text"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/temp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_below="@+id/latitude"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/latitude"
+        android:text="TextView"
+        android:textColor="@color/dialog_text"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/pressure"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_below="@+id/humidity"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/humidity"
+        android:text="TextView"
+        android:textColor="@color/dialog_text"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/humidity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/temp_min"
-        android:layout_alignParentStart="true" />
+        android:layout_centerVertical="true"
+        android:text="TextView"
+        android:textColor="@color/dialog_text"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/temp_min"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_below="@+id/temp_max"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/temp_max"
+        android:text="TextView"
+        android:textColor="@color/dialog_text"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/temp_max"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_below="@+id/visibility"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/visibility"
+        android:text="TextView"
+        android:textColor="@color/dialog_text"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/visibility"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_below="@+id/wind_speed"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/wind_speed"
+        android:text="TextView"
+        android:textColor="@color/dialog_text"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/wind_speed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_below="@+id/clouds"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/clouds"
+        android:text="TextView"
+        android:textColor="@color/dialog_text"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/clouds"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_below="@+id/rain"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/rain"
+        android:text="TextView"
+        android:textColor="@color/dialog_text"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/rain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_below="@+id/sunset"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/sunset"
+        android:text="TextView"
+        android:textColor="@color/dialog_text"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/snow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_below="@+id/pressure"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/pressure"
+        android:text="TextView"
+        android:textColor="@color/dialog_text"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/sunset"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_below="@+id/sunrise"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/sunrise"
+        android:text="TextView"
+        android:textColor="@color/dialog_text"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/sunrise"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_below="@+id/temp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/temp"
+        android:text="TextView"
+        android:textColor="@color/dialog_text"
+        android:textIsSelectable="true" />-->
 
 </RelativeLayout>

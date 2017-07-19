@@ -25,6 +25,18 @@
     <string name="stC">°C</string>
     <string name="stF">°F</string>
     <string name="what_to_wear">WHAT TO WEAR</string>
+    <string name="date">date:</string>
+    <string name="longitude">longitude:</string>
+    <string name="latitude">latitude:</string>
+    <string name="sunset">sunset:</string>
+    <string name="sunrise">sunrise:</string>
+    <string name="temperature">temperature:</string>
+    <string name="temp_min">temp min:</string>
+    <string name="temp_max">temp_max:</string>
+    <string name="pressure">pressure:</string>
+    <string name="humidity">humidity:</string>
+    <string name="visibility">visibility:</string>
+    <string name="wind_speed">wind speed:</string>
 
 
 </resources>

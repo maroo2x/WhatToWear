@@ -11,4 +11,6 @@
     <color name="tempFont">#ff0008</color>
     <color name="tempTitle">#ffffff</color>
     <color name="upper_bar_background">#e2e6ff</color>
+    <color name="dialog_background">#000000</color>
+    <color name="dialog_text">#ffffff</color>
 </resources>

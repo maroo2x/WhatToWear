@@ -26,5 +26,17 @@
     <string name="summaryOn">test2</string>
     <string name="title_activity_settings">Ustawienia</string>
     <string name="what_to_wear">WHAT TO WEAR</string>
+    <string name="date">data:</string>
+    <string name="longitude">długośc geog:</string>
+    <string name="latitude">szerokość geog:</string>
+    <string name="sunset">wschód:</string>
+    <string name="sunrise">zachód:</string>
+    <string name="temperature">temperatura:</string>
+    <string name="temp_min">temp min:</string>
+    <string name="temp_max">temp_maks:</string>
+    <string name="pressure">ciśnienie:</string>
+    <string name="humidity">wilgotność:</string>
+    <string name="visibility">widzialność:</string>
+    <string name="wind_speed">prędkość wiatru:</string>
 
 </resources>

@@ -9,6 +9,7 @@ import android.support.v7.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -82,6 +83,10 @@ public class CurrentWeatherFragment extends Fragment // implements View.OnClickL
     private AdView mAdView;
     private Button buttonDialog;
 
+    String tempString;
+    String tempMinString;
+    String tempMaxString;
+
     @Override
     public void onAttach(Activity act) {
         super.onAttach(act);
@@ -124,18 +129,33 @@ public class CurrentWeatherFragment extends Fragment // implements View.OnClickL
         address.setText(locationAdapter.getAddress());
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         unit = preferences.getBoolean("unit", false);
+        dateToSave = "" + getNowDateFromUnix(dataHandler.getSingleDate(i));
+        tempF = (dataHandler.getSingleTemp(i) * 9 / 5) + 32;
+        tempToSaveF = Math.round(tempF) + "\u00b0F";
+        tempWhenRainToSaveF = Math.round(tempF) + "\u00b0F";
+        tempToSaveC = Math.round(dataHandler.getSingleTemp(i)) + "\u00b0C";
+        tempWhenRainToSaveC = Math.round(dataHandler.getSingleTemp(i)) + "\u00b0C";
+        // check if time is during the day, not night.
+        sunglassesIfWear = dataHandler.getSingleCloud(i) < 50 && (dataHandler.getSingleDate(i) * 1000 > (getCurrentSunsetSunrise(dataHandler.getSingleSunrise(i), dataHandler.getSingleDate(i))) && dataHandler.getSingleDate(i) * 1000 < (getCurrentSunsetSunrise(dataHandler.getSingleSunset(i), dataHandler.getSingleDate(i))));
+        umbrellaIfWear = dataHandler.getSingleRain(i) >= 1;
+        singleDate = dataHandler.getSingleDate(i);
+        singleRain = dataHandler.getSingleRain(i);
+
+
         // add button listener to create Dialog
         buttonDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 // custom dialog
                 final Dialog dialog = new Dialog(mActivity);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.dialog_weather);
-                dialog.setTitle("Title...");
+//                dialog.setTitle("Title...");
                 int i = 0;
                 // set the custom dialog components - text, image and button
-                TextView datetime = (TextView) dialog.findViewById(R.id.datetime);
-                datetime.setText("datetime: " + dataHandler.getSingleDate(i));
+                TextView cleardata = (TextView) dialog.findViewById(R.id.cleardata);
+/*                TextView datetime = (TextView) dialog.findViewById(R.id.datetime);
+                datetime.setText("date/time: " + getDateFromUnix(dataHandler.getSingleDate(i)));
                 TextView longitude = (TextView) dialog.findViewById(R.id.longitude);
                 longitude.setText("longitude: " + locationAdapter.getmLongitudeText());
                 TextView latitude = (TextView) dialog.findViewById(R.id.latitude);
@@ -148,10 +168,17 @@ public class CurrentWeatherFragment extends Fragment // implements View.OnClickL
                 TextView temp_min = (TextView) dialog.findViewById(R.id.temp_min);
                 TextView temp_max = (TextView) dialog.findViewById(R.id.temp_max);
                 if (unit == true) {
+                    tempString = ((dataHandler.getSingleTemp(i) * 9 / 5) + 32) + "\u00b0F";
+                    tempMinString = ((dataHandler.getSingleTemp(i) * 9 / 5) + 32) + "\u00b0F";
+                    tempMaxString = ((dataHandler.getSingleTemp_max(i) * 9 / 5) + 32) + "\u00b0F";
+
                     temp.setText("temperature: " + ((dataHandler.getSingleTemp(i) * 9 / 5) + 32) + "\u00b0F");
                     temp_min.setText("temp min: " + ((dataHandler.getSingleTemp_min(i) * 9 / 5) + 32) + "\u00b0F");
                     temp_max.setText("temp_max: " + ((dataHandler.getSingleTemp_max(i) * 9 / 5) + 32) + "\u00b0F");
                 } else {
+                    tempString = dataHandler.getSingleTemp(i) + "\u00b0C";
+                    tempMinString = dataHandler.getSingleTemp_min(i) + "\u00b0C";
+                    tempMaxString = dataHandler.getSingleTemp_max(i) + "\u00b0C";
                     temp.setText("temperature: " + dataHandler.getSingleTemp(i) + "\u00b0C");
                     temp_min.setText("temp min: " + dataHandler.getSingleTemp_min(i) + "\u00b0C");
                     temp_max.setText("temp_max: " + dataHandler.getSingleTemp_max(i) + "\u00b0C");
@@ -167,53 +194,52 @@ public class CurrentWeatherFragment extends Fragment // implements View.OnClickL
                 TextView snow = (TextView) dialog.findViewById(R.id.snow);
                 snow.setText("snow: " + dataHandler.getSingleSnow(i) + "mm/3h");
                 TextView sunset = (TextView) dialog.findViewById(R.id.sunset);
-                sunset.setText("sunset: " + dataHandler.getSingleSunset(i));
+                sunset.setText("sunset: " + getTimeFromUnix(dataHandler.getSingleSunset(i)));
                 TextView sunrise = (TextView) dialog.findViewById(R.id.sunrise);
-                sunrise.setText("sunrise: " + dataHandler.getSingleSunrise(i));
-                /*
-longitude
-latitude
-temp
-pressure
-humidity
-temp_min
-temp_max
-visibility
-wind_speed
-clouds
-sunset
-sunrise
-                 */
+                sunrise.setText("sunrise: " + getTimeFromUnix(dataHandler.getSingleSunrise(i)));*/
+
+                if (unit == true) {
+                    tempString = ((dataHandler.getSingleTemp(i) * 9 / 5) + 32) + "\u00b0F";
+                    tempMinString = ((dataHandler.getSingleTemp(i) * 9 / 5) + 32) + "\u00b0F";
+                    tempMaxString = ((dataHandler.getSingleTemp_max(i) * 9 / 5) + 32) + "\u00b0F";
+                } else {
+                    tempString = dataHandler.getSingleTemp(i) + "\u00b0C";
+                    tempMinString = dataHandler.getSingleTemp_min(i) + "\u00b0C";
+                    tempMaxString = dataHandler.getSingleTemp_max(i) + "\u00b0C";
+                }
+                cleardata.setText(
+                        getString(R.string.date) + " " + getDateFromUnix(dataHandler.getSingleDate(i)) + "\n" +
+                                getString(R.string.longitude) + " " + locationAdapter.getmLongitudeText() + "\n" +
+                                getString(R.string.latitude) + " " + locationAdapter.getmLatitudeText() + "\n" +
+                                getString(R.string.sunset) + " " + getTimeFromUnix(dataHandler.getSingleSunset(i)) + "\n" +
+                                getString(R.string.sunrise) + " " + getTimeFromUnix(dataHandler.getSingleSunrise(i)) + "\n\n" +
+
+                                getString(R.string.temperature) + " " + dataHandler.getSingleTemp(i) + "\u00b0C" + "\n" +
+                                getString(R.string.clouds) + " " + dataHandler.getSingleCloud(i) + "%" + "\n" +
+                                getString(R.string.temp_min) + " " + dataHandler.getSingleTemp_min(i) + "\u00b0C" + "\n" +
+                                getString(R.string.temp_max) + " " + dataHandler.getSingleTemp_max(i) + "\u00b0C" + "\n" +
+                                getString(R.string.pressure) + " " + dataHandler.getSinglePressure(i) + "hPa" + "\n" +
+                                getString(R.string.humidity) + " " + dataHandler.getSingleHumidity(i) + "%" + "\n" +
+                                getString(R.string.visibility) + " " + dataHandler.getSingleVisibility(i) + "m" + "\n" +
+                                getString(R.string.wind_speed) + " " + dataHandler.getSingleWind_speed(i) + "m/s" + "\n" +
+                                getString(R.string.rain) + " " + dataHandler.getSingleRain(i) + "mm/3h" + "\n" +
+                                getString(R.string.snow) + " " + dataHandler.getSingleSnow(i) + "mm/3h" + "\n"
+                );
+
 //                ImageView image = (ImageView) dialog.findViewById(R.id.image);
                 //               image.setImageResource(R.drawable.ic_launcher);
 
-                Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+/*                Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
                 // if button is clicked, close the custom dialog
                 dialogButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
                     }
-                });
+                });*/
                 dialog.show();
             }
         });
-
-
-
-
-            dateToSave = "" + getDateFromUnix(dataHandler.getSingleDate(i));
-            tempF = (dataHandler.getSingleTemp(i) * 9 / 5) + 32;
-            tempToSaveF = Math.round(tempF) + "\u00b0F";
-            tempWhenRainToSaveF = Math.round(tempF) + "\u00b0F";
-            tempToSaveC = Math.round(dataHandler.getSingleTemp(i)) + "\u00b0C";
-            tempWhenRainToSaveC = Math.round(dataHandler.getSingleTemp(i)) + "\u00b0C";
-            // check if time is during the day, not night.
-            sunglassesIfWear = dataHandler.getSingleCloud(i) < 50 && (dataHandler.getSingleDate(i) * 1000 > (getCurrentSunsetSunrise(dataHandler.getSingleSunrise(i), dataHandler.getSingleDate(i))) && dataHandler.getSingleDate(i) * 1000 < (getCurrentSunsetSunrise(dataHandler.getSingleSunset(i), dataHandler.getSingleDate(i))));
-        umbrellaIfWear = dataHandler.getSingleRain(i) >= 1;
-            singleDate = dataHandler.getSingleDate(i);
-            singleRain = dataHandler.getSingleRain(i);
-
 
         if (singleDate != -9999l) {
             if (singleDate == 10l) {
@@ -393,7 +419,7 @@ temp < 3			dlugie spodnie, kurtka zimowa, czapka	clothes7
     }
 */
 
-    public String getDateFromUnix(long unixtime) {
+    public String getNowDateFromUnix(long unixtime) {
 //      String today = getContext().getString(R.string.today);
 //      String tomorrow = getContext().getString(R.string.tomorrow);
         Date date = new Date(unixtime * 1000L); // *1000 is to convert seconds to milliseconds
@@ -425,6 +451,20 @@ temp < 3			dlugie spodnie, kurtka zimowa, czapka	clothes7
 */
     }
 
+    public String getDateFromUnix(long unixtime) {
+        Date date = new Date(unixtime * 1000L); // *1000 is to convert seconds to milliseconds
+//      format current time and date
+        String formatedDate = SimpleDateFormat.getDateInstance(1).format(date);
+        return formatedDate;
+    }
+
+    public String getTimeFromUnix(long unixtime) {
+        Date date = new Date(unixtime * 1000L); // *1000 is to convert seconds to milliseconds
+//      format current time and date
+        String formatedTime = SimpleDateFormat.getTimeInstance(3).format(date);
+        return formatedTime;
+    }
+
     public Long getCurrentSunsetSunrise(Long sunsetOrSunrise, Long currentDay) {
         Long currentSusnetSunrise;
         Date thisDay = new Date(currentDay * 1000);
@@ -437,9 +477,9 @@ temp < 3			dlugie spodnie, kurtka zimowa, czapka	clothes7
     }
 
     @Override
-    public void onDestroyView(){
-    super.onDestroyView();
-}
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -473,7 +513,8 @@ temp < 3			dlugie spodnie, kurtka zimowa, czapka	clothes7
          */
 
     }
-    public void testClass(View view){
+
+    public void testClass(View view) {
         Toast.makeText(mActivity, "Asynctask 1", Toast.LENGTH_SHORT).show();
     }
 }
