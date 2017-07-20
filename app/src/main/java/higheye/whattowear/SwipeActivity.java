@@ -240,34 +240,14 @@ public class SwipeActivity extends AppCompatActivity implements ShareActionProvi
             case R.id.action_bar_share:
                 createShareIntent();
                 return true;
-            case R.id.action_bar_refresh:
+/*            case R.id.action_bar_refresh:
                 checkAsynctask(findViewById(android.R.id.content));
-                return true;
+//                    checkAsynctask();
+                return true;*/
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
- /*       switch (id) {
-            case R.id.menuItemCelsius:
-            {   unit = 0;
-                 *//*
-                    adapter = new CustomAdapter(this, R.layout.custom_row, entries, unit); // unit: 0 = C, 1 = F
-                    list = (ListView) findViewById(R.id.list);
-                    list.setAdapter(adapter);
-                *//*
-                return true;}
-            case R.id.menuItemFahrenheit:
-            {  unit = 1;
-                *//*
-                    adapter = new CustomAdapter(this, R.layout.custom_row, entries, unit); // unit: 0 = C, 1 = F
-                    list = (ListView) findViewById(R.id.list);
-                    list.setAdapter(adapter);
-                    *//*
-                    return true;}
-            default:
-                return super.onOptionsItemSelected(item);
-        }*/
 
     @Override
     public void onLocationChanged(Location location) {

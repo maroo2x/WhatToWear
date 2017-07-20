@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:style="http://schemas.android.com/tools">
 
 
     <SwitchPreference
+        android:id="@+id/switch1"
         android:defaultValue="false"
         android:key="unit"
         android:summaryOff="@string/stC"
         android:summaryOn="@string/stF"
+        android:title="@string/unit"
         android:text="@string/v7_preference_on"
-        android:title="Unit"/>
+        style="@style/AppTheme" />
     <SwitchPreference
+        android:id="@+id/switch2"
         android:key="time"
-        android:title="Time"
+        android:title="@string/time_format"
         android:summary=""
         android:summaryOff="24h"
         android:summaryOn="12h"
+        android:textAllCaps="true"
+        android:text="tekx"
         android:defaultValue="false" />
 <!--    <SwitchPreference
         android:accessibilityTraversalAfter="@+id/male"

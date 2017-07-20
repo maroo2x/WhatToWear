@@ -1,6 +1,7 @@
 package higheye.whattowear;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.ActionBar;
@@ -16,7 +17,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         super.onCreate(savedInstanceState);
         setupActionBar();
         getFragmentManager().beginTransaction().replace(android.R.id.content, new MyPreferenceFragment()).commit();
-//        SwitchPreference pref = (SwitchPreference) findPreference(getString(R.string.));
+
 
     }
 
@@ -26,8 +27,44 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public void onCreate(final Bundle savedInstanceState)
         {
             super.onCreate(savedInstanceState);
+
+            final SharedPreferences preferences = getActivity().getPreferences(getContext().MODE_PRIVATE);
+//            SharedPreferences preferences = PreferenceManager
+//                    .getDefaultSharedPreferences(getContext());
+//            preferences.registerOnSharedPreferenceChangeListener((SharedPreferences.OnSharedPreferenceChangeListener) getContext());
+//            final SharedPreferences.Editor editor = preferences.edit();
             addPreferencesFromResource(R.xml.preferences);
+
+/*            SwitchPreference unitSwitch = (SwitchPreference) findPreference("unit");
+            unitSwitch.setWidgetLayoutResource(R.layout.custom_switch);
+            unitSwitch.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                   boolean unitTrue = Boolean.parseBoolean(newValue.toString());
+                    if (unitTrue) {
+                        Toast.makeText(getContext(), "unitTrue = true ", Toast.LENGTH_SHORT).show();
+//                        editor.putBoolean("unit", true);
+                    }
+                    else {
+                        Toast.makeText(getContext(), "unitTrue = false ", Toast.LENGTH_SHORT).show();
+//                        editor.putBoolean("unit", false);
+                    }
+                    return true;
+                }
+            });*/
         }
+
+
+/*        SwitchPreference timeSwitch = (SwitchPreference) findPreference("SWITCH2");
+        timeSwitch.setWidgetLayoutResource(R.layout.custom_switch);
+        timeSwitch.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                return true;
+            }
+        });*/
+
+
     }
 
     /**

@@ -14,7 +14,7 @@
     <string name="rain">deszcz(mm/3godz.):</string>
     <string name="snow">śnieg(mm/3godz.):</string>
     <string name="getting_location_data">Pobieranie danych lokalizacyjnych…</string>
-    <string name="unit">jednostka</string>
+    <string name="unit">JEDNOSTKA</string>
     <string name="male">male</string>
     <string name="female">female</string>
     <string name="stC">°C</string>
@@ -33,10 +33,10 @@
     <string name="sunrise">zachód:</string>
     <string name="temperature">temperatura:</string>
     <string name="temp_min">temp min:</string>
-    <string name="temp_max">temp_maks:</string>
+    <string name="temp_max">temp maks:</string>
     <string name="pressure">ciśnienie:</string>
     <string name="humidity">wilgotność:</string>
     <string name="visibility">widzialność:</string>
     <string name="wind_speed">prędkość wiatru:</string>
-
+    <string name="time_format">FORMAT CZASU</string>
 </resources>

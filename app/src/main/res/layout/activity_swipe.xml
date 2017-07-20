@@ -24,18 +24,29 @@
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:title="">
+            <!--           <ImageView
+                           android:id="@+id/action_bar_refresh2"
+                           android:layout_width="20dp"
+                           android:layout_height="20dp"
+                           android:src="@drawable/button"
+                           android:orderInCategory="1"
+                           android:text="teste"
+                           android:title="test"
+                           android:layout_gravity="left"
+                           app:showAsAction="always"
+                           android:contentDescription="content" />-->
 
-            <!--            <Button
-                            android:id="@+id/button1"
-                            style="@style/Theme.AppCompat.Light.DarkActionBar"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_below="@+id/textView1"
-                            android:layout_gravity="start"
-                            android:background="@drawable/button_image"
-                            android:gravity="center"
-                            android:onClick="checkAsynctask"
-                            android:text="" />-->
+            <Button
+                android:id="@+id/action_bar_share"
+                style="@style/Theme.AppCompat.Light.DarkActionBar"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_below="@+id/textView1"
+                android:layout_gravity="start"
+                android:background="@drawable/ic_sync_black_24dp"
+                android:gravity="center"
+                android:onClick="checkAsynctask"
+                android:text="" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

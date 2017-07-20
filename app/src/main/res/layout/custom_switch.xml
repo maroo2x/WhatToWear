@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
+
+
+    <Switch xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/custom_switch_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:textColor="@android:color/black"
+        android:textIsSelectable="false"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:thumb="@drawable/switch_thumb"
+        android:track="@drawable/switch_track" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_alignBaseline="@+id/custom_switch_item"
+        android:layout_alignBottom="@+id/custom_switch_item"
+        android:layout_toRightOf="@+id/custom_switch_item"
+        android:layout_toEndOf="@+id/custom_switch_item" />
+
+</RelativeLayout>
