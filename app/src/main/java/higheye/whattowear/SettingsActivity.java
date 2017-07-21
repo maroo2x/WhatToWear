@@ -1,7 +1,6 @@
 package higheye.whattowear;
 
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.ActionBar;
@@ -28,7 +27,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         {
             super.onCreate(savedInstanceState);
 
-            final SharedPreferences preferences = getActivity().getPreferences(getContext().MODE_PRIVATE);
+//            final SharedPreferences preferences = getActivity().getPreferences(getContext().MODE_PRIVATE);
 //            SharedPreferences preferences = PreferenceManager
 //                    .getDefaultSharedPreferences(getContext());
 //            preferences.registerOnSharedPreferenceChangeListener((SharedPreferences.OnSharedPreferenceChangeListener) getContext());

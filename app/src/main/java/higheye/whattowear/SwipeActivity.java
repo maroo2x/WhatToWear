@@ -46,6 +46,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -70,6 +71,7 @@ public class SwipeActivity extends AppCompatActivity implements ShareActionProvi
     ProgressBar spinner;
     LocationListener locationListener;
     int unit;
+    static long lastUpdateTime = 0;
     CustomAdapter adapter;
     static PlaceholderFragment fragment;
     boolean firstRun = true;
@@ -77,6 +79,7 @@ public class SwipeActivity extends AppCompatActivity implements ShareActionProvi
     private ShareActionProvider mShareActionProvider;
     private ShareActionProvider share = null;
     private EditText editor = null;
+
 
     private Intent shareIntent = new Intent(Intent.ACTION_SEND);
 
@@ -385,13 +388,18 @@ public class SwipeActivity extends AppCompatActivity implements ShareActionProvi
 
         @Override
         protected Boolean doInBackground(Integer... ints) {
-            while (running == false) {
-                return false;
+//          check time of last connection   1s - 1000 ; 10 min - 600000
+            Date now = new Date();
+            while (running == false || now.getTime() < lastUpdateTime + 600000L) {
+                //     Toast.makeText(getApplicationContext(), "now < last update+600", Toast.LENGTH_SHORT).show();
+                return true;
             }
             try {
+                //     Toast.makeText(getApplicationContext(), "now is ok", Toast.LENGTH_SHORT).show();
                 URL url = new URL("http://api.openweathermap.org/data/2.5/weather?lat=" + locationAdapter.getmLatitudeText() + "&lon=" + locationAdapter.getmLongitudeText() + "&units=metric&appid=7e7469bd4b8aec9b7684f7b5dd63d3b5");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
+                lastUpdateTime = now.getTime();
                 StringBuilder response = new StringBuilder(50000);
                 try {
                     InputStream in = connection.getInputStream();
@@ -446,7 +454,9 @@ public class SwipeActivity extends AppCompatActivity implements ShareActionProvi
             fragmentTransaction.detach(fragment);
             fragmentTransaction.attach(fragment);
             fragmentTransaction.commit();
-*/
+*//*
+Date now = new Date();
+locationAdapter.setCoords(Long.toString(lastUpdateTime), Long.toString(now.getTime()));*/
             spinner.setVisibility(View.GONE);
         }
 

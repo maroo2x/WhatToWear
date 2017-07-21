@@ -209,22 +209,23 @@ public class CurrentWeatherFragment extends Fragment // implements View.OnClickL
                 }
                 cleardata.setText(
                         getString(R.string.date) + " " + getDateFromUnix(dataHandler.getSingleDate(i)) + "\n" +
-                                getString(R.string.longitude) + " " + locationAdapter.getmLongitudeText() + "\n" +
                                 getString(R.string.latitude) + " " + locationAdapter.getmLatitudeText() + "\n" +
+                                getString(R.string.longitude) + " " + locationAdapter.getmLongitudeText() + "\n" +
                                 getString(R.string.sunset) + " " + getTimeFromUnix(dataHandler.getSingleSunset(i)) + "\n" +
                                 getString(R.string.sunrise) + " " + getTimeFromUnix(dataHandler.getSingleSunrise(i)) + "\n\n" +
 
-                                getString(R.string.temperature) + " " + dataHandler.getSingleTemp(i) + "\u00b0C" + "\n" +
-                                getString(R.string.clouds) + " " + dataHandler.getSingleCloud(i) + "%" + "\n" +
-                                getString(R.string.temp_min) + " " + dataHandler.getSingleTemp_min(i) + "\u00b0C" + "\n" +
-                                getString(R.string.temp_max) + " " + dataHandler.getSingleTemp_max(i) + "\u00b0C" + "\n" +
-                                getString(R.string.pressure) + " " + dataHandler.getSinglePressure(i) + "hPa" + "\n" +
-                                getString(R.string.humidity) + " " + dataHandler.getSingleHumidity(i) + "%" + "\n" +
-                                getString(R.string.visibility) + " " + dataHandler.getSingleVisibility(i) + "m" + "\n" +
-                                getString(R.string.wind_speed) + " " + dataHandler.getSingleWind_speed(i) + "m/s" + "\n" +
-                                getString(R.string.rain) + " " + dataHandler.getSingleRain(i) + "mm/3h" + "\n" +
-                                getString(R.string.snow) + " " + dataHandler.getSingleSnow(i) + "mm/3h" + "\n"
+                                getString(R.string.temperature) + " " + String.format("%.1f", dataHandler.getSingleTemp(i)) + "\u00b0C" + "\n" +
+                                getString(R.string.clouds) + " " + String.format("%.1f", dataHandler.getSingleCloud(i)) + "%" + "\n" +
+                                getString(R.string.temp_min) + " " + String.format("%.1f", dataHandler.getSingleTemp_min(i)) + "\u00b0C" + "\n" +
+                                getString(R.string.temp_max) + " " + String.format("%.1f", dataHandler.getSingleTemp_max(i)) + "\u00b0C" + "\n" +
+                                getString(R.string.pressure) + " " + String.format("%.1f", dataHandler.getSinglePressure(i)) + "hPa" + "\n" +
+                                getString(R.string.humidity) + " " + String.format("%.1f", dataHandler.getSingleHumidity(i)) + "%" + "\n" +
+                                getString(R.string.visibility) + " " + String.format("%.0f", dataHandler.getSingleVisibility(i)) + "m" + "\n" +
+                                getString(R.string.wind_speed) + " " + String.format("%.2f", dataHandler.getSingleWind_speed(i)) + "m/s" + "\n" +
+                                getString(R.string.rain) + " " + String.format("%.1f", dataHandler.getSingleRain(i)) + "mm/3h" + "\n" +
+                                getString(R.string.snow) + " " + String.format("%.1f", dataHandler.getSingleSnow(i)) + "mm/3h" + "\n"
                 );
+                //  String.format("%.2f", dataHandler.getSingleRain(i))
 
 //                ImageView image = (ImageView) dialog.findViewById(R.id.image);
                 //               image.setImageResource(R.drawable.ic_launcher);

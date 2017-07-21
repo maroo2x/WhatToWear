@@ -11,19 +11,13 @@
         android:key="unit"
         android:summaryOff="@string/stC"
         android:summaryOn="@string/stF"
-        android:title="@string/unit"
-        android:text="@string/v7_preference_on"
-        style="@style/AppTheme" />
+        android:title="@string/unit" />
     <SwitchPreference
         android:id="@+id/switch2"
         android:key="time"
         android:title="@string/time_format"
-        android:summary=""
         android:summaryOff="24h"
-        android:summaryOn="12h"
-        android:textAllCaps="true"
-        android:text="tekx"
-        android:defaultValue="false" />
+        android:summaryOn="12h" />
 <!--    <SwitchPreference
         android:accessibilityTraversalAfter="@+id/male"
         android:defaultValue="true"
