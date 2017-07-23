@@ -25,10 +25,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
@@ -55,10 +52,7 @@ import static android.support.v4.content.PermissionChecker.PERMISSION_GRANTED;
 public class SwipeActivity extends AppCompatActivity implements ShareActionProvider.OnShareTargetSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private AdView mAdView;
-    TextView mCoords;
-    TextView mAddress;
-    ListView list;
-    Context context;
+
     GoogleApiClient mGoogleApiClient;
     LocationRequest locationRequest;
     Location mLastLocation;
@@ -69,16 +63,12 @@ public class SwipeActivity extends AppCompatActivity implements ShareActionProvi
     String longitude;
     public String address;
     ProgressBar spinner;
-    LocationListener locationListener;
     int unit;
     static long lastUpdateTime = 0;
-    CustomAdapter adapter;
     static PlaceholderFragment fragment;
     boolean firstRun = true;
     Bundle savedInstanceState;
-    private ShareActionProvider mShareActionProvider;
     private ShareActionProvider share = null;
-    private EditText editor = null;
 
 
     private Intent shareIntent = new Intent(Intent.ACTION_SEND);

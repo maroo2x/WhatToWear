@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WhatToWear</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="clouds">nubes:</string>
+    <string name="date">datos:</string>
+    <string name="female">hembra</string>
+    <string name="getting_location_data">Obteniendo ubicación...</string>
+    <string name="humidity">humedad:</string>
+    <string name="latitude">latitud:</string>
+    <string name="longitude">longitud:</string>
+    <string name="male">hombre</string>
+    <string name="no_current_location">sin ubicación actual</string>
+    <string name="no_data">obtener datos...</string>
+    <string name="now">ahora</string>
+    <string name="pressure">presión:</string>
+    <string name="rain">lluvia:</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="snow">nieve:</string>
+    <string name="stC">°C</string>
+    <string name="stF">°F</string>
+    <string name="sunrise">amanecer del sol:</string>
+    <string name="sunset">puesta del sol:</string>
+    <string name="temp_max">temp_max:</string>
+    <string name="temp_min">temp_min:</string>
+    <string name="temperature">temperatura:</string>
+    <string name="time_format">FORMATO DE TIEMPO</string>
+    <string name="title_activity_main2">MainActivity</string>
+    <string name="title_activity_settings">Ajustes</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_home">Home</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="today">Hoy</string>
+    <string name="tomorrow">Mañana</string>
+    <string name="unit">UNIDAD</string>
+    <string name="visibility">visibilidad:</string>
+    <string name="what_to_wear">WHAT TO WEAR</string>
+    <string name="wind_speed">velocidad del viento:</string>
+    <string name="summaryOff">test1</string>
+    <string name="summaryOn">test2</string>
+    <string name="title_activity_swipe">WhatToWear</string>
+</resources>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WhatToWear</string>
+    <string name="action_settings">Nastavení</string>
+    <string name="temp_max">nejvyšší teplota:</string>
+    <string name="temp_min">nejnižší teplota:</string>
+    <string name="temperature">teplota:</string>
+    <string name="humidity">vlhkost:</string>
+    <string name="sunset">východ Slunce:</string>
+    <string name="sunrise">západ Slunce:</string>
+    <string name="clouds">mraky:</string>
+    <string name="date">datum:</string>
+    <string name="female">žena</string>
+    <string name="getting_location_data">Získání datové polohy...</string>
+    <string name="latitude">zeměpisná šířka:</string>
+    <string name="longitude">zeměpisná délka:</string>
+    <string name="male">muž</string>
+    <string name="no_current_location">Žádné aktuální umístění</string>
+    <string name="no_data">získávání dat...</string>
+    <string name="now">nyní</string>
+    <string name="pressure">tlak:</string>
+    <string name="rain">déšť:</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="snow">sníh:</string>
+    <string name="stC">°C</string>
+    <string name="stF">°F</string>
+    <string name="time_format">ČASOVÝ FORMÁT</string>
+    <string name="title_activity_main2">MainActivity</string>
+    <string name="title_activity_settings">Nastavení</string>
+    <string name="summaryOff">test1</string>
+    <string name="summaryOn">test2</string>
+    <string name="title_activity_swipe">WhatToWear</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_home">Home</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="today">Dnes</string>
+    <string name="tomorrow">Zítra</string>
+    <string name="unit">JEDNOTKA</string>
+    <string name="visibility">viditelnost:</string>
+    <string name="what_to_wear">WHAT TO WEAR</string>
+    <string name="wind_speed">rychlost větru:</string>
+</resources>
