@@ -389,7 +389,6 @@ public class SwipeActivity extends AppCompatActivity implements ShareActionProvi
                 URL url = new URL("http://api.openweathermap.org/data/2.5/weather?lat=" + locationAdapter.getmLatitudeText() + "&lon=" + locationAdapter.getmLongitudeText() + "&units=metric&appid=7e7469bd4b8aec9b7684f7b5dd63d3b5");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
-                lastUpdateTime = now.getTime();
                 StringBuilder response = new StringBuilder(50000);
                 try {
                     InputStream in = connection.getInputStream();
@@ -420,6 +419,9 @@ public class SwipeActivity extends AppCompatActivity implements ShareActionProvi
                         response.append((char) i);
                     }
                     weatherAdapter.setFutureWeather(response.toString());
+                    if (response.toString().length() > 0) {
+                        lastUpdateTime = now.getTime();
+                    }
                 } finally {
                     connection.disconnect();
                 }
