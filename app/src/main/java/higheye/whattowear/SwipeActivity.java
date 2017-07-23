@@ -113,7 +113,7 @@ public class SwipeActivity extends AppCompatActivity implements ShareActionProvi
         AdRequest adRequest = new AdRequest.Builder().build();
 //        mAdView.loadAd(adRequest);
 
-        //      call api client
+        //     call api client
         buildGoogleApiClient();
         if (mGoogleApiClient != null) {
             mGoogleApiClient.connect();
